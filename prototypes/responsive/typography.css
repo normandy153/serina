@@ -2,7 +2,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 100%;
 	line-height: 24px;
-	background: url('./baseline.gif')
+	/*background: url('./baseline.gif')*/
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -24,8 +24,7 @@ p {
 h1 {
 	font-size: 2.25em;
 	line-height: 1.3333333333333333333333333333em;
-	margin-top: 0.33333333333333333333333em;
-	margin-bottom: 0.33333333333333333333333em;
+	margin-top: 0.66666666666666666667em;
 }
 
 /*30px*/
