@@ -24,7 +24,7 @@ nav {
 
 #content {
 	width: 1192px;
-	margin: 5px auto;
+	margin: 0 auto;
 }
 
 .grid2 section,
@@ -48,12 +48,8 @@ nav {
 	clear: left;
 }
 
-.event-listing {
-	padding-top: 19px;
-}
-
 .event-listing li {
-	padding-top: 24px;
+	padding-top: 23px;
 	margin-bottom: 12px;
 }
 
