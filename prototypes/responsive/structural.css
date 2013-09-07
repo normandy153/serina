@@ -27,7 +27,8 @@ nav {
 	margin: 0 auto;
 }
 
-.grid2 section {
+.grid2 section,
+.grid2 li {
 	width: 580px;
 	float: left;
 	margin-left: 32px;
@@ -40,6 +41,7 @@ nav {
 }
 
 .grid2 section:nth-of-type(2n+1),
+.grid2 li:nth-of-type(2n+1),
 .grid3 section:nth-of-type(3n+1),
 .grid4 section:nth-of-type(4n+1) {
 	margin-left: 0;
