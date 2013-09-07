@@ -5,6 +5,9 @@ body {
 	/*background: url('./baseline.gif')*/
 }
 
+a {
+	color: #33b600;
+}
 h1, h2, h3, h4, h5, h6,
 .event-listing .description span {
 	font-family: 'Abel', sans-serif;
