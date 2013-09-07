@@ -68,3 +68,7 @@ nav {
 	width: 456px;
 	float: left;
 }
+
+.event-listing .description span {
+	display: block;
+}

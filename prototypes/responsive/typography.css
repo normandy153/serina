@@ -2,11 +2,11 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 	line-height: 24px;
-	background: url('./baseline.gif')
+	/*background: url('./baseline.gif')*/
 }
 
 h1, h2, h3, h4, h5, h6,
-time {
+.event-listing .description span {
 	font-family: 'Abel', sans-serif;
 	text-transform: uppercase;
 }
@@ -57,4 +57,8 @@ h6 {
 	line-height: 24px;
 	padding-top: -13px;
 	margin-bottom: 1px;
+}
+
+.center {
+	text-align: center;
 }
