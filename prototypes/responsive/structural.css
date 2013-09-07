@@ -13,7 +13,7 @@ header section {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8d5322', endColorstr='#f9bb55',GradientType=0 ); /* IE6-8 */
 }
 
-header img {
+img {
 	display: block;
 }
 
