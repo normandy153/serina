@@ -49,8 +49,8 @@ nav {
 }
 
 .event-listing li {
-	padding-top: 23px;
-	margin-bottom: 12px;
+	margin-top: 1px;
+	margin-bottom: 0px;
 }
 
 .event-listing .avatar {
