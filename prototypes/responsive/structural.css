@@ -48,3 +48,27 @@ nav {
 	clear: left;
 }
 
+.event-listing {
+	padding-top: 19px;
+}
+
+.event-listing li {
+	padding-top: 24px;
+	margin-bottom: 12px;
+}
+
+.event-listing .avatar {
+	width: 108px;
+	height: 108px;
+	padding-top: 4px;
+	margin-right: 16px;
+	float: left;
+}
+
+.event-listing .avatar img {
+}
+
+.event-listing .description {
+	width: 456px;
+	float: left;
+}
