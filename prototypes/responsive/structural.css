@@ -23,7 +23,8 @@ img {
 }
 
 nav {
-	height: 12px;
+	min-height: 12px;
+	margin-bottom: 72px;
 	background-color: #282733;
 }
 
