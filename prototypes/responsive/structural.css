@@ -13,6 +13,11 @@ header section {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8d5322', endColorstr='#f9bb55',GradientType=0 ); /* IE6-8 */
 }
 
+header section div {
+	width: 1192px;
+	margin: 0 auto;
+}
+
 img {
 	display: block;
 }
@@ -22,7 +27,14 @@ nav {
 	background-color: #282733;
 }
 
-#content {
+.branding {
+	width: 300px;
+	padding-top: 15px;
+	display: block;
+	padding-bottom: 15px;
+}
+
+.fullwidth {
 	width: 1192px;
 	margin: 0 auto;
 }
