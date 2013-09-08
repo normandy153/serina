@@ -86,12 +86,15 @@ nav {
 	clear: left;
 }
 
-.event-listing li {
+.listing {
+	margin-bottom: 24px;
+}
+.listing li {
 	margin-top: 1px;
 	margin-bottom: 0px;
 }
 
-.event-listing .avatar {
+.listing .event-listing .avatar {
 	width: 108px;
 	height: 108px;
 	padding-top: 4px;
@@ -99,14 +102,12 @@ nav {
 	float: left;
 }
 
-.event-listing .avatar img {
-}
-
-.event-listing .description {
+.listing .event-listing .description {
 	width: 456px;
 	float: left;
 }
 
-.event-listing .description span {
+.listing .listing-datetime {
 	display: block;
 }
+

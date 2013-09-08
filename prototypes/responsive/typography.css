@@ -15,7 +15,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6,
-.event-listing .description span {
+.listing-datetime {
 	font-family: 'Abel', sans-serif;
 	text-transform: uppercase;
 }
@@ -34,7 +34,7 @@ h1 {
 }
 
 h2 {
-	font-size: 30px;
+	font-size: 31px; /* Fix weird rendering; normally 30 */
 	line-height: 36px;
 	margin-top: 0px;
 	margin-bottom: 0px;
