@@ -47,6 +47,10 @@ table {
     border-spacing: 0;
 }
 
+img {
+	display: block;
+}
+
 /* Clearfix
  * http://nicolasgallagher.com/micro-clearfix-hack/
  */
