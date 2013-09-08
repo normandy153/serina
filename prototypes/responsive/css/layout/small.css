@@ -1,0 +1,46 @@
+/*
+Goldilocks Approach to Responsive Web Design Boilerplate
+
+Author: Design by Front - @designbyfront
+Version: 0.1
+URL: http://www.goldilocksapproach.com
+----------------------------------------------------------------------------------------
+
+
+/* 6. CUSTOM LAYOUT & TYPOGRAPHY (Baby bear)
+----------------------------------------------------------------------------------------*/
+
+/* Hide images
+ */
+img {
+	display: none;
+}
+
+header img {
+	display: block;
+}
+
+header {
+	margin-bottom: 0px;
+}
+
+.branding {
+	margin-left: 0.809em;
+}
+
+.fullwidth {
+	padding: 0.809em;
+	max-width: 30em;
+}
+
+/* To space out sequential centered h2-led sections
+ * This usually only appears on the homepage
+ */
+.divider {
+	margin-top: 2em;
+	margin-bottom: 3em;
+}
+
+.obnoxious-block.divider {
+	margin: 0px;
+}

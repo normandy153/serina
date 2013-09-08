@@ -1,0 +1,74 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 13px;
+	line-height: 24px;
+	/*background: url('./baseline.gif')*/
+}
+
+a, a:visited, a:hover, a:active, a:focus {
+	color: #33b600;
+	outline: none;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6,
+.listing-datetime {
+	font-family: 'Abel', sans-serif;
+	text-transform: uppercase;
+}
+
+p {
+	font-size: 13px;
+	line-height: 24px;
+	margin-bottom: 24px;
+}
+
+h1 {
+	font-size: 34px;
+	line-height: 48px;
+	margin-top: 12px;
+	margin-bottom: 7px;
+}
+
+h2 {
+	font-size: 31px; /* Fix weird rendering; normally 30 */
+	line-height: 36px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+h3 {
+	font-size: 24px;
+	line-height: 24px;
+	margin-top: -3px;
+	margin-bottom: 3px;
+}
+
+h4 {
+	font-size: 18px;
+	line-height: 24px;
+	margin-top: -1px;
+	margin-bottom: 0px;
+}
+
+h5 {
+	font-size: 16px;
+	line-height: 24px;
+	padding-top: -13px;
+	margin-bottom: 1px;
+}
+
+h6 {
+	font-size: 14px;
+	line-height: 24px;
+	padding-top: -13px;
+	margin-bottom: 1px;
+}
+
+.center {
+	text-align: center;
+}
