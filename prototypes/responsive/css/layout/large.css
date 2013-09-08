@@ -8,10 +8,6 @@ header {
 	padding-top: 15px;
 }
 
-footer .obnoxious-block {
-	margin-bottom: 0px;
-}
-
 .fullwidth {
 	width: 1192px;
 }
@@ -77,10 +73,6 @@ footer .obnoxious-block {
 
 	.branding {
 		padding-top: 15px;
-	}
-
-	footer .obnoxious-block {
-		margin-bottom: 0px;
 	}
 
 	.fullwidth {

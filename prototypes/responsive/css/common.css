@@ -57,3 +57,7 @@ nav {
 .fullwidth {
 	margin: 0 auto;
 }
+
+footer .obnoxious-block {
+	margin-bottom: 0px;
+}
