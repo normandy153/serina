@@ -30,9 +30,35 @@ nav {
 	background-color: #282733;
 }
 
+.fullwidth {
+	margin: 0 auto;
+}
+
+.grid2 section,
+.grid2 li {
+	width: 580px;
+	float: left;
+	margin-left: 32px;
+}
+
+.grid3 section {
+	width: 376px;
+	float: left;
+	margin-left: 32px;
+}
+
+.grid2 section:nth-of-type(2n+1),
+.grid2 li:nth-of-type(2n+1),
+.grid3 section:nth-of-type(3n+1),
+.grid4 section:nth-of-type(4n+1) {
+	margin-left: 0;
+	clear: left;
+}
+
 .obnoxious-block {
 	width: 100%;
 	background: #f2f2f2; /* Old browsers */
+	padding: 0.5em;
 
 	/*background: #23233e; *//* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -46,16 +72,36 @@ nav {
 	/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#23233e', endColorstr='#0e0e18',GradientType=1 ); *//* IE6-8 fallback on horizontal gradient */
 }
 
-.grid2 section:nth-of-type(2n+1),
-.grid2 li:nth-of-type(2n+1),
-.grid3 section:nth-of-type(3n+1),
-.grid4 section:nth-of-type(4n+1) {
-	margin-left: 0;
-	clear: left;
+.divider {
+	margin-top: 48px;
+	margin-bottom: 72px;
 }
 
-.fullwidth {
-	margin: 0 auto;
+.listing {
+	margin-bottom: 24px;
+}
+
+.listing li {
+	list-style: none;
+	margin-top: 1px;
+	margin-bottom: 0px;
+}
+
+.listing .event-listing .avatar {
+	width: 108px;
+	height: 108px;
+	padding-top: 4px;
+	margin-right: 16px;
+	float: left;
+}
+
+.listing .event-listing .description {
+	width: 456px;
+	float: left;
+}
+
+.listing .listing-datetime {
+	display: block;
 }
 
 footer .obnoxious-block {

@@ -15,54 +15,15 @@ header {
 .grid2 section,
 .grid2 li {
 	width: 580px;
-	float: left;
-	margin-left: 32px;
 }
 
 .grid3 section {
 	width: 376px;
-	float: left;
-	margin-left: 32px;
-}
-
-.obnoxious-block {
-	padding: 0.5em;
 }
 
 /* To space out sequential centered h2-led sections
  * This usually only appears on the homepage
  */
-.divider {
-	margin-top: 48px;
-	margin-bottom: 72px;
-}
-
-.listing {
-	margin-bottom: 24px;
-}
-.listing li {
-	list-style: none;
-	margin-top: 1px;
-	margin-bottom: 0px;
-}
-
-.listing .event-listing .avatar {
-	width: 108px;
-	height: 108px;
-	padding-top: 4px;
-	margin-right: 16px;
-	float: left;
-}
-
-.listing .event-listing .description {
-	width: 456px;
-	float: left;
-}
-
-.listing .listing-datetime {
-	display: block;
-}
-
 
 /* 9. CUSTOM LAYOUT & TYPOGRAPHY (Mummy bear)
 ----------------------------------------------------------------------------------------*/
@@ -76,24 +37,16 @@ header {
 	}
 
 	.fullwidth {
-		width: 754px;
+		width: 664px;
 	}
 
 	.grid2 section,
 	.grid2 li {
-		width: 361px;
-		float: left;
-		margin-left: 32px;
+		width: 316px;
 	}
 
 	.grid3 section {
-		width: 230px;
-		float: left;
-		margin-left: 32px;
-	}
-
-	.obnoxious-block {
-		padding: 0.5em;
+		width: 200px;
 	}
 
 	/* To space out sequential centered h2-led sections
@@ -104,31 +57,13 @@ header {
 		margin-bottom: 36px;
 	}
 
-	.listing {
-		margin-bottom: 24px;
-	}
-
-	.listing li {
-		list-style: none;
-		margin-top: 1px;
-		margin-bottom: 0px;
-	}
-
 	.listing .event-listing .avatar {
 		width: 54px;
 		height: 54px;
-		padding-top: 4px;
-		margin-right: 16px;
-		float: left;
 	}
 
 	.listing .event-listing .description {
-		width: 291px;
-		float: left;
-	}
-
-	.listing .listing-datetime {
-		display: block;
+		width: 246px;
 	}
 }
 

@@ -29,6 +29,18 @@ header {
 	max-width: 30em;
 }
 
+.grid2 section,
+.grid2 li {
+	width: 100%;
+	margin: 0px;
+	clear: both;
+}
+
+.grid3 section {
+	width: 100%;
+	margin: 0px;
+}
+
 /* To space out sequential centered h2-led sections
  * This usually only appears on the homepage
  */
@@ -37,6 +49,23 @@ header {
 	margin-bottom: 3em;
 }
 
+.listing {
+	margin-bottom: 24px;
+}
+
+.listing .event-listing .avatar {
+	display: none;
+}
+
+.listing .event-listing .description {
+	width: 100%;
+}
+
+.obnoxious-block {
+	padding: 0;
+}
+
 .obnoxious-block.divider {
 	margin: 0px;
 }
+
