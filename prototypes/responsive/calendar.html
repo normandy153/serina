@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- /ht Andy Clarke - http://front.ie/lkCwyf -->
+	<meta http-equiv="cleartype" content="on">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<!-- /ht Jeremy Keith - http://front.ie/mLXiaS -->
+	<link href="css/reset.css" rel="stylesheet" media="all">
+	<link href="css/typography.css" rel="stylesheet" media="all">
+	<link href="css/common.css" rel="stylesheet" media="all">
+	<link href='css/fullcalendar.css' rel='stylesheet' media='all'/>
+
+	<link rel="stylesheet" href="css/layout/small.css" media="all and (max-width: 33.235em">
+	<link rel="stylesheet" href="css/layout/large.css" media="all and (min-width: 33.236em)">
+
+	<!--[if (lt IE 9) & (!IEMobile)]>
+	<link rel="stylesheet" href="css/layout/large.css" media="all">
+	<![endif]-->
+
+
+	<script type='text/javascript' src='vendor/jquery/jquery-2.0.3.min.js'></script>
+
+	<script type='text/javascript' src='vendor/fullcalendar/fullcalendar.min.js'></script>
+
+
+	<style type='text/css'>
+
+		.fc-event {
+			border: 3px solid #33b600;
+			padding-left: 2px;
+			background-color: #33b600;
+		}
+
+	</style>
+	<script type='text/javascript'>
+		$(function() {
+			var date = new Date();
+			var d = date.getDate();
+			var m = date.getMonth();
+			var y = date.getFullYear();
+
+			$('#calendar').fullCalendar({
+				events: [
+					{
+						title: 'Mt Feathertop Northern Traverse',
+						start: new Date(y, m, 1)
+					},
+					{
+						title: 'Wilsons Promontory Southern Circuit',
+						start: new Date(y, m, d-5),
+						end: new Date(y, m, d-2)
+					},
+					{
+						id: 999,
+						title: 'Some other thing',
+						start: new Date(y, m, d-3, 16, 0),
+						allDay: false
+					}
+				]
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<header>
+		<section>
+			<div class='fullwidth'>
+				<a class='branding' href='/'>
+					<img src='images/logo.png' alt='' title='' />
+				</a>
+			</div>
+		</section>
+		<div>
+			<!--<img src='./banner.jpg' width='100%' height='100%' />-->
+		</div>
+		<nav>
+			<!--<div class='fullwidth'>-->
+			<!--Navigation probably goes here-->
+			<!--</div>-->
+		</nav>
+	</header>
+
+	<div class='fullwidth'>
+		<div id='calendar'></div>
+	</div>
+
+	<footer>
+		<div class='obnoxious-block cf'>
+			<div class='fullwidth'>
+				<h1 class='center'>mumc.org.au</h1>
+				<p class='center'>
+					The bottom of the page.
+				</p>
+			</div>
+		</div>
+	</footer>
+</body>
+
+</html>
