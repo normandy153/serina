@@ -26,21 +26,9 @@
 	<link rel="stylesheet" href="css/layout/large.css" media="all">
 	<![endif]-->
 
-
 	<script type='text/javascript' src='vendor/jquery/jquery-2.0.3.min.js'></script>
-
 	<script type='text/javascript' src='vendor/fullcalendar/fullcalendar.min.js'></script>
 
-
-	<style type='text/css'>
-
-		.fc-event {
-			border: 3px solid #33b600;
-			padding-left: 2px;
-			background-color: #33b600;
-		}
-
-	</style>
 	<script type='text/javascript'>
 		$(function() {
 			var date = new Date();
@@ -49,6 +37,16 @@
 			var y = date.getFullYear();
 
 			$('#calendar').fullCalendar({
+				header: {
+					right: 'title',
+					center: 'prev,today,next',
+					left: 'month,basicDay'
+				},
+				titleFormat: {
+					month: 'MMMM yyyy',                             // September 2009
+					week: "MMM d[ yyyy]{ '&#8212;'[ MMM] d yyyy}", // Sep 7 - 13 2009
+					day: 'dd/MM/yy'                  // Tuesday, Sep 8, 2009
+				},
 				events: [
 					{
 						title: 'Mt Feathertop Northern Traverse',

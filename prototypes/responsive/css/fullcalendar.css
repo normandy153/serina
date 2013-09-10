@@ -262,12 +262,13 @@ html .fc,
 	}
 	 
 .fc-event {
-	border: 1px solid #3a87ad; /* default BORDER color */
-	background-color: #3a87ad; /* default BACKGROUND color */
 	color: #fff;               /* default TEXT color */
 	font-size: .85em;
 	cursor: default;
-	}
+	border: 3px solid #33b600;
+	padding-left: 2px;
+	background-color: #33b600;
+}
 
 a.fc-event {
 	text-decoration: none;
