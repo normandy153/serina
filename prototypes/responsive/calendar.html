@@ -32,6 +32,16 @@
 
 	<script type='text/javascript'>
 		$(function() {
+			$('div.event-legend').hide();
+
+			$('#event-legend').click(function() {
+				event.preventDefault();
+
+				$('div.event-legend').toggle();
+			})
+		});
+
+		$(function() {
 			var date = new Date();
 			var d = date.getDate();
 			var m = date.getMonth();
@@ -147,6 +157,28 @@
 	</header>
 
 	<div class='fullwidth'>
+		<h1>Calendar of Events</h1>
+		<section>
+			<h4 id='event-legend'><a>Legend</a></h4>
+			<p>View the colour codes used in this calendar.</p>
+
+			<div class='event-legend'>
+				<ul>
+					<li class='event-bushwalking'>Bushwalking</li>
+					<li class='event-canoepolo'>Canoe Polo</li>
+					<li class='event-canyoning'>Canyoning</li>
+					<li class='event-caving'>Caving</li>
+					<li class='event-conservation'>Conservation</li>
+					<li class='event-kayaking'>Kayaking</li>
+					<li class='event-mountaineering'>Mountaineering</li>
+					<li class='event-rockclimbing'>Rockclimbing</li>
+					<li class='event-rogaining'>Rogaining</li>
+					<li class='event-skiing'>Skiing</li>
+					<li class='event-bsar'>Bush Search And Rescue</li>
+					<li class='event-other'>Other</li>
+				</ul>
+			</div>
+		</section>
 		<div id='calendar'></div>
 	</div>
 

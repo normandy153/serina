@@ -58,6 +58,27 @@
 }
 
 .event-other {
-	border-color: rgb(211,224,32);
-	background-color: rgb(211,224,32);
+	border-color: rgb(160,150,60);
+	background-color: rgb(160,150,60);
+}
+
+.event-legend {
+	padding: 12px;
+	background-color: #f0f0f0;
+	margin-bottom: 24px;
+}
+
+#event-legend a {
+	cursor: pointer;
+}
+
+.event-legend li {
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	color: #fff;
+	padding: 0px 6px;
+	margin-bottom: 4px;
+	display: inline-block;
 }
