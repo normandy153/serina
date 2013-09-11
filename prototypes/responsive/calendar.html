@@ -28,6 +28,7 @@
 
 	<script type='text/javascript' src='vendor/jquery/jquery-2.0.3.min.js'></script>
 	<script type='text/javascript' src='vendor/fullcalendar/fullcalendar.min.js'></script>
+	<link rel='stylesheet' href='css/events.css' media='all' />
 
 	<script type='text/javascript'>
 		$(function() {
@@ -49,20 +50,77 @@
 				},
 				events: [
 					{
-						title: 'Mt Feathertop Northern Traverse',
-						start: new Date(y, m, 1)
-					},
-					{
 						title: 'Wilsons Promontory Southern Circuit',
 						start: new Date(y, m, d-5),
-						end: new Date(y, m, d-2)
+						end: new Date(y, m, d-2),
+						className: 'event-bushwalking'
 					},
 					{
-						id: 999,
-						title: 'Some other thing',
+						title: 'Weekly Canoe Polo',
+						allDay: false,
+						start: new Date(y, m, d),
+						className: 'event-canoepolo'
+					},
+					{
+						title: 'Canyoning In NSW',
+						start: new Date(y, m, d),
+						end: new Date(y, m, d+2),
+						allDay: false,
+						className: 'event-canyoning'
+					},
+					{
+						title: 'Buchan Caving',
+						allDay: false,
+						start: new Date(y, m, d+1),
+						end: new Date(y, m, d+2),
+						className: 'event-caving'
+					},
+					{
+						title: 'Honeyeater Planting',
+						start: new Date(y, m, d+3),
+						allDay: false,
+						className: 'event-conservation'
+					},
+					{
+						title: 'Mitta River',
 						start: new Date(y, m, d-3, 16, 0),
-						allDay: false
-					}
+						allDay: false,
+						className: 'event-kayaking'
+					},
+					{
+						title: 'Mt Feathertop Northern Traverse',
+						start: new Date(y, m, 1),
+						className: 'event-mountaineering'
+					},
+					{
+						title: 'Easter Arapiles',
+						start: new Date(y, m, 1),
+						end: new Date(y, m, d-7),
+						className: 'event-rockclimbing'
+					},
+					{
+						title: 'Rogaining Championship',
+						start: new Date(y, m, 1),
+						className: 'event-rogaining'
+					},
+					{
+						title: 'Main Range',
+						start: new Date(y, m, d-5),
+						end: new Date(y, m, d-2),
+						className: 'event-skiing'
+					},
+					{
+						title: 'Bush Search & Rescue',
+						start: new Date(y, m, d-5),
+						end: new Date(y, m, d-2),
+						className: 'event-bsar'
+					},
+					{
+						title: 'Committee Meeting and O-Week Stuff',
+						start: new Date(y, m, d-5),
+						end: new Date(y, m, d-2),
+						className: 'event-other'
+					},
 				]
 			});
 		});

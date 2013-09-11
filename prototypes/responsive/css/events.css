@@ -1,0 +1,59 @@
+.event-bushwalking {
+	border-color: rgb(224,32,32);
+	background-color: rgb(224,32,32);
+}
+
+.event-canoepolo {
+	border-color: rgb(224,134,32);
+	background-color: rgb(224,134,32);
+}
+
+.event-canyoning {
+	border-color: rgb(211,224,32);
+	background-color: rgb(211,224,32);
+}
+
+.event-caving {
+	border-color: rgb(109,224,32);
+	background-color: rgb(109,224,32);
+}
+
+.event-conservation {
+	border-color: rgb(32,224,58);
+	background-color: rgb(32,224,58);
+}
+
+.event-kayaking {
+	border-color: rgb(32,224,160);
+	background-color: rgb(32,224,160);
+}
+
+.event-mountaineering {
+	border-color: rgb(32,186,224);
+	background-color: rgb(32,186,224);
+}
+
+.event-rockclimbing {
+	border-color: rgb(32,83,224);
+	background-color: rgb(32,83,224);
+}
+
+.event-rogaining {
+	border-color: rgb(83,32,224);
+	background-color: rgb(83,32,224);
+}
+
+.event-skiing {
+	border-color: rgb(186,32,224);
+	background-color: rgb(186,32,224);
+}
+
+.event-bsar {
+	border-color: rgb(0,0,0);
+	background-color: rgb(0,0,0);
+}
+
+.event-other {
+	border-color: rgb(128,128,128);
+	background-color: rgb(128,128,128);
+}
