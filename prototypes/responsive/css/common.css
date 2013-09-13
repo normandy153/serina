@@ -21,7 +21,7 @@ header section {
 
 .branding {
 	width: 178px;
-	padding-top: 4px;
+	padding-top: 15px;
 	display: block;
 }
 
@@ -36,15 +36,12 @@ nav {
 
 .grid2 section,
 .grid2 li {
-	width: 580px;
 	float: left;
 	margin-left: 32px;
 }
 
 .grid3 section {
-	width: 376px;
 	float: left;
-	margin-left: 32px;
 }
 
 .grid2 section:nth-of-type(2n+1),
@@ -73,12 +70,8 @@ nav {
 }
 
 .divider {
-	margin-top: 48px;
-	margin-bottom: 72px;
-}
-
-.listing {
-	margin-bottom: 24px;
+	margin-top: 24px;
+	margin-bottom: 48px;
 }
 
 .listing li {
@@ -88,20 +81,13 @@ nav {
 }
 
 .listing .event-listing .avatar {
-	width: 108px;
-	height: 108px;
 	padding-top: 4px;
 	margin-right: 16px;
 	float: left;
 }
 
 .listing .event-listing .description {
-	width: 456px;
-	float: left;
-}
-
-.listing .listing-datetime {
-	display: block;
+	float: right;
 }
 
 footer .obnoxious-block {

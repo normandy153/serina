@@ -1,65 +1,69 @@
 /* 8. CUSTOM LAYOUT & TYPOGRAPHY (Daddy bear)
 ----------------------------------------------------------------------------------------*/
-header {
-	margin-bottom: 72px;
-}
-
-.branding {
-	padding-top: 15px;
-}
 
 .fullwidth {
 	width: 1192px;
+	max-width: none;
 }
 
 .grid2 section,
 .grid2 li {
 	width: 580px;
+	margin-left: 32px;
 }
 
 .grid3 section {
 	width: 376px;
+	margin-left: 32px;
+}
+
+.standfirst img {
+	display: block;
 }
 
 /* To space out sequential centered h2-led sections
  * This usually only appears on the homepage
  */
 
+.listing .event-listing .avatar {
+	width: 108px;
+	height: 108px;
+	display: block;
+}
+
+.listing .event-listing .description {
+	width: 456px;
+}
+
+
 /* 9. CUSTOM LAYOUT & TYPOGRAPHY (Mummy bear)
 ----------------------------------------------------------------------------------------*/
-@media screen and (min-width: 30em) and (max-width: 63.236em) {
-	header {
-		margin-bottom: 24px;
-	}
-
-	.branding {
-		padding-top: 15px;
-	}
+@media screen and (min-width: 33.236em) and (max-width: 63.236em) {
 
 	.fullwidth {
 		width: 664px;
+		max-width: none;
 	}
 
 	.grid2 section,
 	.grid2 li {
 		width: 316px;
+		margin-left: 32px;
 	}
 
 	.grid3 section {
 		width: 200px;
+		margin-left: 32px;
 	}
 
-	/* To space out sequential centered h2-led sections
-	 * This usually only appears on the homepage
-	 */
-	.divider {
-		margin-top: 24px;
-		margin-bottom: 36px;
+	.standfirst img {
+		display: block;
 	}
 
 	.listing .event-listing .avatar {
 		width: 54px;
 		height: 54px;
+		display: block;
 	}
 
 	.listing .event-listing .description {

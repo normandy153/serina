@@ -10,22 +10,9 @@ URL: http://www.goldilocksapproach.com
 /* 6. CUSTOM LAYOUT & TYPOGRAPHY (Baby bear)
 ----------------------------------------------------------------------------------------*/
 
-/* Hide images
- */
-img {
-	display: none;
-}
-
-header img {
-	display: block;
-}
-
-header {
-	margin-bottom: 0px;
-}
-
 .fullwidth {
-	padding: 0.809em;
+	/*padding-left: 0.809em;*/
+	/*padding-right: 0.809em;*/
 	max-width: 30em;
 }
 
@@ -33,7 +20,6 @@ header {
 .grid2 li {
 	width: 100%;
 	margin: 0px;
-	clear: both;
 }
 
 .grid3 section {
@@ -41,31 +27,27 @@ header {
 	margin: 0px;
 }
 
-/* To space out sequential centered h2-led sections
- * This usually only appears on the homepage
- */
-.divider {
-	margin-top: 2em;
-	margin-bottom: 3em;
-}
 
-.listing {
-	margin-bottom: 24px;
+.standfirst img {
+	display: none;
 }
+/*.listing {*/
+	/*margin-bottom: 24px;*/
+/*}*/
 
 .listing .event-listing .avatar {
 	display: none;
 }
 
-.listing .event-listing .description {
-	width: 100%;
-}
+/*.listing .event-listing .description {*/
+	/*width: 100%;*/
+/*}*/
 
-.obnoxious-block {
-	padding: 0;
-}
+/*.obnoxious-block {*/
+	/*padding: 0;*/
+/*}*/
 
-.obnoxious-block.divider {
-	margin: 0px;
-}
+/*.obnoxious-block.divider {*/
+	/*margin: 0px;*/
+/*}*/
 
