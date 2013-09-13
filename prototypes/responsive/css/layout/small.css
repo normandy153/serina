@@ -11,8 +11,8 @@ URL: http://www.goldilocksapproach.com
 ----------------------------------------------------------------------------------------*/
 
 .fullwidth {
-	/*padding-left: 0.809em;*/
-	/*padding-right: 0.809em;*/
+	padding-left: 0.809em;
+	padding-right: 0.809em;
 	max-width: 30em;
 }
 
@@ -26,7 +26,6 @@ URL: http://www.goldilocksapproach.com
 	width: 100%;
 	margin: 0px;
 }
-
 
 .standfirst img {
 	display: none;
@@ -43,9 +42,9 @@ URL: http://www.goldilocksapproach.com
 	/*width: 100%;*/
 /*}*/
 
-/*.obnoxious-block {*/
-	/*padding: 0;*/
-/*}*/
+.obnoxious-block {
+	padding: 0;
+}
 
 /*.obnoxious-block.divider {*/
 	/*margin: 0px;*/
