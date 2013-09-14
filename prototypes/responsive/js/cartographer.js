@@ -6,6 +6,7 @@
 		var config = init($(this), locations);
 
 		plot();
+		addMarkers();
 
 		/**
 		 * Init
@@ -15,7 +16,8 @@
 
 			var derived = {
 				element: element,
-				locations: locations
+				locations: locations,
+				map: ''
 			}
 
 			var merged = $.extend(defaults, derived);
@@ -61,6 +63,23 @@
 
 			var map = new google.maps.Map(document.getElementById(config.element.attr('id')), mapOptions);
 			map.fitBounds(getBounds());
+
+			config.map = map;
+		}
+
+		/**
+		 * Add markers/points of interest
+		 */
+		function addMarkers() {
+			for (var i = 0; i < config.locations.length; i++) {
+				var currentLocation = config.locations[i];
+
+				var marker = new google.maps.Marker({
+					title: currentLocation.title,
+					position: new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
+					map: config.map
+				});
+			}
 		}
 	}
 }(jQuery));
