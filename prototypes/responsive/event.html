@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- /ht Andy Clarke - http://front.ie/lkCwyf -->
+	<meta http-equiv="cleartype" content="on">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<!-- /ht Jeremy Keith - http://front.ie/mLXiaS -->
+	<link rel="stylesheet" href="css/reset.css" media="all">
+	<link rel="stylesheet" href="css/typography.css" media="all">
+	<link rel="stylesheet" href="css/common.css" media="all">
+
+	<link rel="stylesheet" href="css/layout/small.css" media="all and (max-width: 33.235em">
+	<link rel="stylesheet" href="css/layout/large.css" media="all and (min-width: 33.236em)">
+
+	<!--[if (lt IE 9) & (!IEMobile)]>
+	<link rel="stylesheet" href="css/layout/large.css" media="all">
+	<![endif]-->
+
+	<script type='text/javascript' src='vendor/jquery/jquery-2.0.3.min.js'></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfuFD28VOdTEGDuASvI27nAZEKomFys38&sensor=true"></script>
+	<script type="text/javascript">
+		(function($) {
+			$.fn.cartographer = function(locations) {
+				var config = init($(this), locations);
+
+				plot();
+
+				/**
+				 * Init
+				 */
+				function init(element, locations) {
+					var defaults = {}
+
+					var derived = {
+						element: element,
+						locations: locations
+					}
+
+					var merged = $.extend(defaults, derived);
+
+					return merged;
+				}
+
+				/**
+				 * Plot markers
+				 *
+				 * @param locations
+				 */
+				function plot() {
+					for (var i = 0; i < config.locations.length; i++) {
+						var currentLocation = config.locations[i];
+
+						var mapOptions = {
+							center: new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
+							zoom: 12,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						};
+
+						var map = new google.maps.Map(document.getElementById(config.element.attr('id')), mapOptions);
+					}
+				}
+			}
+		}(jQuery));
+
+		$(function() {
+			$('#map-canvas').cartographer([
+				{
+					geocode: false,
+					latitude: -33.702272,
+					longitude: 151.005768
+				}
+			]);
+		});
+
+	</script>
+</head>
+
+<body>
+	<header>
+		<section>
+			<div class='fullwidth'>
+				<a class='branding' href='/'>
+					<img src='images/logo.png' alt='' title='' />
+				</a>
+			</div>
+		</section>
+		<nav>
+			<!--<div class='fullwidth'>-->
+			<!--Navigation probably goes here-->
+			<!--</div>-->
+		</nav>
+		<div>
+			<!--<img src='./banner.jpg' width='100%' height='100%' />-->
+		</div>
+	</header>
+
+	<div class='fullwidth'>
+		<h2 class='center'>Mt Feathertop Northern Traverse</h2>
+		<p class='center'>
+			<span class='datetime'>14/04/2013&ndash;15/04/2014</span>
+		</p>
+
+		<style type='text/css'>
+			p.intro {
+				font-weight: bold;
+			}
+		</style>
+		<div class='grid2 divider cf'>
+			<section>
+				<p class='intro'>
+					Objectively innovate empowered manufactured products whereas parallel platforms. Holisticly predominate extensible testing procedures for reliable supply chains. Dramatically engage top-line web services vis-a-vis cutting-edge deliverables.
+				</p>
+				<p>
+					Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.
+				</p>
+				<p>
+					Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.
+				</p>
+				<p>
+					Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.
+				</p>
+				<p>
+					blap
+				</p>
+			</section>
+			<section>
+				gorp
+				<div id='map-canvas' style='width:auto;height:500px'></div>
+			</section>
+		</div>
+	</div>
+
+	<footer>
+		<div class='obnoxious-block cf'>
+			<div class='fullwidth'>
+				<h1 class='center'>mumc.org.au</h1>
+				<p class='center'>
+					The bottom of the page.
+				</p>
+			</div>
+		</div>
+	</footer>
+</body>
+
+</html>
