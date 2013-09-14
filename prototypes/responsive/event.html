@@ -26,51 +26,9 @@
 	<![endif]-->
 
 	<script type='text/javascript' src='vendor/jquery/jquery-2.0.3.min.js'></script>
+	<script type='text/javascript' src='js/cartographer.js'></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfuFD28VOdTEGDuASvI27nAZEKomFys38&sensor=true"></script>
 	<script type="text/javascript">
-		(function($) {
-			$.fn.cartographer = function(locations) {
-				var config = init($(this), locations);
-
-				plot();
-
-				/**
-				 * Init
-				 */
-				function init(element, locations) {
-					var defaults = {}
-
-					var derived = {
-						element: element,
-						locations: locations
-					}
-
-					var merged = $.extend(defaults, derived);
-
-					return merged;
-				}
-
-				/**
-				 * Plot markers
-				 *
-				 * @param locations
-				 */
-				function plot() {
-					for (var i = 0; i < config.locations.length; i++) {
-						var currentLocation = config.locations[i];
-
-						var mapOptions = {
-							center: new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
-							zoom: 12,
-							mapTypeId: google.maps.MapTypeId.ROADMAP
-						};
-
-						var map = new google.maps.Map(document.getElementById(config.element.attr('id')), mapOptions);
-					}
-				}
-			}
-		}(jQuery));
-
 		$(function() {
 			$('#map-canvas').cartographer([
 				{
@@ -111,7 +69,20 @@
 
 		<style type='text/css'>
 			p.intro {
-				font-weight: bold;
+				font-size: 15px;
+				font-style: italic;
+			}
+
+			.map-canvas {
+				width: auto;
+				height: 400px;
+			}
+
+			/* Overcome css-reset problems with controls
+			 * https://groups.google.com/forum/#!topic/google-maps-js-api-v3/3YIftYyNmyk
+			 */
+			.map-canvas img {
+				max-width: inherit;
 			}
 		</style>
 		<div class='grid2 divider cf'>
@@ -128,13 +99,9 @@
 				<p>
 					Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.
 				</p>
-				<p>
-					blap
-				</p>
 			</section>
 			<section>
-				gorp
-				<div id='map-canvas' style='width:auto;height:500px'></div>
+				<div id='map-canvas' class='map-canvas'></div>
 			</section>
 		</div>
 	</div>
