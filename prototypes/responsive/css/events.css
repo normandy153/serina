@@ -1,3 +1,6 @@
+/**
+ * Calendar
+ */
 .event-bushwalking {
 	border-color: rgb(32,224,58);
 	background-color: rgb(32,224,58);
@@ -81,4 +84,24 @@
 	padding: 0px 6px;
 	margin-bottom: 4px;
 	display: inline-block;
+}
+
+/**
+ * Event detail
+ */
+p.intro {
+	font-size: 15px;
+	font-style: italic;
+}
+
+.map-canvas {
+	width: auto;
+	height: 400px;
+}
+
+/* Overcome css-reset problems with controls
+ * https://groups.google.com/forum/#!topic/google-maps-js-api-v3/3YIftYyNmyk
+ */
+.map-canvas img {
+	max-width: inherit;
 }
