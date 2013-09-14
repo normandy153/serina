@@ -58,7 +58,7 @@
 		 */
 		function plot() {
 			var mapOptions = {
-				mapTypeId: google.maps.MapTypeId.ROADMAP
+				mapTypeId: google.maps.MapTypeId.SATELLITE
 			};
 
 			var map = new google.maps.Map(document.getElementById(config.element.attr('id')), mapOptions);
