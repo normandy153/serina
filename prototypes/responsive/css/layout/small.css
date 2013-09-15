@@ -31,6 +31,7 @@ URL: http://www.goldilocksapproach.com
 	display: none;
 }
 
+.listing .member-listing .avatar,
 .listing .event-listing .avatar {
 	display: none;
 }
@@ -38,5 +39,4 @@ URL: http://www.goldilocksapproach.com
 .obnoxious-block {
 	padding: 0;
 }
-
 

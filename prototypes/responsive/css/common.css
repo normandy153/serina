@@ -93,3 +93,21 @@ nav {
 footer .obnoxious-block {
 	margin-bottom: 0px;
 }
+
+.listing.member-listing li {
+	outline: 1px solid #f00;
+	margin-bottom: 32px;
+	float: left;
+}
+
+.listing.member-listing .name {
+	outline: 1px solid #0ff;
+	vertical-align: middle;
+	display: table-cell;
+}
+
+.listing.member-listing .avatar {
+	outline: 1px solid #f0f;
+	margin-right: 16px;
+	float: left;
+}

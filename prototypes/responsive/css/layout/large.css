@@ -21,10 +21,6 @@
 	display: block;
 }
 
-/* To space out sequential centered h2-led sections
- * This usually only appears on the homepage
- */
-
 .listing .event-listing .avatar {
 	width: 108px;
 	height: 108px;
@@ -35,6 +31,22 @@
 	width: 456px;
 }
 
+.listing.member-listing .avatar {
+	width: 48px;
+	height: 48px;
+	display: block;
+}
+
+.listing.member-listing li {
+	outline: 1px solid #00f;
+	width: 298px;
+	height: 48px;
+}
+
+.listing.member-listing .name {
+	width: 202px;
+	height: 48px;
+}
 
 /* 9. CUSTOM LAYOUT & TYPOGRAPHY (Mummy bear)
 ----------------------------------------------------------------------------------------*/
@@ -57,6 +69,12 @@
 	}
 
 	.standfirst img {
+		display: block;
+	}
+
+	.listing .member-listing .avatar {
+		width: 36px;
+		height: 36px;
 		display: block;
 	}
 
