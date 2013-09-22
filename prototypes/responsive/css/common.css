@@ -57,6 +57,8 @@ nav {
 	outline: 1px solid #00f;
 	width: 100%;
 	background: #f2f2f2; /* Old browsers */
+	padding-top: 12px;
+	padding-bottom: 12px;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	opacity: 0.67;
