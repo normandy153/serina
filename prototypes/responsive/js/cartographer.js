@@ -134,23 +134,57 @@
 		}
 
 		/**
-		 * Add markers/points of interest
+		 * Add one marker
+		 *
+		 * @param currentWaypoint
 		 */
-		function addMarkers() {
-			for (var i = 0; i < config.processedWaypoints.length; i++) {
-				var currentWaypoint = config.processedWaypoints[i];
-
-				if (currentWaypoint.latitude != undefined) {
-					var marker = new google.maps.Marker({
-						title: currentWaypoint.title,
-						position: new google.maps.LatLng(currentWaypoint.latitude, currentWaypoint.longitude),
-						map: config.map
-					});
+		function addMarker(currentCoordinate, image) {
+			if (currentCoordinate.latitude != undefined) {
+				var definition = {
+					title: currentCoordinate.title,
+					image: image,
+					position: new google.maps.LatLng(currentCoordinate.latitude, currentCoordinate.longitude),
+					map: config.map
 				}
+
+				/* If a custom image was chosen, otherwise use default
+				 */
+				if (image !== null) {
+					definition.image = image;
+				}
+
+				var marker = new google.maps.Marker(definition);
 			}
 		}
 
-		function route(directionsService, directionsDisplay, start, end, type) {
+		/**
+		 * Add a waypoint style to the map
+		 *
+		 * @param currentCoordinate
+		 */
+		function addWaypoint(currentCoordinate) {
+			addMarker(currentCoordinate, null);
+		}
+
+		/**
+		 * Add markers/points of interest
+		 */
+		function addWaypoints() {
+			for (var i = 0; i < config.processedWaypoints.length; i++) {
+				addWaypoint(config.processedWaypoints[i]);
+			}
+		}
+
+		/**
+		 * Draw a line between two locations
+		 *
+		 * @param directionsService
+		 * @param directionsDisplay
+		 * @param start
+		 * @param end
+		 * @param type
+		 */
+		function addRoute(directionsService, directionsDisplay, start, end, type) {
 			var request = {
 				origin: start,
 				destination: end,
@@ -171,7 +205,7 @@
 		/**
 		 * Draw route between two points
 		 */
-		function addRoute() {
+		function addRoutes() {
 			var directionsService = new google.maps.DirectionsService();
 
 			for (var i = 1; i < config.processedWaypoints.length; i++) {
@@ -188,7 +222,7 @@
 				var start = new google.maps.LatLng(previousWaypoint.latitude, previousWaypoint.longitude);
 				var end = new google.maps.LatLng(currentWaypoint.latitude, currentWaypoint.longitude);
 
-				route(directionsService, directionsDisplay, start, end, 'DRIVING');
+				addRoute(directionsService, directionsDisplay, start, end, 'DRIVING');
 			}
 		}
 		/**
@@ -197,8 +231,8 @@
 		function facade() {
 			if (config.processedWaypoints.length == config.locations.waypoints.length) {
 				plot();
-				addRoute();
-				addMarkers();
+				addRoutes();
+				addWaypoints();
 				clearTimeout(mapTimeout);
 			}
 		}
