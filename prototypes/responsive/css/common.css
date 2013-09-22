@@ -34,18 +34,18 @@ nav {
 	margin: 0 auto;
 }
 
-.grid2 section,
-.grid2 li {
-	float: left;
-	margin-left: 32px;
-}
+/*.grid2 section,*/
+/*.grid2 li {*/
+	/*float: left;*/
+	/*margin-left: 32px;*/
+/*}*/
 
 .grid3 section {
 	float: left;
 }
 
-.grid2 section:nth-of-type(2n+1),
-.grid2 li:nth-of-type(2n+1),
+/*.grid2 section:nth-of-type(2n+1),*/
+/*.grid2 li:nth-of-type(2n+1),*/
 .grid3 section:nth-of-type(3n+1),
 .grid4 section:nth-of-type(4n+1) {
 	margin-left: 0;
@@ -78,6 +78,19 @@ nav {
 	list-style: none;
 	margin-top: 1px;
 	margin-bottom: 0px;
+	float: left;
+}
+
+/* Alternate list elements horizontally rather than vertically
+ */
+.alternate li {
+	margin-left: 32px;
+	float: left;
+}
+
+.alternate li:nth-of-type(2n+1) {
+	margin-left: 0;
+	clear: left;
 }
 
 .listing .event-listing .avatar {
