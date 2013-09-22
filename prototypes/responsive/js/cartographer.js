@@ -3,14 +3,14 @@
  * Google Maps API Wrapper
  */
 (function($) {
-	$.fn.cartographer = function(locations) {
-		var config = init($(this), locations);
+	$.fn.cartographer = function(waypoints) {
+		var config = init($(this), waypoints);
 
 		/* Geocode everything first
 		 */
 		preprocess();
 
-		/* Poll processedLocations list to see whether all geocoding
+		/* Poll processedWaypoints list to see whether all geocoding
 		 * has been done asynchronously
 		 */
 		var mapTimeout = setInterval(facade, 1000);
@@ -18,13 +18,13 @@
 		/**
 		 * Init
 		 */
-		function init(element, locations) {
+		function init(element, waypoints) {
 			var defaults = {}
 
 			var derived = {
 				element: element,
-				locations: locations,
-				processedLocations: [],
+				waypoints: waypoints,
+				processedWaypoints: [],
 				map: ''
 			}
 
@@ -37,22 +37,22 @@
 		 * Preprocess one location
 		 *
 		 * @param geocoder
-		 * @param currentLocation
+		 * @param currentWaypoint
 		 */
-		function preprocessOne(index, geocoder, currentLocation) {
+		function preprocessOne(index, geocoder, currentWaypoint) {
 
 			/* Geocode addresses
 			 */
-			if (currentLocation.geocode == true) {
-				geocoder.geocode({'address': currentLocation.address}, function(results, status) {
+			if (currentWaypoint.geocode == true) {
+				geocoder.geocode({'address': currentWaypoint.address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						var newElement = {
-							title: currentLocation.title,
+							title: currentWaypoint.title,
 							latitude: results[0].geometry.location.ob,
 							longitude: results[0].geometry.location.pb
 						}
 
-						config.processedLocations[index] = newElement;
+						config.processedWaypoints[index] = newElement;
 					}
 					/* When there are no results, add a null element
 					 * so the other markers plot anyway
@@ -61,18 +61,18 @@
 						var newElement = {
 						}
 
-						config.processedLocations[index] = newElement;
+						config.processedWaypoints[index] = newElement;
 					}
 				});
 			}
 			else {
 				var newElement = {
-					title: currentLocation.title,
-					latitude: currentLocation.latitude,
-					longitude: currentLocation.longitude
+					title: currentWaypoint.title,
+					latitude: currentWaypoint.latitude,
+					longitude: currentWaypoint.longitude
 				}
 
-				config.processedLocations[index] = newElement;
+				config.processedWaypoints[index] = newElement;
 			}
 		}
 
@@ -82,24 +82,24 @@
 		function preprocess() {
 			var geocoder = new google.maps.Geocoder();
 
-			for (var i = 0; i < config.locations.length; i++) {
-				preprocessOne(i, geocoder, config.locations[i]);
+			for (var i = 0; i < config.waypoints.length; i++) {
+				preprocessOne(i, geocoder, config.waypoints[i]);
 			}
 		}
 
 		/**
 		 * Plot markers
 		 *
-		 * @param locations
+		 * @param waypoints
 		 */
 		function getBounds() {
 			var bounds = new google.maps.LatLngBounds();
 
-			for (var i = 0; i < config.processedLocations.length; i++) {
-				var currentLocation = config.processedLocations[i];
+			for (var i = 0; i < config.processedWaypoints.length; i++) {
+				var currentWaypoint = config.processedWaypoints[i];
 
-				if (currentLocation.latitude != undefined) {
-					var coords = new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude);
+				if (currentWaypoint.latitude != undefined) {
+					var coords = new google.maps.LatLng(currentWaypoint.latitude, currentWaypoint.longitude);
 					bounds.extend(coords);
 				}
 			}
@@ -134,13 +134,13 @@
 		 * Add markers/points of interest
 		 */
 		function addMarkers() {
-			for (var i = 0; i < config.processedLocations.length; i++) {
-				var currentLocation = config.processedLocations[i];
+			for (var i = 0; i < config.processedWaypoints.length; i++) {
+				var currentWaypoint = config.processedWaypoints[i];
 
-				if (currentLocation.latitude != undefined) {
+				if (currentWaypoint.latitude != undefined) {
 					var marker = new google.maps.Marker({
-						title: currentLocation.title,
-						position: new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
+						title: currentWaypoint.title,
+						position: new google.maps.LatLng(currentWaypoint.latitude, currentWaypoint.longitude),
 						map: config.map
 					});
 				}
@@ -171,7 +171,7 @@
 		function addRoute() {
 			var directionsService = new google.maps.DirectionsService();
 
-			for (var i = 1; i < config.processedLocations.length; i++) {
+			for (var i = 1; i < config.processedWaypoints.length; i++) {
 				var directionsDisplay = new google.maps.DirectionsRenderer({
 					suppressMarkers: true,
 					preserveViewport: true
@@ -179,11 +179,11 @@
 
 				directionsDisplay.setMap(config.map);
 
-				var previousLocation = config.processedLocations[i-1];
-				var currentLocation = config.processedLocations[i];
+				var previousWaypoint = config.processedWaypoints[i-1];
+				var currentWaypoint = config.processedWaypoints[i];
 
-				var start = new google.maps.LatLng(previousLocation.latitude, previousLocation.longitude);
-				var end = new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude);
+				var start = new google.maps.LatLng(previousWaypoint.latitude, previousWaypoint.longitude);
+				var end = new google.maps.LatLng(currentWaypoint.latitude, currentWaypoint.longitude);
 
 				route(directionsService, directionsDisplay, start, end, 'DRIVING');
 			}
@@ -192,7 +192,7 @@
 		 * Facade method to circumvent timing
 		 */
 		function facade() {
-			if (config.processedLocations.length == config.locations.length) {
+			if (config.processedWaypoints.length == config.waypoints.length) {
 				plot();
 				addRoute();
 				addMarkers();
