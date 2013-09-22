@@ -1,3 +1,4 @@
+
 /**
  * Google Maps API Wrapper
  */
@@ -38,21 +39,20 @@
 		 * @param geocoder
 		 * @param currentLocation
 		 */
-		function preprocessOne(geocoder, currentLocation) {
+		function preprocessOne(index, geocoder, currentLocation) {
 
 			/* Geocode addresses
 			 */
 			if (currentLocation.geocode == true) {
 				geocoder.geocode({'address': currentLocation.address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
-						console.log(results, status);
 						var newElement = {
 							title: currentLocation.title,
 							latitude: results[0].geometry.location.ob,
 							longitude: results[0].geometry.location.pb
 						}
 
-						config.processedLocations.push(newElement);
+						config.processedLocations[index] = newElement;
 					}
 					/* When there are no results, add a null element
 					 * so the other markers plot anyway
@@ -61,7 +61,7 @@
 						var newElement = {
 						}
 
-						config.processedLocations.push(newElement);
+						config.processedLocations[index] = newElement;
 					}
 				});
 			}
@@ -72,7 +72,7 @@
 					longitude: currentLocation.longitude
 				}
 
-				config.processedLocations.push(newElement);
+				config.processedLocations[index] = newElement;
 			}
 		}
 
@@ -83,7 +83,7 @@
 			var geocoder = new google.maps.Geocoder();
 
 			for (var i = 0; i < config.locations.length; i++) {
-				preprocessOne(geocoder, config.locations[i]);
+				preprocessOne(i, geocoder, config.locations[i]);
 			}
 		}
 
@@ -147,15 +147,58 @@
 			}
 		}
 
+		function route(directionsService, directionsDisplay, start, end, type) {
+			var request = {
+				origin: start,
+				destination: end,
+
+				// Note that Javascript allows us to access the constant
+				// using square brackets and a string value as its
+				// "property."
+				travelMode: google.maps.DirectionsTravelMode.DRIVING
+			};
+
+			directionsService.route(request, function(response, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(response);
+				}
+			});
+		}
+
+		/**
+		 * Draw route between two points
+		 */
+		function addRoute() {
+			var directionsService = new google.maps.DirectionsService();
+
+			for (var i = 1; i < config.processedLocations.length; i++) {
+				var directionsDisplay = new google.maps.DirectionsRenderer({
+					suppressMarkers: true,
+					preserveViewport: true
+				});
+
+				directionsDisplay.setMap(config.map);
+
+				var previousLocation = config.processedLocations[i-1];
+				var currentLocation = config.processedLocations[i];
+
+				var start = new google.maps.LatLng(previousLocation.latitude, previousLocation.longitude);
+				var end = new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude);
+
+				route(directionsService, directionsDisplay, start, end, 'DRIVING');
+			}
+		}
 		/**
 		 * Facade method to circumvent timing
 		 */
 		function facade() {
 			if (config.processedLocations.length == config.locations.length) {
 				plot();
+				addRoute();
 				addMarkers();
 				clearTimeout(mapTimeout);
 			}
 		}
 	}
 }(jQuery));
+
