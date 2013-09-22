@@ -22,11 +22,13 @@
 			var defaults = {}
 
 			var derived = {
+				map: '',
 				element: element,
-				waypoints: locations.waypoints,
-				processedWaypoints: [],
-				pointsOfInterest: locations.pointsOfInterest,
-				map: ''
+				locations: locations,
+
+				/* This caters for asynchronous geocoding
+				 */
+				processedWaypoints: []
 			}
 
 			var merged = $.extend(defaults, derived);
@@ -83,8 +85,8 @@
 		function preprocess() {
 			var geocoder = new google.maps.Geocoder();
 
-			for (var i = 0; i < config.waypoints.length; i++) {
-				preprocessOne(i, geocoder, config.waypoints[i]);
+			for (var i = 0; i < config.locations.waypoints.length; i++) {
+				preprocessOne(i, geocoder, config.locations.waypoints[i]);
 			}
 		}
 
@@ -193,7 +195,7 @@
 		 * Facade method to circumvent timing
 		 */
 		function facade() {
-			if (config.processedWaypoints.length == config.waypoints.length) {
+			if (config.processedWaypoints.length == config.locations.waypoints.length) {
 				plot();
 				addRoute();
 				addMarkers();
