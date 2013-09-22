@@ -142,7 +142,7 @@
 			if (currentCoordinate.latitude != undefined) {
 				var definition = {
 					title: currentCoordinate.title,
-					image: image,
+					icon: image,
 					position: new google.maps.LatLng(currentCoordinate.latitude, currentCoordinate.longitude),
 					map: config.map
 				}
@@ -158,6 +158,24 @@
 		}
 
 		/**
+		 * Add a point of interest to the map
+		 *
+		 * @param currentCoordinate
+		 */
+		function addPointOfInterest(currentCoordinate) {
+			addMarker(currentCoordinate, './images/star-3.png');
+		}
+
+		/**
+		 * Add all waypoints to the map
+		 */
+		function addPointsOfInterest() {
+			for (var i = 0; i < config.locations.pointsOfInterest.length; i++) {
+				addPointOfInterest(config.locations.pointsOfInterest[i]);
+			}
+		}
+
+		/**
 		 * Add a waypoint style to the map
 		 *
 		 * @param currentCoordinate
@@ -167,7 +185,7 @@
 		}
 
 		/**
-		 * Add markers/points of interest
+		 * Add all waypoints to the map
 		 */
 		function addWaypoints() {
 			for (var i = 0; i < config.processedWaypoints.length; i++) {
@@ -233,6 +251,7 @@
 				plot();
 				addRoutes();
 				addWaypoints();
+				addPointsOfInterest();
 				clearTimeout(mapTimeout);
 			}
 		}
