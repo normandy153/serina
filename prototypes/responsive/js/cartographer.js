@@ -3,8 +3,8 @@
  * Google Maps API Wrapper
  */
 (function($) {
-	$.fn.cartographer = function(waypoints) {
-		var config = init($(this), waypoints);
+	$.fn.cartographer = function(locations) {
+		var config = init($(this), locations);
 
 		/* Geocode everything first
 		 */
@@ -18,13 +18,14 @@
 		/**
 		 * Init
 		 */
-		function init(element, waypoints) {
+		function init(element, locations) {
 			var defaults = {}
 
 			var derived = {
 				element: element,
-				waypoints: waypoints,
+				waypoints: locations.waypoints,
 				processedWaypoints: [],
+				pointsOfInterest: locations.pointsOfInterest,
 				map: ''
 			}
 

@@ -31,39 +31,43 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfuFD28VOdTEGDuASvI27nAZEKomFys38&sensor=true"></script>
 	<script type="text/javascript">
 		$(function() {
-			$('#map-canvas').cartographer([
-				{
-					geocode: true,
-					title: 'The Clubrooms',
-					address: '169-171 Berkeley Street, Vic'
-				},
-				{
-					geocode: true,
-					title: 'Cherry Tree',
-					address: '57 Binney St W, Euroa VIC 3666‎'
-				},
-				{
-					geocode: false,
-					title: 'Snowy Rd Turnoff',
-					latitude: -36.432229,
-					longitude: 146.255794
-				},
-				{
-					geocode: true,
-					title: 'Milawa Hotel',
-					address: 'milawa hotel, milawa, vic'
-				},
-				{
-					geocode: true,
-					title: 'Harrietville',
-					address: 'harrietville, vic'
-				},
-				{
-					geocode: true,
-					title: 'Mt Feathertop',
-					address: 'Mt. Feathertop'
-				},
-			]);
+			$('#map-canvas').cartographer({
+				waypoints: [
+					{
+						geocode: true,
+						title: 'The Clubrooms',
+						address: '169-171 Berkeley Street, Vic'
+					},
+					{
+						geocode: true,
+						title: 'Cherry Tree',
+						address: '57 Binney St W, Euroa VIC 3666‎'
+					},
+					{
+						geocode: false,
+						title: 'Snowy Rd Turnoff',
+						latitude: -36.432229,
+						longitude: 146.255794
+					},
+					{
+						geocode: true,
+						title: 'Milawa Hotel',
+						address: 'milawa hotel, milawa, vic'
+					},
+					{
+						geocode: true,
+						title: 'Harrietville',
+						address: 'harrietville, vic'
+					},
+					{
+						geocode: true,
+						title: 'Mt Feathertop',
+						address: 'Mt. Feathertop'
+					},
+				],
+				pointsOfInterest: [
+				]
+			});
 		});
 	</script>
 </head>
