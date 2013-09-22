@@ -33,10 +33,30 @@
 		$(function() {
 			$('#map-canvas').cartographer([
 				{
-					geocode: false,
+					geocode: true,
 					title: 'Mt Feathertop',
-					latitude: -36.893076,
-					longitude: 147.137661
+					address: 'Mt. Feathertop'
+				},
+				{
+					geocode: true,
+					title: 'The Clubrooms',
+					address: '169-171 Berkeley Street, Vic'
+				},
+				{
+					geocode: true,
+					title: 'Cherry Tree',
+					address: '57 Binney St W, Euroa VIC 3666‎'
+				},
+				{
+					geocode: false,
+					title: 'Snowy Rd Turnoff',
+					latitude: -36.429017,
+					longitude: 146.25927
+				},
+				{
+					geocode: true,
+					title: 'Milawa Hotel',
+					address: 'milawa hotel, milawa, vic'
 				}
 			]);
 		});
