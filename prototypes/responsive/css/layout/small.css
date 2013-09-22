@@ -31,6 +31,10 @@ URL: http://www.goldilocksapproach.com
 	display: none;
 }
 
+.standfirst section {
+	margin-bottom: 16px;
+}
+
 .listing .member-listing .avatar,
 .listing .event-listing .avatar {
 	display: none;
