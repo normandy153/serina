@@ -69,16 +69,13 @@ nav {
 	/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#23233e', endColorstr='#0e0e18',GradientType=1 ); *//* IE6-8 fallback on horizontal gradient */
 }
 
+footer .obnoxious-block {
+	margin-bottom: 0px;
+}
+
 .divider {
 	margin-top: 24px;
 	margin-bottom: 48px;
-}
-
-.listing li {
-	list-style: none;
-	margin-top: 1px;
-	margin-bottom: 0px;
-	float: left;
 }
 
 /* Alternate list elements horizontally rather than vertically
@@ -93,6 +90,13 @@ nav {
 	clear: left;
 }
 
+.listing li {
+	list-style: none;
+	margin-top: 1px;
+	margin-bottom: 0px;
+	float: left;
+}
+
 .listing .event-listing .avatar {
 	padding-top: 4px;
 	margin-right: 16px;
@@ -101,10 +105,6 @@ nav {
 
 .listing .event-listing .description {
 	float: right;
-}
-
-footer .obnoxious-block {
-	margin-bottom: 0px;
 }
 
 .listing.member-listing li {
@@ -124,3 +124,5 @@ footer .obnoxious-block {
 	margin-right: 16px;
 	float: left;
 }
+
+
