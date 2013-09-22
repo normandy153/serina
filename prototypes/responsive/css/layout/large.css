@@ -32,19 +32,20 @@
 }
 
 .listing.member-listing .avatar {
-	width: 48px;
-	height: 48px;
 	display: block;
 }
 
 .listing.member-listing li {
-	outline: 1px solid #00f;
 	width: 298px;
-	height: 48px;
+	margin-bottom: 32px;
+}
+
+.listing.member-listing .avatar {
+	display: block;
 }
 
 .listing.member-listing .name {
-	width: 202px;
+	width: 198px;
 	height: 48px;
 }
 
@@ -72,12 +73,6 @@
 		display: block;
 	}
 
-	.listing .member-listing .avatar {
-		width: 36px;
-		height: 36px;
-		display: block;
-	}
-
 	.listing .event-listing .avatar {
 		width: 54px;
 		height: 54px;
@@ -86,6 +81,19 @@
 
 	.listing .event-listing .description {
 		width: 246px;
+	}
+
+	.listing.member-listing li {
+		width: 332px;
+		margin-bottom: 32px;
+	}
+
+	.listing.member-listing .avatar {
+		display: block;
+	}
+
+	.listing.member-listing .name {
+		width: 236px;
 	}
 }
 

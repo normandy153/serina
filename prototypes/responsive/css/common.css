@@ -106,21 +106,21 @@ footer .obnoxious-block {
 }
 
 .listing.member-listing li {
-	outline: 1px solid #f00;
-	margin-bottom: 32px;
+	width: 100%;
 	float: left;
 }
 
 .listing.member-listing .name {
-	outline: 1px solid #0ff;
 	vertical-align: middle;
 	display: table-cell;
 }
 
 .listing.member-listing .avatar {
-	outline: 1px solid #f0f;
+	width: 48px;
+	height: 48px;
 	margin-right: 16px;
 	float: left;
+	display: none;
 }
 
 
