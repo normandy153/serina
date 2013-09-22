@@ -92,11 +92,13 @@
 p.intro {
 	font-size: 15px;
 	font-style: italic;
+	padding-top: 5px;
 }
 
 .map-canvas {
 	width: auto;
-	height: 400px;
+	height: 390px;
+	display: block;
 }
 
 /* Overcome css-reset problems with controls
