@@ -51,8 +51,8 @@
 					if (status == google.maps.GeocoderStatus.OK) {
 						var newElement = {
 							title: currentWaypoint.title,
-							latitude: results[0].geometry.location.ob,
-							longitude: results[0].geometry.location.pb
+							latitude: results[0].geometry.location.lat(),
+							longitude: results[0].geometry.location.lng()
 						}
 
 						config.processedWaypoints[index] = newElement;
