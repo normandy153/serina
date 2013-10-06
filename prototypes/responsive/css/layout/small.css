@@ -40,6 +40,14 @@ URL: http://www.goldilocksapproach.com
 	display: none;
 }
 
+.listing.member-listing li {
+	text-align: center;
+}
+
+.listing.member-listing .name {
+	display: inline;
+}
+
 .obnoxious-block {
 	padding-bottom: 10px;
 }
