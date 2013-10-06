@@ -47,3 +47,13 @@ URL: http://www.goldilocksapproach.com
 .map-canvas {
 	height: 385px;
 }
+
+ul.gear-list > li {
+	width: 100%;
+	text-align: center;
+}
+
+ul.gear-list > li {
+	margin-left: 0;
+	clear: left;
+}

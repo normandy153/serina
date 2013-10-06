@@ -107,3 +107,26 @@ p.intro {
 .map-canvas img {
 	max-width: inherit;
 }
+
+/**
+ * Gear List
+ */
+ul.gear-list {
+	margin-bottom: 60px;
+}
+
+ul.gear-list > li {
+
+	margin-top: 24px;
+	margin-left: 32px;
+	list-style: none;
+	float: left;
+}
+
+ul.gear-list > li > span {
+	font-weight: bold;
+}
+
+ul.gear-list > li > ul > li {
+	list-style: none;
+}

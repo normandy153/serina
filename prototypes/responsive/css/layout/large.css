@@ -53,6 +53,15 @@
 	height: 48px;
 }
 
+ul.gear-list > li {
+	width: 274px;
+}
+
+ul.gear-list > li:nth-of-type(4n+1) {
+	margin-left: 0;
+	clear: left;
+}
+
 /* 9. CUSTOM LAYOUT & TYPOGRAPHY (Mummy bear)
 ----------------------------------------------------------------------------------------*/
 @media screen and (min-width: 33.236em) and (max-width: 63.236em) {
@@ -98,6 +107,15 @@
 
 	.listing.member-listing .name {
 		width: 236px;
+	}
+
+	ul.gear-list > li {
+		width: 316px;
+	}
+
+	ul.gear-list > li:nth-of-type(2n+1) {
+		margin-left: 0;
+		clear: left;
 	}
 }
 
