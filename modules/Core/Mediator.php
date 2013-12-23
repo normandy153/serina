@@ -27,6 +27,17 @@ class Mediator {
 	public function __construct($request) {
 		$this->setRequest($request);
 
+		$controllerMethod = $this->deriveControllerMethod();
+
+		new \Core\Probe($controllerMethod);
+	}
+
+	/**
+	 * Determine controller method to use
+	 *
+	 * @return string
+	 */
+	private function deriveControllerMethod() {
 		/* The prefix to the action, as determined by request method
 		 * This will be one of get, put, post, delete
 		 */
@@ -44,10 +55,7 @@ class Mediator {
 		 */
 		$controllerMethod = $controllerMethodPrefix . $moduleName . $action;
 
-		new \Core\Probe($controllerMethodPrefix);
-		new \Core\Probe($moduleName);
-		new \Core\Probe($controllerMethod);
-		new \Core\Probe($this->getRequest()->getArgs());
+		return $controllerMethod;
 	}
 
 	/* Getters/Setters
