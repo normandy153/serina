@@ -12,4 +12,8 @@ namespace Core;
 
 class Mediator {
 
+	public function __construct($request) {
+		new \Core\Probe($request->getArgs());
+		new \Core\Probe($request->getEndpoint());
+	}
 }
