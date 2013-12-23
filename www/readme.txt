@@ -1,0 +1,1 @@
+Publicly accessible web dir
