@@ -26,6 +26,28 @@ class Mediator {
 	 */
 	public function __construct($request) {
 		$this->setRequest($request);
+
+		/* The prefix to the action, as determined by request method
+		 * This will be one of get, put, post, delete
+		 */
+		$controllerMethodPrefix = strtolower($this->getRequest()->getMethod());
+
+		/* The endpoint represents which module we'll look for first
+		 */
+		$moduleName = ucwords($this->getRequest()->getEndpoint());
+
+		/* Any special action to undertake
+		 */
+		$action = ucwords($this->getRequest()->getAction());
+
+		/* Final controller name
+		 */
+		$controllerMethod = $controllerMethodPrefix . $moduleName . $action;
+
+		new \Core\Probe($controllerMethodPrefix);
+		new \Core\Probe($moduleName);
+		new \Core\Probe($controllerMethod);
+		new \Core\Probe($this->getRequest()->getArgs());
 	}
 
 	/* Getters/Setters

@@ -27,6 +27,13 @@ class Request {
 	private $endpoint = '';
 
 	/**
+	 * An action for the endpoint
+	 *
+	 * @var string
+	 */
+	private $action = '';
+
+	/**
 	 * Provided arguments
 	 *
 	 * @var array
@@ -52,11 +59,11 @@ class Request {
 		$this->setArgs($args);
 		$this->setEndpoint($endpoint);
 
-		/* Check if the second argument is non-numeric, in case something
-		 * special needs to happen, like file uploads: e.g. /event/upload
+		/* Check if the second argument is non-numeric, in case something special
+		 * needs to happen, like file uploads: e.g. /event/list, /event/detail etc
 		 */
-		if (array_key_exists(0, $this->getArgs()) && preg_match('/[0-9]+/', $args[0])) {
-
+		if (array_key_exists(0, $this->getArgs()) && !preg_match('/[0-9]+/', $args[0])) {
+			$this->setAction($args[0]);
 		}
 	}
 
@@ -115,5 +122,23 @@ class Request {
 	 */
 	public function getMethod() {
 		return $this->method;
+	}
+
+	/**
+	 * Set action
+	 *
+	 * @param string $action
+	 */
+	private function setAction($action) {
+		$this->action = $action;
+	}
+
+	/**
+	 * Get action
+	 *
+	 * @return string
+	 */
+	public function getAction() {
+		return $this->action;
 	}
 }
