@@ -29,6 +29,7 @@ class Mediator {
 
 		$controllerMethod = $this->deriveControllerMethod();
 
+		
 		new \Core\Probe($controllerMethod);
 	}
 

@@ -8,8 +8,4 @@ require_once('../modules/Core/Autoloader.php');
 
 $request = new \Core\Request($_REQUEST);
 
-$request = new \Core\Request(array(
-	'route' => 'event/gear/1/2/3/4/5'
-));
-
 $mediator = new \Core\Mediator($request);
