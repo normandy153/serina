@@ -30,6 +30,7 @@ class Mediator {
 	 * Constructor
 	 *
 	 * @param $request
+	 * @throws \Exception
 	 */
 	public function __construct($request) {
 		$this->setRequest($request);
@@ -43,15 +44,19 @@ class Mediator {
 		/* The controller object which will get instantiated and contains
 		 * the method asked to run
 		 */
-		$objectName = $this->getModule() . '\Controller';
+		$controllerName = $this->getModule() . '\Controller';
 
-		if (method_exists($objectName, $controllerMethod)) {
-			$object = new $objectName();
-			$object->$controllerMethod();
+		if (class_exists($controllerName) && method_exists($controllerName, $controllerMethod)) {
+			$controller = new $controllerName();
+			$controllerOutput = $controller->$controllerMethod();
 		}
 		else {
-			echo $controllerMethod . '() not found';
+			throw new \Exception($controllerMethod . '() not found');
 		}
+
+		/* Normally check that a view method also exists, but instead,
+		 * pipe through straight to twig
+		 */
 	}
 
 	/**
