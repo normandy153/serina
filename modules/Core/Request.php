@@ -13,11 +13,11 @@ namespace Core;
 class Request {
 
 	/**
-	 * Provided arguments
+	 * Method used in the request (GET/PUT/POST/DELETE)
 	 *
-	 * @var array
+	 * @var string
 	 */
-	private $args = array();
+	private $method = '';
 
 	/**
 	 * Module endpoint
@@ -27,11 +27,11 @@ class Request {
 	private $endpoint = '';
 
 	/**
-	 * Method used in the request (GET/PUT/POST/DELETE)
+	 * Provided arguments
 	 *
-	 * @var string
+	 * @var array
 	 */
-	private $method = '';
+	private $args = array();
 
 	/**
 	 * Constructor
@@ -39,6 +39,10 @@ class Request {
 	 * @param $request
 	 */
 	public function __construct($request) {
+
+		/* The method used
+ 		 */
+		$this->setMethod($_SERVER['REQUEST_METHOD']);
 
 		/* Decide args and endpoint for restful interface
 		 */
@@ -54,12 +58,7 @@ class Request {
 		if (array_key_exists(0, $this->getArgs()) && preg_match('/[0-9]+/', $args[0])) {
 
 		}
-
-		/* The method used
-		 */
-		$this->setMethod($_SERVER['REQUEST_METHOD']);
 	}
-
 
 	/* Getters/Setters
 	 */
