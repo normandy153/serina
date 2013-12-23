@@ -40,8 +40,14 @@ class Mediator {
 
 		$controllerMethod = $this->deriveControllerMethod();
 
-		if (method_exists($this->getModule(), $controllerMethod)) {
-			echo 'yep, method found';
+		/* The controller object which will get instantiated and contains
+		 * the method asked to run
+		 */
+		$objectName = $this->getModule() . '\Controller';
+
+		if (method_exists($objectName, $controllerMethod)) {
+			$object = new $objectName();
+			$object->$controllerMethod();
 		}
 		else {
 			echo $controllerMethod . '() not found';

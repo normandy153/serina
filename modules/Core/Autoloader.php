@@ -46,13 +46,26 @@ class Autoloader {
 	 * @throws \Exception
 	 */
 	private function core($classname) {
-		$path = dirname(__FILE__) . '/../' . str_replace('\\', '/', $classname) . '.php';
+		$prefix = dirname(__FILE__) . '/../';
+		$filename = str_replace('\\', '/', $classname) . '.php';
 
-		if (file_exists($path)) {
-			require_once($path);
+		$directPath =  $prefix . $filename;
+		$customPath = $prefix . 'Custom/' . $filename;
+		$corePath = $prefix . 'Core/' . $filename;
+
+		/* Try three possible locations in order
+		 */
+		if (file_exists($directPath)) {
+			require_once($directPath);
+		}
+		else if (file_exists($customPath)) {
+			require_once($customPath);
+		}
+		else if (file_exists($corePath)) {
+			require_once($corePath);
 		}
 		else {
-			throw new \Exception('Module not found: ' . $classname);
+			throw new \Exception("Module not found: {$classname}");
 		}
 	}
 }
