@@ -20,6 +20,13 @@ class Mediator {
 	private $request = null;
 
 	/**
+	 * The module to use
+	 *
+	 * @var string
+	 */
+	private $module = '';
+
+	/**
 	 * Constructor
 	 *
 	 * @param $request
@@ -27,10 +34,18 @@ class Mediator {
 	public function __construct($request) {
 		$this->setRequest($request);
 
+		/* The endpoint represents which module we'll look for first
+ 		 */
+		$this->setModule(ucwords($this->getRequest()->getEndpoint()));
+
 		$controllerMethod = $this->deriveControllerMethod();
 
-		
-		new \Core\Probe($controllerMethod);
+		if (method_exists($this->getModule(), $controllerMethod)) {
+			echo 'yep, method found';
+		}
+		else {
+			echo $controllerMethod . '() not found';
+		}
 	}
 
 	/**
@@ -44,17 +59,13 @@ class Mediator {
 		 */
 		$controllerMethodPrefix = strtolower($this->getRequest()->getMethod());
 
-		/* The endpoint represents which module we'll look for first
-		 */
-		$moduleName = ucwords($this->getRequest()->getEndpoint());
-
 		/* Any special action to undertake
 		 */
 		$action = ucwords($this->getRequest()->getAction());
 
 		/* Final controller name
 		 */
-		$controllerMethod = $controllerMethodPrefix . $moduleName . $action;
+		$controllerMethod = $controllerMethodPrefix . $this->getModule() . $action;
 
 		return $controllerMethod;
 	}
@@ -78,5 +89,23 @@ class Mediator {
 	 */
 	private function getRequest() {
 		return $this->request;
+	}
+
+	/**
+	 * Set module
+	 *
+	 * @param string $module
+	 */
+	private function setModule($module) {
+		$this->module = $module;
+	}
+
+	/**
+	 * Get module
+	 *
+	 * @return string
+	 */
+	private function getModule() {
+		return $this->module;
 	}
 }

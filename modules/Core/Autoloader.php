@@ -43,6 +43,7 @@ class Autoloader {
 	 * Autoload core classes
 	 *
 	 * @param $classname
+	 * @throws \Exception
 	 */
 	private function core($classname) {
 		$path = dirname(__FILE__) . '/../' . str_replace('\\', '/', $classname) . '.php';
@@ -51,8 +52,7 @@ class Autoloader {
 			require_once($path);
 		}
 		else {
-			echo "nope";
+			throw new \Exception('Module not found: ' . $classname);
 		}
-//		print_r($path);
 	}
 }
