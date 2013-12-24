@@ -15,6 +15,10 @@ class Controller extends \App\Controller\Base {
 	 */
 	public function getTest() {
 		echo 'getTest() ran.';
-		new \App\Probe($this->getArgs());
+
+		return array(
+			'args' => $this->getArgs(),
+			'testKey' => 'testValue'
+		);
 	}
 }

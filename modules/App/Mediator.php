@@ -39,7 +39,7 @@ class Mediator {
 		/* Run controller if method exists
 		 */
 		if (method_exists($controller, $method)) {
-			$controller->$method();
+			$output = $controller->$method();
 		}
 		else {
 			throw new \Exception("$method not found.");
@@ -48,6 +48,7 @@ class Mediator {
 		/* Normally check that a view method also exists, but instead,
 		 * pipe through straight to twig
 		 */
+		new \App\Probe($output);
 	}
 
 	/**
