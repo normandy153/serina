@@ -4,7 +4,12 @@
 	<title></title>
 </head>
 <body>
-{{ dump() }}
 <h1>{{ testKey }}</h1>
+
+<ul>
+	{% for arg in args %}
+	<li>{{ arg }}</li>
+	{% endfor %}
+</ul>
 </body>
 </html>
