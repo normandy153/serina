@@ -27,6 +27,13 @@ class Request {
 	private $endpoint = '';
 
 	/**
+	 * The module to use
+	 *
+	 * @var string
+	 */
+	private $module = '';
+
+	/**
 	 * An action for the endpoint
 	 *
 	 * @var string
@@ -58,12 +65,13 @@ class Request {
 
 		$this->setArgs($args);
 		$this->setEndpoint($endpoint);
+		$this->setModule(ucwords($this->getEndpoint()));
 
 		/* Check if the second argument is non-numeric, in case something special
 		 * needs to happen, like file uploads: e.g. /event/list, /event/detail etc
 		 */
 		if (array_key_exists(0, $this->getArgs()) && !preg_match('/[0-9]+/', $args[0])) {
-			$this->setAction($args[0]);
+			$this->setAction(ucwords($args[0]));
 		}
 	}
 
@@ -140,5 +148,23 @@ class Request {
 	 */
 	public function getAction() {
 		return $this->action;
+	}
+
+	/**
+	 * Set module
+	 *
+	 * @param string $module
+	 */
+	private function setModule($module) {
+		$this->module = $module;
+	}
+
+	/**
+	 * Get module
+	 *
+	 * @return string
+	 */
+	public function getModule() {
+		return $this->module;
 	}
 }

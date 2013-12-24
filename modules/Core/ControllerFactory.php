@@ -29,20 +29,12 @@ class ControllerFactory {
 	private $request = null;
 
 	/**
-	 * The module to use
-	 *
-	 * @var string
-	 */
-	private $module = '';
-
-	/**
 	 * Constructor
 	 *
 	 * @param $request
 	 */
 	public function __construct($request) {
 		$this->setRequest($request);
-		$this->setModule(ucwords($this->getRequest()->getEndpoint()));
 	}
 
 	/**
@@ -58,7 +50,7 @@ class ControllerFactory {
 		 * Spawn one and return it if found; otherwise frag out
 		 */
 		foreach($this->getDirs() as $currentDir) {
-			$className = "\\{$currentDir}\\{$this->getModule()}\\Controller";
+			$className = "\\{$currentDir}\\{$this->getRequest()->getModule()}\\Controller";
 
 			if (class_exists($className) && method_exists($className, $method)) {
 				return new $className();
@@ -80,13 +72,17 @@ class ControllerFactory {
 		 */
 		$controllerMethodPrefix = strtolower($this->getRequest()->getMethod());
 
+		/* The module to use
+		 */
+		$module = $this->getRequest()->getModule();
+
 		/* Any special action to undertake
 		 */
-		$action = ucwords($this->getRequest()->getAction());
+		$action = $this->getRequest()->getAction();
 
 		/* Final controller name
 		 */
-		$controllerMethod = $controllerMethodPrefix . $this->getModule() . $action;
+		$controllerMethod = $controllerMethodPrefix . $module . $action;
 
 		return $controllerMethod;
 	}
@@ -128,23 +124,5 @@ class ControllerFactory {
 	 */
 	private function getRequest() {
 		return $this->request;
-	}
-
-	/**
-	 * Set module
-	 *
-	 * @param string $module
-	 */
-	private function setModule($module) {
-		$this->module = $module;
-	}
-
-	/**
-	 * Get module
-	 *
-	 * @return string
-	 */
-	private function getModule() {
-		return $this->module;
 	}
 }
