@@ -6,7 +6,7 @@
  * Time: 9:33 PM
  */
 
-namespace Core;
+namespace App;
 
 class Autoloader {
 
@@ -23,7 +23,7 @@ class Autoloader {
 	public function __construct() {
 		spl_autoload_register(null, false);
 		spl_autoload_extensions('.php');
-		spl_autoload_register(array($this, 'core'));
+		spl_autoload_register(array($this, 'app'));
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Autoloader {
 	 * @param $classname
 	 * @throws \Exception
 	 */
-	private function core($classname) {
+	private function app($classname) {
 		$prefix = dirname(__FILE__) . '/../';
 		$filename = str_replace('\\', '/', $classname) . '.php';
 

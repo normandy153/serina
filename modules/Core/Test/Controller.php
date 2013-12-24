@@ -8,13 +8,13 @@
 
 namespace Core\Test;
 
-class Controller extends \Core\ControllerAbstract {
+class Controller extends \App\ControllerAbstract {
 
 	/**
 	 * Experimental method
 	 */
 	public function getTest() {
 		echo 'getTest() ran.';
-		new \Core\Probe($this->getArgs());
+		new \App\Probe($this->getArgs());
 	}
 }

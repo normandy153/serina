@@ -7,7 +7,7 @@
  */
 
 
-namespace Core;
+namespace App;
 
 
 abstract class ControllerAbstract {

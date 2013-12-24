@@ -7,7 +7,7 @@
  */
 
 
-namespace Core;
+namespace App;
 
 
 class ControllerFactory {

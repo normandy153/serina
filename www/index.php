@@ -3,9 +3,9 @@
  * Date: 23/12/13
  * Time: 9:38 PM
  */
-require_once('../modules/Core/Autoloader.php');
-\Core\Autoloader::init();
+require_once('../modules/App/Autoloader.php');
+\App\Autoloader::init();
 
-$request = new \Core\Request($_REQUEST);
+$request = new \App\Request($_REQUEST);
 
-$mediator = new \Core\Mediator($request);
+$mediator = new \App\Mediator($request);
