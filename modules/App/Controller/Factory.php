@@ -22,6 +22,13 @@ class Factory {
 	);
 
 	/**
+	 * The dir in which the controller was found
+	 *
+	 * @var string
+	 */
+	private $dir = '';
+
+	/**
 	 * An instance of Request
 	 *
 	 * @var null
@@ -51,7 +58,11 @@ class Factory {
 		foreach($this->getDirs() as $currentDir) {
 			$className = "\\{$currentDir}\\{$this->getRequest()->getModule()}\\Controller";
 
+			/* Remember where it was found
+			 */
 			if (class_exists($className)) {
+				$this->setDir($currentDir);
+
 				return new $className($this->getRequest()->getArgs());
 			}
 		}
@@ -96,5 +107,19 @@ class Factory {
 	 */
 	private function getRequest() {
 		return $this->request;
+	}
+
+	/**
+	 * @param string $dir
+	 */
+	private function setDir($dir) {
+		$this->dir = $dir;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDir() {
+		return $this->dir;
 	}
 }
