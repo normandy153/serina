@@ -41,13 +41,16 @@ class Mediator {
 			throw new \Exception("$method not found.");
 		}
 
+		$controller->$method();
+
 		/* Generate output payload
 		 */
-		$payload = $controller->$method();
+		$payloadFactory = new PayloadFactory($this->getRequest(), $controllerFactory->getDir(), $controller->getOutput());
+		$payload = $payloadFactory->build();
 
 		/* Render output via twig
 		 */
-		$renderer = new View\Twig($this->getRequest(), $controllerFactory->getDir(), $payload);
+		$renderer = new View\Twig($payload);
 		$renderer->render();
 	}
 

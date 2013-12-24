@@ -13,6 +13,21 @@ namespace App\Controller;
 class Payload {
 
 	/**
+	 * An instance of Request
+	 *
+	 * @var null
+	 */
+	private $request = null;
+
+	/**
+	 * The dir in which to load template files
+	 * This allows Custom to precede Core
+	 *
+	 * @var string
+	 */
+	private $dir = '';
+
+	/**
 	 * The .html file to load, by default
 	 * This should not have the .html extension
 	 *
@@ -30,16 +45,56 @@ class Payload {
 	/**
 	 * Constructor
 	 *
+	 * @param $request
+	 * @param $dir
 	 * @param $templateFile
 	 * @param $vars
 	 */
-	public function __construct($templateFile, $vars) {
+	public function __construct($request, $dir, $templateFile, $vars) {
+		$this->setRequest($request);
+		$this->setDir($dir);
 		$this->setTemplateFile($templateFile);
 		$this->setVars($vars);
 	}
 
 	/* Getters/Setters
 	 */
+
+	/**
+	 * Set request
+	 *
+	 * @param null $request
+	 */
+	private function setRequest($request) {
+		$this->request = $request;
+	}
+
+	/**
+	 * Get request
+	 *
+	 * @return null
+	 */
+	public function getRequest() {
+		return $this->request;
+	}
+
+	/**
+	 * Set dir
+	 *
+	 * @param string $dir
+	 */
+	private function setDir($dir) {
+		$this->dir = $dir;
+	}
+
+	/**
+	 * Get dir
+	 *
+	 * @return string
+	 */
+	public function getDir() {
+		return $this->dir;
+	}
 
 	/**
 	 * Set template file

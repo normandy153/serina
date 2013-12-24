@@ -20,12 +20,34 @@ abstract class Base {
 	protected $args = array();
 
 	/**
+	 * Controller output
+	 *
+	 * @var array
+	 */
+	protected $output = array();
+
+	/**
 	 * Constructor
 	 *
 	 * @param $args
 	 */
 	public function __construct($args) {
 		$this->setArgs($args);
+	}
+
+	/**
+	 * Store controller output
+	 *
+	 * @param $templateFile
+	 * @param $vars
+	 */
+	final protected function output($templateFile, $vars) {
+		$output = array(
+			'templateFile' => $templateFile,
+			'vars' => $vars,
+		);
+
+		$this->setOutput($output);
 	}
 
 	/* Getters/Setters
@@ -47,5 +69,19 @@ abstract class Base {
 	 */
 	protected function getArgs() {
 		return $this->args;
+	}
+
+	/**
+	 * @param array $output
+	 */
+	protected function setOutput($output) {
+		$this->output = $output;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getOutput() {
+		return $this->output;
 	}
 }

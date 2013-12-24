@@ -12,20 +12,6 @@ namespace App\View;
 
 class Twig {
 
-	/**
-	 * An instance of Request
-	 *
-	 * @var null
-	 */
-	private $request = null;
-
-	/**
-	 * The dir in which to load template files
-	 * This allows Custom to precede Core
-	 *
-	 * @var string
-	 */
-	private $dir = '';
 
 	/**
 	 * The data to render
@@ -37,13 +23,9 @@ class Twig {
 	/**
 	 * Constructor
 	 *
-	 * @param $request
-	 * @param $dir
 	 * @param \App\Controller\Payload $payload
 	 */
-	public function __construct($request, $dir, \App\Controller\Payload $payload) {
-		$this->setRequest($request);
-		$this->setDir($dir);
+	public function __construct(\App\Controller\Payload $payload) {
 		$this->setPayload($payload);
 
 		$this->setup();
@@ -70,30 +52,12 @@ class Twig {
 		$loader = new \Twig_Loader_String();
 		$twig = new \Twig_Environment($loader);
 
-		new \App\Probe($this->getDir());
+		new \App\Probe($this->getPayload());
 		echo $twig->render('Hello {{ name }}!', array('name' => 'Fabien'));
 	}
 
 	/* Getters/Setters
  	 */
-
-	/**
-	 * Set request
-	 *
-	 * @param null $request
-	 */
-	private function setRequest($request) {
-		$this->request = $request;
-	}
-
-	/**
-	 * Get request
-	 *
-	 * @return null
-	 */
-	private function getRequest() {
-		return $this->request;
-	}
 
 	/**
 	 * Set payload
@@ -110,24 +74,6 @@ class Twig {
 	 * @return null
 	 */
 	private function getPayload() {
-		return $this->payloadd;
-	}
-
-	/**
-	 * Set dir
-	 *
-	 * @param string $dir
-	 */
-	private function setDir($dir) {
-		$this->dir = $dir;
-	}
-
-	/**
-	 * Get dir
-	 *
-	 * @return string
-	 */
-	private function getDir() {
-		return $this->dir;
+		return $this->payload;
 	}
 }
