@@ -31,10 +31,10 @@ class Mediator {
 		/* The controller object which will get instantiated and contains
 		 * the method asked to run
 		 */
-		$controllerFactory = new \Core\ControllerFactory($this->getRequest());
+		$controllerFactory = new ControllerFactory($this->getRequest());
 		$controller = $controllerFactory->build();
 
-		new \Core\Probe($controller);
+		new Probe($controller);
 
 		/* Normally check that a view method also exists, but instead,
 		 * pipe through straight to twig
