@@ -6,7 +6,7 @@
  * Time: 11:26 PM
  */
 
-namespace Test;
+namespace Core\Test;
 
 class Controller {
 

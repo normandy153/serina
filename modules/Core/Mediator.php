@@ -20,13 +20,6 @@ class Mediator {
 	private $request = null;
 
 	/**
-	 * The module to use
-	 *
-	 * @var string
-	 */
-	private $module = '';
-
-	/**
 	 * Constructor
 	 *
 	 * @param $request
@@ -35,50 +28,18 @@ class Mediator {
 	public function __construct($request) {
 		$this->setRequest($request);
 
-		/* The endpoint represents which module we'll look for first
- 		 */
-		$this->setModule(ucwords($this->getRequest()->getEndpoint()));
-
-		$controllerMethod = $this->deriveControllerMethod();
-
 		/* The controller object which will get instantiated and contains
 		 * the method asked to run
 		 */
-		$controllerName = $this->getModule() . '\Controller';
+		$controllerFactory = new \Core\ControllerFactory($this->getRequest());
 
-		if (class_exists($controllerName) && method_exists($controllerName, $controllerMethod)) {
-			$controller = new $controllerName();
-			$controllerOutput = $controller->$controllerMethod();
-		}
-		else {
-			throw new \Exception($controllerMethod . '() not found');
-		}
+		$controllerName = $controllerFactory->build();
+
+		new \Core\Probe($controllerName);
 
 		/* Normally check that a view method also exists, but instead,
 		 * pipe through straight to twig
 		 */
-	}
-
-	/**
-	 * Determine controller method to use
-	 *
-	 * @return string
-	 */
-	private function deriveControllerMethod() {
-		/* The prefix to the action, as determined by request method
-		 * This will be one of get, put, post, delete
-		 */
-		$controllerMethodPrefix = strtolower($this->getRequest()->getMethod());
-
-		/* Any special action to undertake
-		 */
-		$action = ucwords($this->getRequest()->getAction());
-
-		/* Final controller name
-		 */
-		$controllerMethod = $controllerMethodPrefix . $this->getModule() . $action;
-
-		return $controllerMethod;
 	}
 
 	/* Getters/Setters
@@ -100,23 +61,5 @@ class Mediator {
 	 */
 	private function getRequest() {
 		return $this->request;
-	}
-
-	/**
-	 * Set module
-	 *
-	 * @param string $module
-	 */
-	private function setModule($module) {
-		$this->module = $module;
-	}
-
-	/**
-	 * Get module
-	 *
-	 * @return string
-	 */
-	private function getModule() {
-		return $this->module;
 	}
 }
