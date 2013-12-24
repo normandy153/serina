@@ -16,9 +16,9 @@ class Controller extends \App\Controller\Base {
 	public function getTest() {
 		echo 'getTest() ran.';
 
-		return array(
+		$this->output('getTest', array(
 			'args' => $this->getArgs(),
 			'testKey' => 'testValue'
-		);
+		));
 	}
 }

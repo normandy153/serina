@@ -20,14 +20,6 @@ class Payload {
 	private $request = null;
 
 	/**
-	 * The dir in which to load template files
-	 * This allows Custom to precede Core
-	 *
-	 * @var string
-	 */
-	private $dir = '';
-
-	/**
 	 * The .html file to load, by default
 	 * This should not have the .html extension
 	 *
@@ -52,8 +44,7 @@ class Payload {
 	 */
 	public function __construct($request, $dir, $templateFile, $vars) {
 		$this->setRequest($request);
-		$this->setDir($dir);
-		$this->setTemplateFile($templateFile);
+		$this->setTemplateFile($dir . '/' . $request->getModule() . '/templates/' . $templateFile);
 		$this->setVars($vars);
 	}
 
