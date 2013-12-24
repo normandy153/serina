@@ -9,7 +9,6 @@
 
 namespace App;
 
-
 class Mediator {
 
 	/**
@@ -48,7 +47,15 @@ class Mediator {
 		/* Normally check that a view method also exists, but instead,
 		 * pipe through straight to twig
 		 */
-		new \App\Probe($output);
+		$vendorPath = dirname(__FILE__) . '/../../vendor';
+
+		require_once("$vendorPath/Twig-1.15.0/lib/Twig/Autoloader.php");
+		\Twig_Autoloader::register();
+
+		$loader = new \Twig_Loader_String();
+		$twig = new \Twig_Environment($loader);
+
+		echo $twig->render('Hello {{ name }}!', array('name' => 'Fabien'));
 	}
 
 	/**

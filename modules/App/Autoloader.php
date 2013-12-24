@@ -64,8 +64,5 @@ class Autoloader {
 		else if (file_exists($corePath)) {
 			require_once($corePath);
 		}
-		else {
-			throw new \Exception("Module not found: {$classname}");
-		}
 	}
 }
