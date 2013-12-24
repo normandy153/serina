@@ -34,11 +34,47 @@ class Mediator {
 		$controllerFactory = new ControllerFactory($this->getRequest());
 		$controller = $controllerFactory->build();
 
-		new Probe($controller);
+		$method = $this->deriveControllerMethod();
+
+		/* Run controller if method exists
+		 */
+		if (method_exists($controller, $method)) {
+			$controller->$method();
+		}
+		else {
+			throw new \Exception("$method not found.");
+		}
 
 		/* Normally check that a view method also exists, but instead,
 		 * pipe through straight to twig
 		 */
+	}
+
+	/**
+	 * Determine controller method to use
+	 *
+	 * @return string
+	 */
+	private function deriveControllerMethod() {
+
+		/* The prefix to the action, as determined by request method
+		 * This will be one of get, put, post, delete
+		 */
+		$controllerMethodPrefix = strtolower($this->getRequest()->getMethod());
+
+		/* The module to use
+		 */
+		$module = $this->getRequest()->getModule();
+
+		/* Any special action to undertake
+		 */
+		$action = $this->getRequest()->getAction();
+
+		/* Final controller name
+		 */
+		$controllerMethod = $controllerMethodPrefix . $module . $action;
+
+		return $controllerMethod;
 	}
 
 	/* Getters/Setters

@@ -44,7 +44,6 @@ class ControllerFactory {
 	 * @throws \Exception
 	 */
 	public function build() {
-		$method = $this->deriveControllerMethod();
 
 		/* Look in custom then core dirs for a module's controller
 		 * Spawn one and return it if found; otherwise frag out
@@ -52,39 +51,12 @@ class ControllerFactory {
 		foreach($this->getDirs() as $currentDir) {
 			$className = "\\{$currentDir}\\{$this->getRequest()->getModule()}\\Controller";
 
-			if (class_exists($className) && method_exists($className, $method)) {
+			if (class_exists($className)) {
 				return new $className();
 			}
 		}
 
-		throw new \Exception($method . '() not found');
-	}
-
-	/**
-	 * Determine controller method to use
-	 *
-	 * @return string
-	 */
-	private function deriveControllerMethod() {
-
-		/* The prefix to the action, as determined by request method
-		 * This will be one of get, put, post, delete
-		 */
-		$controllerMethodPrefix = strtolower($this->getRequest()->getMethod());
-
-		/* The module to use
-		 */
-		$module = $this->getRequest()->getModule();
-
-		/* Any special action to undertake
-		 */
-		$action = $this->getRequest()->getAction();
-
-		/* Final controller name
-		 */
-		$controllerMethod = $controllerMethodPrefix . $module . $action;
-
-		return $controllerMethod;
+		throw new \Exception($this->getRequest()->getModule() . ' controller not found.');
 	}
 
 	/* Getters/Setters
