@@ -32,19 +32,19 @@ class Twig {
 	 *
 	 * @var null
 	 */
-	private $vars = null;
+	private $payload = null;
 
 	/**
 	 * Constructor
 	 *
 	 * @param $request
 	 * @param $dir
-	 * @param $vars
+	 * @param \App\Controller\Payload $payload
 	 */
-	public function __construct($request, $dir, $vars) {
+	public function __construct($request, $dir, \App\Controller\Payload $payload) {
 		$this->setRequest($request);
 		$this->setDir($dir);
-		$this->setVars($vars);
+		$this->setPayload($payload);
 
 		$this->setup();
 	}
@@ -96,21 +96,21 @@ class Twig {
 	}
 
 	/**
-	 * Set vars
+	 * Set payload
 	 *
-	 * @param null $vars
+	 * @param null $payload
 	 */
-	private function setVars($vars) {
-		$this->vars = $vars;
+	private function setPayload($payload) {
+		$this->payload = $payload;
 	}
 
 	/**
-	 * Get vars
+	 * Get payload
 	 *
 	 * @return null
 	 */
-	private function getVars() {
-		return $this->vars;
+	private function getPayload() {
+		return $this->payloadd;
 	}
 
 	/**

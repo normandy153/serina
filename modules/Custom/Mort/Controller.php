@@ -7,6 +7,7 @@
  */
 
 namespace Custom\Mort;
+use \App\Controller\Payload as Payload;
 
 class Controller extends \App\Controller\Base {
 
@@ -16,9 +17,9 @@ class Controller extends \App\Controller\Base {
 	public function getMort() {
 		echo 'getMort() ran.';
 
-		return array(
+		return new Payload('getMort', array(
 			'args' => $this->getArgs(),
 			'mortKey' => 'testMort'
-		);
+		));
 	}
 }
