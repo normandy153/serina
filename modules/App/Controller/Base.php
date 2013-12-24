@@ -7,10 +7,10 @@
  */
 
 
-namespace App;
+namespace App\Controller;
 
 
-abstract class ControllerAbstract {
+abstract class Base {
 
 	/**
 	 * A list of arguments provided in the request

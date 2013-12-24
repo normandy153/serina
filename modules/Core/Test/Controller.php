@@ -8,7 +8,7 @@
 
 namespace Core\Test;
 
-class Controller extends \App\ControllerAbstract {
+class Controller extends \App\Controller\Base {
 
 	/**
 	 * Experimental method

@@ -7,10 +7,10 @@
  */
 
 
-namespace App;
+namespace App\Controller;
 
 
-class ControllerFactory {
+class Factory {
 
 	/**
 	 * A list of locations which a Controller might exist

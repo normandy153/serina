@@ -31,7 +31,7 @@ class Mediator {
 		/* The controller object which will get instantiated and contains
 		 * the method asked to run
 		 */
-		$controllerFactory = new ControllerFactory($this->getRequest());
+		$controllerFactory = new Controller\Factory($this->getRequest());
 		$controller = $controllerFactory->build();
 
 		$method = $this->deriveControllerMethod();
