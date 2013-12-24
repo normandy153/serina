@@ -52,7 +52,7 @@ class ControllerFactory {
 			$className = "\\{$currentDir}\\{$this->getRequest()->getModule()}\\Controller";
 
 			if (class_exists($className)) {
-				return new $className();
+				return new $className($this->getRequest()->getArgs());
 			}
 		}
 
