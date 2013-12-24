@@ -20,6 +20,13 @@ class Payload {
 	private $request = null;
 
 	/**
+	 * The dir in which templates are located
+	 *
+	 * @var string
+	 */
+	private $templateDir = '';
+
+	/**
 	 * The .html file to load, by default
 	 * This should not have the .html extension
 	 *
@@ -44,7 +51,8 @@ class Payload {
 	 */
 	public function __construct($request, $dir, $templateFile, $vars) {
 		$this->setRequest($request);
-		$this->setTemplateFile($dir . '/' . $request->getModule() . '/templates/' . $templateFile);
+		$this->setTemplateDir($dir . '/' . $request->getModule() . '/Templates/');
+		$this->setTemplateFile($templateFile);
 		$this->setVars($vars);
 	}
 
@@ -70,21 +78,21 @@ class Payload {
 	}
 
 	/**
-	 * Set dir
+	 * Set template dir
 	 *
-	 * @param string $dir
+	 * @param string $templateDir
 	 */
-	private function setDir($dir) {
-		$this->dir = $dir;
+	private function setTemplateDir($templateDir) {
+		$this->templateDir = $templateDir;
 	}
 
 	/**
-	 * Get dir
+	 * Get template dir
 	 *
 	 * @return string
 	 */
-	public function getDir() {
-		return $this->dir;
+	public function getTemplateDir() {
+		return $this->templateDir;
 	}
 
 	/**

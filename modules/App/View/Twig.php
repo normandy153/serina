@@ -49,11 +49,15 @@ class Twig {
 	 * Render vars in twig
 	 */
 	public function render() {
-		$loader = new \Twig_Loader_String();
-		$twig = new \Twig_Environment($loader);
+		$loader = new \Twig_Loader_Filesystem(dirname(__FILE__) . '/../../' . $this->getPayload()->getTemplateDir());
 
-		new \App\Probe($this->getPayload());
-		echo $twig->render('Hello {{ name }}!', array('name' => 'Fabien'));
+		$twig = new \Twig_Environment($loader, array(
+			'debug' => true,
+		));
+
+		$twig->addExtension(new \Twig_Extension_Debug());
+
+		echo $twig->render($this->getPayload()->getTemplateFile() . '.html', $this->getPayload()->getVars());
 	}
 
 	/* Getters/Setters
