@@ -38,10 +38,19 @@ class Mediator {
 		/* Run controller if method exists
 		 */
 		if (!method_exists($controller, $method)) {
-			throw new \Exception("$method not found.");
+			$requestStatus = new RequestStatus("No endpoint: {$method}", 404);
+		}
+		else {
+			$requestStatus = new RequestStatus(null, 200);
+			$controller->$method();
 		}
 
-		$controller->$method();
+		/* Get the request status and append it so you can render out the
+		 * error screen(s) accordingly
+		 */
+		$this->getRequest()->setRequestStatus($requestStatus);
+
+		new Probe($this->getRequest());
 
 		/* Generate output payload
 		 */

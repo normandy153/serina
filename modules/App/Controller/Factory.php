@@ -66,8 +66,6 @@ class Factory {
 				return new $className($this->getRequest()->getArgs());
 			}
 		}
-
-		throw new \Exception($this->getRequest()->getModule() . ' controller not found.');
 	}
 
 	/* Getters/Setters

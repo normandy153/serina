@@ -48,6 +48,13 @@ class Request {
 	private $args = array();
 
 	/**
+	 * An instance of RequestStatus
+	 *
+	 * @var null
+	 */
+	private $requestStatus = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @param $request
@@ -166,5 +173,23 @@ class Request {
 	 */
 	public function getModule() {
 		return $this->module;
+	}
+
+	/**
+	 * Set request status
+	 *
+	 * @param null $requestStatus
+	 */
+	public function setRequestStatus($requestStatus) {
+		$this->requestStatus = $requestStatus;
+	}
+
+	/**
+	 * Get request status
+	 *
+	 * @return null
+	 */
+	public function getRequestStatus() {
+		return $this->requestStatus;
 	}
 }
