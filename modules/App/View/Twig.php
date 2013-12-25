@@ -12,7 +12,6 @@ namespace App\View;
 
 class Twig {
 
-
 	/**
 	 * The data to render
 	 *
@@ -49,30 +48,34 @@ class Twig {
 	 * Render vars in twig
 	 */
 	public function render() {
-		if ($this->getPayload()->getRequest()->getRequestStatus()->getCode() == 200) {
-			$loader = new \Twig_Loader_Filesystem(dirname(__FILE__) . '/../../' . $this->getPayload()->getTemplateDir());
-
-			$twig = new \Twig_Environment($loader, array(
-				'debug' => true,
-			));
-
-			$twig->addExtension(new \Twig_Extension_Debug());
-
-			echo $twig->render($this->getPayload()->getTemplateFile() . '.html', $this->getPayload()->getVars());
+		if (!$this->getPayload()->getRequest()->getRequestStatus()->hasError()) {
+			$dir = dirname(__FILE__) . '/../../' . $this->getPayload()->getTemplateDir();
+			$file = $this->getPayload()->getTemplateFile() . '.html';
 		}
 		else {
-
-			$loader = new \Twig_Loader_Filesystem(dirname(__FILE__) . '/../../Core');
-
-			$twig = new \Twig_Environment($loader, array(
-				'debug' => true,
-			));
-
-			$twig->addExtension(new \Twig_Extension_Debug());
-new \App\Probe($this->getPayload());
-			echo $twig->render($this->getPayload()->getRequest()->getRequestStatus()->getCode() . '.html', $this->getPayload()->getVars());
+			$dir = dirname(__FILE__) . '/../../Core';
+			$file = $this->getPayload()->getRequest()->getRequestStatus()->getCode() . '.html';
 		}
 
+		echo $this->startTwig($dir)->render($file, $this->getPayload()->getVars());
+	}
+
+	/**
+	 * A macro for initialising twig stuff
+	 *
+	 * @param $dir
+	 * @return \Twig_Environment
+	 */
+	private function startTwig($dir) {
+		$loader = new \Twig_Loader_Filesystem($dir);
+
+		$twig = new \Twig_Environment($loader, array(
+			'debug' => true,
+		));
+
+		$twig->addExtension(new \Twig_Extension_Debug());
+
+		return $twig;
 	}
 
 	/* Getters/Setters
