@@ -20,6 +20,15 @@ class Twig {
 	private $payload = null;
 
 	/**
+	 * A list of locations which a Controller might exist
+	 *
+	 * @var array
+	 */
+	private $dirs = array(
+		'Custom', 'Core'
+	);
+
+	/**
 	 * Constructor
 	 *
 	 * @param \App\Controller\Payload $payload
@@ -48,13 +57,30 @@ class Twig {
 	 * Render vars in twig
 	 */
 	public function render() {
+		new \App\Probe($this->getPayload());
+
+		/* Load templates as normal
+		 */
 		if (!$this->getPayload()->getRequest()->getRequestStatus()->hasError()) {
 			$dir = dirname(__FILE__) . '/../../' . $this->getPayload()->getTemplateDir();
 			$file = $this->getPayload()->getTemplateFile() . '.html';
 		}
+		/* Load error templates
+		 * See if Custom modules/data overrides core defaults
+		 */
 		else {
-			$dir = dirname(__FILE__) . '/../../Core';
-			$file = $this->getPayload()->getRequest()->getRequestStatus()->getCode() . '.html';
+			foreach ($this->getDirs() as $currentDir) {
+				$file = $this->getPayload()->getRequest()->getRequestStatus()->getCode() . '.html';
+
+				$prefix = dirname(__FILE__) . "/../../{$currentDir}";
+				$path =  "{$prefix}/{$file}";
+
+				if (file_exists($path)) {
+					$dir = $prefix;
+
+					break;
+				}
+			}
 		}
 
 		echo $this->startTwig($dir)->render($file, $this->getPayload()->getVars());
@@ -97,5 +123,23 @@ class Twig {
 	 */
 	private function getPayload() {
 		return $this->payload;
+	}
+
+	/**
+	 * Set dirs
+	 *
+	 * @param array $dirs
+	 */
+	private function setDirs($dirs) {
+		$this->dirs = $dirs;
+	}
+
+	/**
+	 * Get dirs
+	 *
+	 * @return array
+	 */
+	private function getDirs() {
+		return $this->dirs;
 	}
 }

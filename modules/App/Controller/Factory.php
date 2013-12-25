@@ -18,7 +18,7 @@ class Factory {
 	 * @var array
 	 */
 	private $dirs = array(
-		'Core', 'Custom'
+		'Custom', 'Core'
 	);
 
 	/**
