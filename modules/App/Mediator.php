@@ -39,10 +39,14 @@ class Mediator {
 		 */
 		if (!method_exists($controller, $method)) {
 			$requestStatus = new RequestStatus("No endpoint: {$method}", 404);
+
+			$output = null;
 		}
 		else {
 			$requestStatus = new RequestStatus(null, 200);
 			$controller->$method();
+
+			$output = $controller->getOutput();
 		}
 
 		/* Get the request status and append it so you can render out the
@@ -54,7 +58,7 @@ class Mediator {
 
 		/* Generate output payload
 		 */
-		$payloadFactory = new PayloadFactory($this->getRequest(), $controllerFactory->getDir(), $controller->getOutput());
+		$payloadFactory = new PayloadFactory($this->getRequest(), $controllerFactory->getDir(), $output);
 		$payload = $payloadFactory->build();
 
 		/* Render output via twig
