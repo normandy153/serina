@@ -40,7 +40,7 @@ class Mediator {
 		if (!method_exists($controller, $method)) {
 			$requestStatus = new RequestStatus("No endpoint: {$method}", 404);
 
-			$output = null;
+			$output = array();
 		}
 		else {
 			$requestStatus = new RequestStatus(null, 200);
@@ -53,8 +53,6 @@ class Mediator {
 		 * error screen(s) accordingly
 		 */
 		$this->getRequest()->setRequestStatus($requestStatus);
-
-		new Probe($this->getRequest());
 
 		/* Generate output payload
 		 */

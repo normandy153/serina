@@ -49,15 +49,30 @@ class Twig {
 	 * Render vars in twig
 	 */
 	public function render() {
-		$loader = new \Twig_Loader_Filesystem(dirname(__FILE__) . '/../../' . $this->getPayload()->getTemplateDir());
+		if ($this->getPayload()->getRequest()->getRequestStatus()->getCode() == 200) {
+			$loader = new \Twig_Loader_Filesystem(dirname(__FILE__) . '/../../' . $this->getPayload()->getTemplateDir());
 
-		$twig = new \Twig_Environment($loader, array(
-			'debug' => true,
-		));
+			$twig = new \Twig_Environment($loader, array(
+				'debug' => true,
+			));
 
-		$twig->addExtension(new \Twig_Extension_Debug());
+			$twig->addExtension(new \Twig_Extension_Debug());
 
-		echo $twig->render($this->getPayload()->getTemplateFile() . '.html', $this->getPayload()->getVars());
+			echo $twig->render($this->getPayload()->getTemplateFile() . '.html', $this->getPayload()->getVars());
+		}
+		else {
+
+			$loader = new \Twig_Loader_Filesystem(dirname(__FILE__) . '/../../Core');
+
+			$twig = new \Twig_Environment($loader, array(
+				'debug' => true,
+			));
+
+			$twig->addExtension(new \Twig_Extension_Debug());
+new \App\Probe($this->getPayload());
+			echo $twig->render($this->getPayload()->getRequest()->getRequestStatus()->getCode() . '.html', $this->getPayload()->getVars());
+		}
+
 	}
 
 	/* Getters/Setters

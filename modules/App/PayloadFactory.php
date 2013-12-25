@@ -27,7 +27,12 @@ class PayloadFactory {
 	 * @param $output
 	 */
 	public function __construct($request, $dir, $output) {
-		$payload = new Controller\Payload($request, $dir, $output['templateFile'], $output['vars']);
+		$merged = array_merge(array(
+			'templateFile' => '',
+			'vars' => array()
+			), $output);
+
+		$payload = new Controller\Payload($request, $dir, $merged['templateFile'], $merged['vars']);
 		$this->setPayload($payload);
 	}
 

@@ -39,7 +39,7 @@ class Payload {
 	 *
 	 * @var null
 	 */
-	private $vars = null;
+	private $vars = array();
 
 	/**
 	 * Constructor
