@@ -73,6 +73,19 @@ class RequestStatus {
 	}
 
 	/**
+	 * Determine whether an error occurred
+	 *
+	 * @return bool
+	 */
+	public function hasError() {
+		if ($this->getCode() > 399) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Set code
 	 *
 	 * @param int $code
