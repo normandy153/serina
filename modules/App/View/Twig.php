@@ -57,7 +57,6 @@ class Twig {
 	 * Render vars in twig
 	 */
 	public function render() {
-		new \App\Probe($this->getPayload());
 
 		/* Load templates as normal
 		 */
