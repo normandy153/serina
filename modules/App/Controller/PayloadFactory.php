@@ -7,7 +7,7 @@
  */
 
 
-namespace App;
+namespace App\Controller;
 
 
 class PayloadFactory {
@@ -32,7 +32,7 @@ class PayloadFactory {
 			'vars' => array()
 			), $output);
 
-		$payload = new Controller\Payload($request, $dir, $merged['templateFile'], $merged['vars']);
+		$payload = new Payload($request, $dir, $merged['templateFile'], $merged['vars']);
 		$this->setPayload($payload);
 	}
 

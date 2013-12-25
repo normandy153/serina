@@ -56,7 +56,7 @@ class Mediator {
 
 		/* Generate output payload
 		 */
-		$payloadFactory = new PayloadFactory($this->getRequest(), $controllerFactory->getDir(), $output);
+		$payloadFactory = new Controller\PayloadFactory($this->getRequest(), $controllerFactory->getDir(), $output);
 		$payload = $payloadFactory->build();
 
 		/* Render output via twig
