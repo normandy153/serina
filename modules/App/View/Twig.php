@@ -70,7 +70,7 @@ class Twig {
 		 */
 		else {
 			foreach ($this->getDirs() as $currentDir) {
-				$file = $this->getPayload()->getRequest()->getRequestStatus()->getCode() . '.html';
+				$file = 'error.html';
 
 				$prefix = dirname(__FILE__) . "/../../{$currentDir}";
 				$path =  "{$prefix}/{$file}";
