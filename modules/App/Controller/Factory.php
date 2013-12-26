@@ -57,7 +57,7 @@ class Factory {
 		 */
 		foreach($this->getDirs() as $currentDir) {
 			$className = "\\{$currentDir}\\{$this->getRequest()->getModule()}\\Controller";
-
+;
 			/* Remember where it was found
 			 */
 			if (class_exists($className)) {

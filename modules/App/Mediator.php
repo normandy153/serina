@@ -34,7 +34,8 @@ class Mediator {
 		$controller = $controllerFactory->build();
 
 		$method = $this->deriveControllerMethod();
-
+new \App\Probe($controller);
+		new \App\Probe($method);
 		/* Run controller if method exists
 		 */
 		if (!method_exists($controller, $method)) {
