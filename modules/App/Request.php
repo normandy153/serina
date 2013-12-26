@@ -65,9 +65,18 @@ class Request {
  		 */
 		$this->setMethod($_SERVER['REQUEST_METHOD']);
 
+		/* Default controller to use
+		 */
+		if (!count(array_keys($request))) {
+			$route = 'test';
+		}
+		else {
+			$route = $request['route'];
+		}
+
 		/* Decide args and endpoint for restful interface
 		 */
-		$args = explode('/', rtrim($request['route']));
+		$args = explode('/', rtrim($route));
 		$endpoint = array_shift($args);
 
 		$this->setArgs($args);
