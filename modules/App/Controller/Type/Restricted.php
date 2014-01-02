@@ -18,6 +18,5 @@ abstract class Restricted extends Base {
 	 * @return mixed|void
 	 */
 	protected function setup() {
-		new \App\Probe('Restricted hook method.');
 	}
 }

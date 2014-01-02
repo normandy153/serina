@@ -18,6 +18,5 @@ abstract class Unrestricted extends Base {
 	 * @return mixed|void
 	 */
 	protected function setup() {
-		new \App\Probe('Unrestricted hook method.');
 	}
 }

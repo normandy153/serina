@@ -18,6 +18,5 @@ abstract class Admin extends Base {
 	 * @return mixed|void
 	 */
 	protected function setup() {
-		new \App\Probe('Admin hook method.');
 	}
 }
