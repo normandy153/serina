@@ -57,11 +57,11 @@ class Twig {
 	 * Render vars in twig
 	 */
 	public function render() {
-
+		new \App\Probe($this->getPayload());
 		/* Load templates as normal
 		 */
 		if (!$this->getPayload()->getRequest()->getRequestStatus()->hasError()) {
-			$dir = dirname(__FILE__) . '/../../' . $this->getPayload()->getTemplateDir();
+			$dir = dirname(__FILE__) . "/../../{$this->getPayload()->getTemplateDir()}";
 			$file = $this->getPayload()->getTemplateFile() . '.html';
 		}
 		/* Load error templates

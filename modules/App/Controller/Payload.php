@@ -51,7 +51,7 @@ class Payload {
 	 */
 	public function __construct($request, $dir, $templateFile, $vars) {
 		$this->setRequest($request);
-		$this->setTemplateDir($dir . '/' . $request->getModule() . '/Templates/');
+		$this->setTemplateDir("{$dir}/{$request->getModule()}/{$request->getType()}/Templates/");
 		$this->setTemplateFile($templateFile);
 		$this->setVars($vars);
 	}
