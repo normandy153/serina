@@ -20,6 +20,20 @@ class Request {
 	private $method = '';
 
 	/**
+	 * Requests taking place in one of these special areas
+	 *
+	 * @var array
+	 */
+	private $allTypes = array('Admin', 'Restricted');
+
+	/**
+	 * One of Admin, Restricted, Unrestricted
+	 *
+	 * @var string
+	 */
+	private $type = 'Unrestricted';
+
+	/**
 	 * Module endpoint
 	 *
 	 * @var string
@@ -84,6 +98,17 @@ class Request {
 		/* Decide args and endpoint for restful interface
 		 */
 		$args = explode('/', rtrim($route));
+
+		/* Determine what type of access it was (either to admin,
+		 * restricted/private or unrestricted/public areas of the framework)
+		 */
+		$type = ucwords($args[0]);
+
+		if (in_array($type, $this->getAllTypes())) {
+			$this->setType($type);
+			array_shift($args);
+		}
+
 		$endpoint = array_shift($args);
 
 		$this->setArgs($args);
@@ -225,5 +250,41 @@ class Request {
 	 */
 	private function getDefaultRoute() {
 		return $this->defaultRoute;
+	}
+
+	/**
+	 * Set type
+	 *
+	 * @param string $type
+	 */
+	private function setType($type) {
+		$this->type = $type;
+	}
+
+	/**
+	 * Get type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
+	 * Set all types
+	 *
+	 * @param array $allTypes
+	 */
+	private function setAllTypes($allTypes) {
+		$this->allTypes = $allTypes;
+	}
+
+	/**
+	 * Get all types
+	 *
+	 * @return array
+	 */
+	public function getAllTypes() {
+		return $this->allTypes;
 	}
 }

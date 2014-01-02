@@ -6,19 +6,19 @@
  * Time: 11:26 PM
  */
 
-namespace Core\Test;
+namespace Custom\Mort\Unrestricted;
 
 class Controller extends \App\Controller\Base {
 
 	/**
 	 * Experimental method
 	 */
-	public function getTest() {
-		echo 'getTest() ran.';
+	public function getMort() {
+		echo 'getMort() ran.';
 
-		$this->output('getTest', array(
+		$this->output('getMort', array(
 			'args' => $this->getArgs(),
-			'testKey' => 'testValue'
+			'mortKey' => 'testMort'
 		));
 	}
 }

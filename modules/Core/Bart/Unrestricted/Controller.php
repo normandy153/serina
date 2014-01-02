@@ -6,19 +6,19 @@
  * Time: 11:26 PM
  */
 
-namespace Custom\Mort;
+namespace Core\Bart\Unrestricted;
 
 class Controller extends \App\Controller\Base {
 
 	/**
 	 * Experimental method
 	 */
-	public function getMort() {
-		echo 'getMort() ran.';
+	public function getBart() {
+		echo 'getBart() ran.';
 
-		$this->output('getMort', array(
+		$this->output('getTest', array(
 			'args' => $this->getArgs(),
-			'mortKey' => 'testMort'
+			'testKey' => 'bart test'
 		));
 	}
 }
