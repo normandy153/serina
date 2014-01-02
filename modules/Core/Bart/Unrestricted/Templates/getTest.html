@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<h1>{{ testKey }}</h1>
-<h2>Bart Test</h2>
+{% extends 'Unrestricted.html' %}
+
+{% block content %}
+<h2>{{ testKey }}</h2>
+<h3>Bart Test</h3>
 <ul>
 	{% for arg in args %}
 	<li>{{ arg }}</li>
 	{% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}

@@ -93,7 +93,7 @@ class Twig {
 	 * @return \Twig_Environment
 	 */
 	private function startTwig($dir) {
-		$loader = new \Twig_Loader_Filesystem($dir);
+		$loader = new \Twig_Loader_Filesystem(array(dirname(__FILE__) . '/../../../theme/Default', $dir));
 
 		$twig = new \Twig_Environment($loader, array(
 			'debug' => true,
