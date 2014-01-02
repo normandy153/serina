@@ -8,7 +8,7 @@
 
 namespace Core\Bart\Unrestricted;
 
-class Controller extends \App\Controller\Base {
+class Controller extends \App\Controller\Unrestricted {
 
 	/**
 	 * Experimental method

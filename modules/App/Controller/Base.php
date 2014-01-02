@@ -33,7 +33,16 @@ abstract class Base {
 	 */
 	public function __construct($args) {
 		$this->setArgs($args);
+
+		$this->setup();
 	}
+
+	/**
+	 * Hook method
+	 *
+	 * @return mixed
+	 */
+	abstract protected function setup();
 
 	/**
 	 * Store controller output
