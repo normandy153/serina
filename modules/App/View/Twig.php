@@ -64,7 +64,7 @@ class Twig {
 			$dir = dirname(__FILE__) . "/../../{$this->getPayload()->getTemplateDir()}";
 			$file = $this->getPayload()->getTemplateFile() . '.html';
 		}
-		
+
 		/* Load error templates
 		 * See if Custom modules/data overrides core defaults
 		 */

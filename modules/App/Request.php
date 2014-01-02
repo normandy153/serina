@@ -97,7 +97,7 @@ class Request {
 
 		/* Decide args and endpoint for restful interface
 		 */
-		$args = explode('/', rtrim($route));
+		$args = array_values(array_filter(explode('/', rtrim($route))));
 
 		/* Determine what type of access it was (either to admin,
 		 * restricted/private or unrestricted/public areas of the framework)
