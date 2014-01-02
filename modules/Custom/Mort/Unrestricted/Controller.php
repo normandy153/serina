@@ -8,7 +8,7 @@
 
 namespace Custom\Mort\Unrestricted;
 
-class Controller extends \App\Controller\Unrestricted {
+class Controller extends \App\Controller\Type\Unrestricted {
 
 	/**
 	 * Experimental method

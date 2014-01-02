@@ -7,7 +7,7 @@
  */
 
 
-namespace App\Controller;
+namespace App\Controller\Type;
 
 
 abstract class Base {

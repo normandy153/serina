@@ -1,16 +1,16 @@
 <?php
 /**
- * Admin
+ * Restricted
  *
  * Date: 2/01/14
  * Time: 11:12 PM
  */
 
 
-namespace App\Controller;
+namespace App\Controller\Type;
 
 
-abstract class Admin extends Base {
+abstract class Restricted extends Base {
 
 	/**
 	 * Hook method
@@ -18,6 +18,6 @@ abstract class Admin extends Base {
 	 * @return mixed|void
 	 */
 	protected function setup() {
-		new \App\Probe('Admin hook method.');
+		new \App\Probe('Restricted hook method.');
 	}
 }
