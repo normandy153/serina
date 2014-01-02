@@ -1,0 +1,11 @@
+{% extends 'Unrestricted.html' %}
+
+{% block content %}
+<h2>{{ testKey }}</h2>
+<strong>This is in Core/Test/Unrestricted</strong>
+<ul>
+	{% for arg in args %}
+	<li>{{ arg }}</li>
+	{% endfor %}
+</ul>
+{% endblock %}

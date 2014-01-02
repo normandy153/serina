@@ -1,0 +1,12 @@
+{% extends 'Restricted.html' %}
+
+{% block content %}
+<h2>{{ testKey }}</h2>
+<em>Restricted</em>
+<strong>This is in Core/Test/Restricted</strong>
+<ul>
+	{% for arg in args %}
+	<li>{{ arg }}</li>
+	{% endfor %}
+</ul>
+{% endblock %}
