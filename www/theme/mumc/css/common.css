@@ -13,3 +13,8 @@ header {
 	background: linear-gradient(to bottom,  #8d5322 0%,#f9bb55 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8d5322', endColorstr='#f9bb55',GradientType=0 ); /* IE6-8 */
 }
+
+header section.branding {
+	width: 178px;
+	padding-top: 12px;
+}
