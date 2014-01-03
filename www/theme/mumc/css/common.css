@@ -39,3 +39,15 @@ div.grid3 section
 	float: left;
 	margin-left: 32px;
 }
+
+/* Lists
+ */
+div.listing-alternate li:nth-of-type(2n+1) {
+	margin-left: 0px;
+	clear: left;
+}
+
+div.listing-alternate li {
+	margin-left: 32px;
+	float: left;
+}

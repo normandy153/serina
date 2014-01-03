@@ -14,6 +14,10 @@
 	div.grid3 section {
 		width: 376px;
 	}
+
+	div.listing-alternate li {
+		width: 580px;
+	}
 }
 
 @media screen and (min-width: 33.236em) and (max-width: 63.236em) {
@@ -32,6 +36,10 @@
 	div.grid3 section {
 		width: 200px;
 	}
+
+	div.listing-alternate li {
+		width: 316px;
+	}
 }
 
 @media screen and (max-width: 33.235em) {
@@ -39,7 +47,7 @@
 		background-color: #faa;
 	}
 
-	.fullwidth {
+	div.fullwidth {
 		padding-left: 0.809em;
 		padding-right: 0.809em;
 		max-width: 30em;
@@ -51,6 +59,11 @@
 	}
 
 	div.grid3 section {
+		width: 100%;
+		margin-left: 0px;
+	}
+
+	div.listing-alternate li {
 		width: 100%;
 		margin-left: 0px;
 	}
