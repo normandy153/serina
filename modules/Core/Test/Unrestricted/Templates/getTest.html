@@ -1,8 +1,15 @@
 {% extends 'Unrestricted.html' %}
 
+{% block head %}
+<title>Sample Page</title>
+<meta name='description' content='A sample description for this page.'>
+{% endblock %}
+
 {% block content %}
 <h2>{{ testKey }}</h2>
 <strong>This is in Core/Test/Unrestricted</strong>
+
+<p>These are arguments passed on the url:</p>
 <ul>
 	{% for arg in args %}
 	<li>{{ arg }}</li>
