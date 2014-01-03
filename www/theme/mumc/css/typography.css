@@ -2,7 +2,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 	line-height: 24px;
-	background: url('../img/baseline.gif')
+	/*background: url('../img/baseline.gif')*/
 }
 
 a, a:visited, a:hover, a:active, a:focus {
