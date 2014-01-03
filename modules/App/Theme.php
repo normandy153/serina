@@ -31,7 +31,7 @@ class Theme {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->setName('Default');
+		$this->setName('MUMC');
 		$this->setDir(dirname(__FILE__) . '/../../theme/' . $this->getName());
 	}
 
