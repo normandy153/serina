@@ -1,0 +1,68 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 13px;
+	line-height: 24px;
+	/*background: url('../img/baseline.gif')*/
+}
+
+a, a:visited, a:hover, a:active, a:focus {
+	color: #33b600;
+	outline: none;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6, .datetime {
+	font-family: 'Ropa sans', sans-serif;
+	text-transform: uppercase;
+	line-height: 24px;
+	letter-spacing: -0.03em;
+}
+
+.datetime {
+	display: block;
+	margin: 0px;
+}
+
+h1 {
+	font-size: 34px;
+	line-height: 48px;
+}
+
+h2 {
+	font-size: 30px;
+	line-height: 48px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+h4 {
+	font-size: 18px;
+}
+
+h5 {
+	font-size: 16px;
+}
+
+h6 {
+	font-size: 14px;
+}
+
+p {
+	font-size: 13px;
+	line-height: 24px;
+	margin-bottom: 24px;
+}
+
+.center {
+	text-align: center;
+}
+
+label {
+	font-weight: bold;
+}
