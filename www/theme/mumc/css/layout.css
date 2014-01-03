@@ -5,8 +5,10 @@
 
 	div.fullwidth {
 		width: 1192px;
-		max-width: none;
-		margin: 0 auto;
+	}
+
+	div.grid2 section {
+		width: 580px;
 	}
 }
 
@@ -15,10 +17,12 @@
 		background-color: #ffa;
 	}
 
-	.fullwidth {
+	div.fullwidth {
 		width: 664px;
-		max-width: none;
-		margin: 0 auto;
+	}
+
+	div.grid2 section {
+		width: 316px;
 	}
 }
 
@@ -31,6 +35,9 @@
 		padding-left: 0.809em;
 		padding-right: 0.809em;
 		max-width: 30em;
-		margin: 0 auto;
+	}
+
+	div.grid2 section {
+		margin-left: auto;
 	}
 }
