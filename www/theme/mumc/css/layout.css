@@ -57,13 +57,13 @@
 	div.listing-alternate li img.avatar {
 		width: 64px;
 		height: 64px;
-		margin-right: 32px;
+		margin-right: 16px;
 		margin-bottom: 32px;
 		float: left;
 	}
 
 	div.listing-alternate li .description {
-		width: 220px;
+		width: 236px;
 		float: right;
 	}
 }
