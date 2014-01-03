@@ -14,18 +14,32 @@ class Mediator {
 	/**
 	 * An instance of Request
 	 *
-	 * @var null
+	 * @var \App\Request
 	 */
 	private $request = null;
 
 	/**
+	 * An instance of Theme
+	 *
+	 * @var \App\Theme
+	 */
+	private $theme = null;
+
+	/**
 	 * Constructor
 	 *
-	 * @param $request
-	 * @throws \Exception
+	 * @param Request $request
+	 * @param Theme $theme
 	 */
-	public function __construct($request) {
+	public function __construct(Request $request, Theme $theme) {
 		$this->setRequest($request);
+		$this->setTheme($theme);
+	}
+
+	/**
+	 * Run controller and view
+	 */
+	public function run() {
 
 		/* The controller object which will get instantiated and contains
 		 * the method asked to run
@@ -61,7 +75,7 @@ class Mediator {
 
 		/* Render output via twig
 		 */
-		$renderer = new View\Twig($payload);
+		$renderer = new View\Twig($payload, $this->getTheme());
 		$renderer->render();
 	}
 
@@ -111,5 +125,23 @@ class Mediator {
 	 */
 	private function getRequest() {
 		return $this->request;
+	}
+
+	/**
+	 * Set theme
+	 *
+	 * @param null $theme
+	 */
+	private function setTheme($theme) {
+		$this->theme = $theme;
+	}
+
+	/**
+	 * Get theme
+	 *
+	 * @return null
+	 */
+	public function getTheme() {
+		return $this->theme;
 	}
 }
