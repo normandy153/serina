@@ -51,3 +51,14 @@ div.listing-alternate li {
 	margin-left: 32px;
 	float: left;
 }
+
+/* Forms
+ */
+fieldset {
+	margin-bottom: 10px;
+}
+
+label {
+	clear: both;
+	display: block;
+}
