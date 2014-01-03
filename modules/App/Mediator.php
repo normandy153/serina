@@ -34,6 +34,12 @@ class Mediator {
 	public function __construct(Request $request, Theme $theme) {
 		$this->setRequest($request);
 		$this->setTheme($theme);
+	}
+
+	/**
+	 * Run controller and view
+	 */
+	public function run() {
 
 		/* The controller object which will get instantiated and contains
 		 * the method asked to run
@@ -69,7 +75,7 @@ class Mediator {
 
 		/* Render output via twig
 		 */
-		$renderer = new View\Twig($payload, $theme);
+		$renderer = new View\Twig($payload, $this->getTheme());
 		$renderer->render();
 	}
 

@@ -14,3 +14,4 @@ $theme = new \App\Theme();
 /* Launch it!
  */
 $mediator = new \App\Mediator($request, $theme);
+$mediator->run();
