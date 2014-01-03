@@ -22,6 +22,11 @@ h1, h2, h3, h4, h5, h6, .datetime {
 	letter-spacing: -0.03em;
 }
 
+.datetime {
+	display: block;
+	margin: 0px;
+}
+
 h1 {
 	font-size: 34px;
 	line-height: 48px;
