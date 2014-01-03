@@ -2,16 +2,35 @@
 	body {
 		background-color: #afa;
 	}
+
+	div.fullwidth {
+		width: 1192px;
+		max-width: none;
+		margin: 0 auto;
+	}
 }
 
 @media screen and (min-width: 33.236em) and (max-width: 63.236em) {
 	body {
 		background-color: #ffa;
 	}
+
+	.fullwidth {
+		width: 664px;
+		max-width: none;
+		margin: 0 auto;
+	}
 }
 
 @media screen and (max-width: 33.235em) {
 	body {
 		background-color: #faa;
+	}
+
+	.fullwidth {
+		padding-left: 0.809em;
+		padding-right: 0.809em;
+		max-width: 30em;
+		margin: 0 auto;
 	}
 }
