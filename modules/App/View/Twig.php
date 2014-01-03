@@ -29,12 +29,21 @@ class Twig {
 	);
 
 	/**
+	 * An instance of Theme
+	 *
+	 * @var \App\Theme
+	 */
+	private $theme = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @param \App\Controller\Payload $payload
+	 * @param \App\Theme $theme
 	 */
-	public function __construct(\App\Controller\Payload $payload) {
+	public function __construct(\App\Controller\Payload $payload, \App\Theme $theme) {
 		$this->setPayload($payload);
+		$this->setTheme($theme);
 
 		$this->setup();
 	}
@@ -93,8 +102,14 @@ class Twig {
 	 * @return \Twig_Environment
 	 */
 	private function startTwig($dir) {
-		$loader = new \Twig_Loader_Filesystem(array(dirname(__FILE__) . '/../../../theme/Default', $dir));
 
+		/* Register loaders so it looks for sitewide html templates first
+		 * and then into specific module templates
+		 */
+		$loader = new \Twig_Loader_Filesystem(array($this->getTheme()->getDir(), $dir));
+
+		/* Debug environment
+		 */
 		$twig = new \Twig_Environment($loader, array(
 			'debug' => true,
 		));
@@ -141,5 +156,23 @@ class Twig {
 	 */
 	private function getDirs() {
 		return $this->dirs;
+	}
+
+	/**
+	 * Set theme
+	 *
+	 * @param \App\Theme $theme
+	 */
+	private function setTheme($theme) {
+		$this->theme = $theme;
+	}
+
+	/**
+	 * Get theme
+	 *
+	 * @return \App\Theme
+	 */
+	private function getTheme() {
+		return $this->theme;
 	}
 }
