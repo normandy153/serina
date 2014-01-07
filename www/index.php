@@ -8,7 +8,14 @@ require_once('../modules/App/Autoloader.php');
 
 /* Manufacture dependencies
  */
-$request = new \App\Request($_REQUEST);
+
+/* Set up modified Request, via custom routes
+ */
+$router = new \App\Router($_REQUEST);
+$request = $router->produce();
+
+/* Selected theme
+ */
 $theme = new \App\Theme();
 
 /* Launch it!
