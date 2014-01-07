@@ -48,7 +48,8 @@ class Router {
 	 * Produce a
 	 */
 	public function produce() {
-
+		$data = $this->getData();
+		
 		/* If the root was selected, this will be empty
 		 */
 		if (!isset($data['route'])) {
