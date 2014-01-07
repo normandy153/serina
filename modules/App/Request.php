@@ -69,31 +69,15 @@ class Request {
 	private $requestStatus = null;
 
 	/**
-	 * Default controller method to run
-	 *
-	 * @var string
-	 */
-	private $defaultRoute = 'test/22';
-
-	/**
 	 * Constructor
 	 *
-	 * @param $request
+	 * @param $route
 	 */
-	public function __construct($request) {
+	public function __construct($route) {
 
 		/* The method used
  		 */
 		$this->setMethod($_SERVER['REQUEST_METHOD']);
-
-		/* Default controller to use
-		 */
-		if (count(array_keys($request))) {
-			$route = $request['route'];
-		}
-		else {
-			$route = $this->getDefaultRoute();
-		}
 
 		/* Decide args and endpoint for restful interface
 		 */
@@ -232,24 +216,6 @@ class Request {
 	 */
 	public function getRequestStatus() {
 		return $this->requestStatus;
-	}
-
-	/**
-	 * Set default route
-	 *
-	 * @param string $defaultRoute
-	 */
-	private function setDefaultRoute($defaultRoute) {
-		$this->defaultRoute = $defaultRoute;
-	}
-
-	/**
-	 * Get default route
-	 *
-	 * @return string
-	 */
-	private function getDefaultRoute() {
-		return $this->defaultRoute;
 	}
 
 	/**
