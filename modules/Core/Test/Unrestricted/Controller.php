@@ -19,4 +19,14 @@ class Controller extends \App\Controller\Type\Unrestricted {
 			'testKey' => 'testValue'
 		));
 	}
+
+	/**
+	 * Secondary experimental method
+	 */
+	public function getTestAnother() {
+		$this->output('getTestAnother', array(
+			'args' => $this->getArgs(),
+			'testKey' => 'anotherTestValue',
+		));
+	}
 }
