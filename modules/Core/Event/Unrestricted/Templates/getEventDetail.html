@@ -1,12 +1,16 @@
 {% extends 'Unrestricted.html' %}
 
 {% block head %}
-<title>Sample Page</title>
-<meta name='description' content='Test event detail' />
+<title>{{ collection[0].getName() }}</title>
+<meta name='description' content="{{ collection[0].getName() }}" />
 {% endblock %}
 
 {% block content %}
 
-Event detail
+<ul>
+	<li>Name: {{ collection[0].getName() }}</li>
+	<li>Starts: {{ collection[0].getStartDateTime() }}</li>
+	<li>Ends: {{ collection[0].getEndDateTime() }}</li>
+</ul>
 
 {% endblock %}
