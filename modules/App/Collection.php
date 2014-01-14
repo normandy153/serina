@@ -40,7 +40,7 @@ class Collection implements \Iterator {
 	 * @return bool
 	 */
 	public function valid() {
-		if (isset($this->stack[$this->getPosition()])) {
+		if (isset($this->stack[$this->position])) {
 			return true;
 		}
 
