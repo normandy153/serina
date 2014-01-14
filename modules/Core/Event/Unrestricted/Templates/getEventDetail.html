@@ -6,11 +6,16 @@
 {% endblock %}
 
 {% block content %}
-
+<h1>{{ collection[0].getName() }}</h1>
 <ul>
-	<li>Name: {{ collection[0].getName() }}</li>
 	<li>Starts: {{ collection[0].getStartDateTime() }}</li>
 	<li>Ends: {{ collection[0].getEndDateTime() }}</li>
 </ul>
+
+<div>
+	<p>
+		{{ collection[0].getDescription() }}
+	</p>
+</div>
 
 {% endblock %}

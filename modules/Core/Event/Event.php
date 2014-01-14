@@ -9,10 +9,61 @@ namespace Core;
 
 class Event {
 
+	/**
+	 * Identifier
+	 *
+	 * @var int
+	 */
 	private $id = 1;
+
+	/**
+	 * Event name
+	 *
+	 * @var string
+	 */
 	private $name = 'Test Event';
+
+	/**
+	 * Event description
+	 *
+	 * @var string
+	 */
+	private $description = 'A description for Test Event';
+
+	/**
+	 * Start date
+	 *
+	 * @var string
+	 */
 	private $startDateTime = '2014-01-15 12:20:00';
+
+	/**
+	 * End date
+	 *
+	 * @var string
+	 */
 	private $endDateTime = '2014-01-17 17:00:00';
+
+	/**
+	 * A collection of Waypoint instances
+	 *
+	 * @var null
+	 */
+	private $waypoints = null;
+
+	/**
+	 * A collection of User instances
+	 *
+	 * @var null
+	 */
+	private $attendees = null;
+
+	/**
+	 * A collection of User instances
+	 *
+	 * @var null
+	 */
+	private $leaders = null;
 
 	/**
 	 * Constructor
@@ -25,6 +76,8 @@ class Event {
 	 */
 
 	/**
+	 * Set end datetime
+	 *
 	 * @param string $endDateTime
 	 */
 	public function setEndDateTime($endDateTime) {
@@ -32,6 +85,8 @@ class Event {
 	}
 
 	/**
+	 * Get end datetime
+	 *
 	 * @return string
 	 */
 	public function getEndDateTime() {
@@ -39,6 +94,8 @@ class Event {
 	}
 
 	/**
+	 * Set id
+	 *
 	 * @param int $id
 	 */
 	public function setId($id) {
@@ -46,6 +103,8 @@ class Event {
 	}
 
 	/**
+	 * Get id
+	 *
 	 * @return int
 	 */
 	public function getId() {
@@ -53,6 +112,8 @@ class Event {
 	}
 
 	/**
+	 * Set name
+	 *
 	 * @param string $name
 	 */
 	public function setName($name) {
@@ -60,6 +121,8 @@ class Event {
 	}
 
 	/**
+	 * Get name
+	 *
 	 * @return string
 	 */
 	public function getName() {
@@ -67,6 +130,8 @@ class Event {
 	}
 
 	/**
+	 * Set start datetime
+	 *
 	 * @param string $startDateTime
 	 */
 	public function setStartDateTime($startDateTime) {
@@ -74,10 +139,84 @@ class Event {
 	}
 
 	/**
+	 * Get start datetime
+	 *
 	 * @return string
 	 */
 	public function getStartDateTime() {
 		return $this->startDateTime;
+	}
+
+	/**
+	 * Set waypoints
+	 *
+	 * @param null $waypoints
+	 */
+	public function setWaypoints($waypoints) {
+		$this->waypoints = $waypoints;
+	}
+
+	/**
+	 * Get waypoints
+	 *
+	 * @return null
+	 */
+	public function getWaypoints() {
+		return $this->waypoints;
+	}
+
+	/**
+	 * Set description
+	 *
+	 * @param string $description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
+	/**
+	 * Get description
+	 *
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+	/**
+	 * Set attendees
+	 *
+	 * @param null $attendees
+	 */
+	public function setAttendees($attendees) {
+		$this->attendees = $attendees;
+	}
+
+	/**
+	 * Get attendees
+	 *
+	 * @return null
+	 */
+	public function getAttendees() {
+		return $this->attendees;
+	}
+
+	/**
+	 * Set leaders
+	 *
+	 * @param null $leaders
+	 */
+	public function setLeaders($leaders) {
+		$this->leaders = $leaders;
+	}
+
+	/**
+	 * Get leaders
+	 *
+	 * @return null
+	 */
+	public function getLeaders() {
+		return $this->leaders;
 	}
 
 
