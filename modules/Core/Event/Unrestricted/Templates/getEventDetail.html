@@ -18,4 +18,21 @@
 	</p>
 </div>
 
+<ul>
+	{% for currentWaypoint in collection[0].getWaypoints() %}
+	<li>{{ currentWaypoint.latitude }} / {{ currentWaypoint.longitude }}</li>
+	{% endfor %}
+</ul>
+
+<ul>
+	{% for currentAttendee in collection[0].getAttendees() %}
+	<li>{{ currentAttendee.lastname }}, {{ currentAttendee.firstname }}</li>
+	{% endfor %}
+</ul>
+
+<ul>
+	{% for currentLeader in collection[0].getLeaders() %}
+	<li>{{ currentLeader.lastname }}, {{ currentLeader.firstname }}</li>
+	{% endfor %}
+</ul>
 {% endblock %}

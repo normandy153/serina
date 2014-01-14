@@ -69,9 +69,27 @@ class Event {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->setWaypoints(new \App\Collection());
-		$this->setAttendees(new \App\Collection());
-		$this->setLeaders(new \App\Collection());
+		$waypoints = new \App\Collection();
+		$waypoints->add(array(
+			'latitude' => 12345,
+			'longitude' => 67890,
+		));
+
+		$attendees = new \App\Collection();
+		$attendees->add(array(
+			'firstname' => 'Test Firstname',
+			'lastname' => 'Test Lastname',
+		));
+
+		$leaders = new \App\Collection();
+		$leaders->add(array(
+			'firstname' => 'John',
+			'lastname' => 'Doe',
+		));
+
+		$this->setWaypoints($waypoints);
+		$this->setAttendees($attendees);
+		$this->setLeaders($leaders);
 	}
 
 	/* Getters/Setters
