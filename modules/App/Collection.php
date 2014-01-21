@@ -26,6 +26,39 @@ class Collection implements \Iterator {
 	protected $stack = array();
 
 	/**
+	 * Number of items in the stack
+	 *
+	 * @return int
+	 */
+	public function length() {
+		return count($this->stack);
+	}
+	
+	/**
+	 * Get the first element
+	 *
+	 * @return mixed
+	 */
+	public function first() {
+		if (isset($this->stack[0])) {
+			return $this->stack[0];
+		}
+	}
+
+	/**
+	 * Get the last element
+	 *
+	 * @return mixed
+	 */
+	public function last() {
+		$index = count($this->stack);
+
+		if (isset($this->stack[$index])) {
+			return $this->stack[$index];
+		}
+	}
+
+	/**
 	 * Add an item onto the end
 	 *
 	 * @param $item
