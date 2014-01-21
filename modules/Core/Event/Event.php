@@ -69,25 +69,44 @@ class Event {
 	 * Constructor
 	 */
 	public function __construct() {
-		$waypoints = new \App\Collection();
-		$waypoints->add(array(
-			'latitude' => 12345,
-			'longitude' => 67890,
-		));
 
+		/* Assemble waypoints
+		 */
+		$waypointCollection = new \Core\Event\Waypoint\Collection();
+
+		$node = new \Core\Event\Waypoint\Node(null);
+		$node->setLatitude(111.111)->setLongitude(222.222);
+		$waypointCollection->add($node);
+
+		$node = new \Core\Event\Waypoint\Node(null);
+		$node->setLatitude(333.333)->setLongitude(444.444);
+		$waypointCollection->add($node);
+
+		$node = new \Core\Event\Waypoint\Node(null);
+		$node->setLatitude(555.555)->setLongitude(666.666);
+		$waypointCollection->add($node);
+
+		/* Transcode nodes into a single polyfill
+		 */
+		$waypointCollection->transcode();
+
+		/* Attendees
+		 */
 		$attendees = new \App\Collection();
 		$attendees->add(array(
 			'firstname' => 'Test Firstname',
 			'lastname' => 'Test Lastname',
 		));
 
+		/* People
+		 */
 		$leaders = new \App\Collection();
 		$leaders->add(array(
 			'firstname' => 'John',
 			'lastname' => 'Doe',
 		));
 
-		$this->setWaypoints($waypoints);
+		$this->setWaypoints($waypointCollection);
 		$this->setAttendees($attendees);
 		$this->setLeaders($leaders);
 	}

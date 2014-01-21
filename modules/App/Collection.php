@@ -78,4 +78,25 @@ class Collection implements \Iterator {
 	public function key() {
 		return $this->position;
 	}
+
+	/* Getters/Setters
+	 */
+
+	/**
+	 * Set stack
+	 *
+	 * @param array $stack
+	 */
+	public function setStack($stack) {
+		$this->stack = $stack;
+	}
+
+	/**
+	 * Get stack
+	 *
+	 * @return array
+	 */
+	public function getStack() {
+		return $this->stack;
+	}
 }
