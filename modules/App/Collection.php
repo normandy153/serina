@@ -16,14 +16,14 @@ class Collection implements \Iterator {
 	 *
 	 * @var int
 	 */
-	private $position = 0;
+	protected $position = 0;
 
 	/**
 	 * A stack of items
 	 *
 	 * @var array
 	 */
-	private $stack = array();
+	protected $stack = array();
 
 	/**
 	 * Add an item onto the end

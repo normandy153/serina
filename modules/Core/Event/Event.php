@@ -82,6 +82,14 @@ class Event {
 		$node->setAddress('1 Flinders St, Melbourne');
 		$waypointCollection->add($node);
 
+		$node = new \Core\Event\Waypoint\Node();
+		$node->setAddress('10 Toorak Rd, Melbourne');
+		$waypointCollection->add($node);
+
+		$node = new \Core\Event\Waypoint\Node();
+		$node->setAddress('50 Sydney Rd, Melbourne');
+		$waypointCollection->add($node);
+
 		/* Transcode nodes into a single polyfill
 		 */
 		$waypointCollection->transcode();

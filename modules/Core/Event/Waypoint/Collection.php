@@ -36,15 +36,40 @@ class Collection extends \App\Collection {
 	 * Encode all added Nodes into a single polyfill
 	 */
 	public function transcode() {
-		$url = array();
 
-		foreach($this->getStack() as $currentNode) {
-			$url[] = $currentNode->getAddress();
+		$curl = curl_init();
+
+		curl_setopt($curl, CURLOPT_URL, $this->retrieveUrl());
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+		$result = curl_exec($curl);
+
+		new \App\Probe($this->retrieveUrl());
+		new \App\Probe($result);
+	}
+
+	private function retrieveUrl() {
+		$waypoints = array();
+
+		for ($i = 1; $i < count($this->getStack())-2; $i++) {
+			$currentNode = $this->stack[$i];
+
+			$waypoints[] = $currentNode->getAddress();
 		}
 
-		$suffix = implode('|', $url);
+		$origin = urlencode($this->stack[0]->getAddress());
+		$allWaypoints = urlencode(implode('|', $waypoints));
+		$destination = urlencode($this->stack[count($this->stack)-1]->getAddress());
 
-		new \App\Probe($suffix);
+		$url = 'http://maps.googleapis.com/maps/api/directions/json?sensor=false&origin={ORIGIN}&waypoints={WAYPOINTS}&destination={DESTINATION}';
+
+		$url = strtr($url, array(
+			'{ORIGIN}' => $origin,
+			'{WAYPOINTS}' => $allWaypoints,
+			'{DESTINATION}' => $destination
+		));
+
+		return $url;
 	}
 
 	/* Getters/Setters
