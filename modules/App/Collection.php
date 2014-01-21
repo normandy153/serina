@@ -33,7 +33,7 @@ class Collection implements \Iterator {
 	public function length() {
 		return count($this->stack);
 	}
-	
+
 	/**
 	 * Get the first element
 	 *
@@ -53,8 +53,8 @@ class Collection implements \Iterator {
 	public function last() {
 		$index = count($this->stack);
 
-		if (isset($this->stack[$index])) {
-			return $this->stack[$index];
+		if (isset($this->stack[$index-1])) {
+			return $this->stack[$index-1];
 		}
 	}
 
