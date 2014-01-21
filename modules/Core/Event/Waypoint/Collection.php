@@ -44,15 +44,13 @@ class Collection extends \App\Collection {
 	 */
 	public function transcode() {
 
-		$curl = curl_init();
+		$curl = new \App\Curl($this->retrieveUrl());
 
-		curl_setopt($curl, CURLOPT_URL, $this->retrieveUrl());
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$result = $curl->exec()->getResult();
+		$errors = $curl->exec()->getErrors();
 
-		$result = curl_exec($curl);
-
-		new \App\Probe($this->retrieveUrl());
 		new \App\Probe($result);
+		new \App\Probe($errors);
 	}
 
 	/**
