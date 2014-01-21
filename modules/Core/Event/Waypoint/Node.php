@@ -34,11 +34,8 @@ class Node {
 
 	/**
 	 * Constructor
-	 *
-	 * @param $address
 	 */
-	public function __construct($address) {
-		$this->setAddress($address);
+	public function __construct() {
 	}
 
 	/* Getters/Setters
@@ -48,9 +45,12 @@ class Node {
 	 * Set address
 	 *
 	 * @param string $address
+	 * @return $this
 	 */
-	private function setAddress($address) {
+	public function setAddress($address) {
 		$this->address = $address;
+
+		return $this;
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Node {
 	 *
 	 * @return string
 	 */
-	private function getAddress() {
+	public function getAddress() {
 		return $this->address;
 	}
 

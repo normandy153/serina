@@ -16,7 +16,7 @@ class Collection extends \App\Collection {
 	 *
 	 * @var string
 	 */
-	private $encoded = '';
+	private $encodedPolyfill = '';
 
 	/**
 	 * Maximum number of transcodeable Nodes
@@ -36,10 +36,15 @@ class Collection extends \App\Collection {
 	 * Encode all added Nodes into a single polyfill
 	 */
 	public function transcode() {
+		$url = array();
+
 		foreach($this->getStack() as $currentNode) {
-			new \App\Probe($currentNode);
+			$url[] = $currentNode->getAddress();
 		}
 
+		$suffix = implode('|', $url);
+
+		new \App\Probe($suffix);
 	}
 
 	/* Getters/Setters
@@ -48,10 +53,10 @@ class Collection extends \App\Collection {
 	/**
 	 * Set encoded polyfill
 	 *
-	 * @param string $encoded
+	 * @param string $encodedPolyfill
 	 */
-	public function setEncoded($encoded) {
-		$this->encoded = $encoded;
+	public function setEncodedPolyfill($encodedPolyfill) {
+		$this->encodedPolyfill = $encodedPolyfill;
 	}
 
 	/**
@@ -59,7 +64,10 @@ class Collection extends \App\Collection {
 	 *
 	 * @return string
 	 */
-	public function getEncoded() {
-		return $this->encoded;
+	public function getEncodedPolyfill() {
+		return $this->encodedPolyfill;
 	}
+
+
+
 } 
