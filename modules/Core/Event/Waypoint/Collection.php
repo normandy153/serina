@@ -19,6 +19,13 @@ class Collection extends \App\Collection {
 	private $encodedPolyfill = '';
 
 	/**
+	 * The Google Maps API Url
+	 *
+	 * @var string
+	 */
+	private $apiUrl = 'http://maps.googleapis.com/maps/api/directions/json?sensor=false&origin={ORIGIN}&waypoints={WAYPOINTS}&destination={DESTINATION}';
+
+	/**
 	 * Maximum number of transcodeable Nodes
 	 *
 	 * @var int
@@ -61,9 +68,7 @@ class Collection extends \App\Collection {
 		$allWaypoints = urlencode(implode('|', $waypoints));
 		$destination = urlencode($this->stack[count($this->stack)-1]->getAddress());
 
-		$url = 'http://maps.googleapis.com/maps/api/directions/json?sensor=false&origin={ORIGIN}&waypoints={WAYPOINTS}&destination={DESTINATION}';
-
-		$url = strtr($url, array(
+		$url = strtr($this->getApiUrl(), array(
 			'{ORIGIN}' => $origin,
 			'{WAYPOINTS}' => $allWaypoints,
 			'{DESTINATION}' => $destination
@@ -93,6 +98,21 @@ class Collection extends \App\Collection {
 		return $this->encodedPolyfill;
 	}
 
+	/**
+	 * Set api url
+	 *
+	 * @param string $apiUrl
+	 */
+	private function setApiUrl($apiUrl) {
+		$this->apiUrl = $apiUrl;
+	}
 
-
-} 
+	/**
+	 * Get api url
+	 *
+	 * @return string
+	 */
+	private function getApiUrl() {
+		return $this->apiUrl;
+	}
+}
