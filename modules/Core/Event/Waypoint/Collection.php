@@ -43,14 +43,17 @@ class Collection extends \App\Collection {
 	 * Encode all added Nodes into a single polyfill
 	 */
 	public function transcode() {
-
 		$curl = new \App\Curl($this->retrieveUrl());
 
 		$result = $curl->exec()->getResult();
 		$errors = $curl->exec()->getErrors();
 
-		new \App\Probe($result);
-		new \App\Probe($errors);
+		/* json_decode google response data
+		 * Remember it
+		 */
+		$data = json_decode($result);
+
+		$this->setEncodedPolyfill($data->routes[0]->overiew_polyline->points);
 	}
 
 	/**
