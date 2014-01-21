@@ -55,24 +55,44 @@ class Collection extends \App\Collection {
 		new \App\Probe($result);
 	}
 
+	/**
+	 * Derive a url for Google Maps API
+	 * This encodes all the waypoints between an origin and a destination
+	 *
+	 * @return string
+	 */
 	private function retrieveUrl() {
-		$waypoints = array();
+		$url = '';
 
-		for ($i = 1; $i < count($this->getStack())-2; $i++) {
-			$currentNode = $this->stack[$i];
+		/* A start and end Node must exist
+		 */
+		if ($this->length() >= 2) {
+			$waypoints = array();
 
-			$waypoints[] = $currentNode->getAddress();
+			/* Multiple waypoints exist
+			 */
+			if ($this->length() > 2) {
+				for ($i = 1; $i < $this->length()-1; $i++) {
+					$currentNode = $this->stack[$i];
+
+					$waypoints[] = $currentNode->getAddress();
+				}
+			}
+
+			/* Combine them all
+			 */
+			$origin = urlencode($this->first()->getAddress());
+			$allWaypoints = urlencode(implode('|', $waypoints));
+			$destination = urlencode($this->last()->getAddress());
+
+			/* Inject them into the url
+			 */
+			$url = strtr($this->getApiUrl(), array(
+				'{ORIGIN}' => $origin,
+				'{WAYPOINTS}' => $allWaypoints,
+				'{DESTINATION}' => $destination
+			));
 		}
-
-		$origin = urlencode($this->stack[0]->getAddress());
-		$allWaypoints = urlencode(implode('|', $waypoints));
-		$destination = urlencode($this->stack[count($this->stack)-1]->getAddress());
-
-		$url = strtr($this->getApiUrl(), array(
-			'{ORIGIN}' => $origin,
-			'{WAYPOINTS}' => $allWaypoints,
-			'{DESTINATION}' => $destination
-		));
 
 		return $url;
 	}
