@@ -74,16 +74,12 @@ class Event {
 		 */
 		$waypointCollection = new \Core\Event\Waypoint\Collection();
 
-		$node = new \Core\Event\Waypoint\Node(null);
-		$node->setLatitude(111.111)->setLongitude(222.222);
+		$node = new \Core\Event\Waypoint\Node();
+		$node->setAddress('300 Swanston St, Melbourne');
 		$waypointCollection->add($node);
 
-		$node = new \Core\Event\Waypoint\Node(null);
-		$node->setLatitude(333.333)->setLongitude(444.444);
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node(null);
-		$node->setLatitude(555.555)->setLongitude(666.666);
+		$node = new \Core\Event\Waypoint\Node();
+		$node->setAddress('1 Flinders St, Melbourne');
 		$waypointCollection->add($node);
 
 		/* Transcode nodes into a single polyfill
