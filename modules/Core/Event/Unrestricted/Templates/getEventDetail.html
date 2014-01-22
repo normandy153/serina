@@ -3,18 +3,86 @@
 {% block head %}
 <title>{{ collection[0].getName() }}</title>
 <meta name='description' content="{{ collection[0].getName() }}" />
+<script src="/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfuFD28VOdTEGDuASvI27nAZEKomFys38&libraries=geometry&sensor=true"></script>
 <script type="text/javascript">
+	/**
+	 * Google Maps API Wrapper
+	 */
+	(function($) {
+		$.fn.cartographer = function(options) {
 
+			/* Accept optional parameter
+			 */
+			options = options || {}
+
+			var config = init($(this), options);
+
+			plot();
+
+			/**
+			 * Init
+			 */
+			function init(element, options) {
+				var defaults = {
+					map: '',
+					element: element
+				}
+
+				var derived = {
+				}
+
+				var merged = $.extend(defaults, derived, options);
+
+				return merged;
+			}
+
+			function plot() {
+
+				/* Set bounds
+				 */
+				var coords = new google.maps.LatLng(-37.794593, 144.965973);
+				var bounds = new google.maps.LatLngBounds().extend(coords);
+
+				/* Set up map
+				 */
+				var mapOptions = {
+					mapTypeId: google.maps.MapTypeId.MAP
+				};
+
+				var map = new google.maps.Map(document.getElementById(config.element.attr('id')), mapOptions);
+				map.fitBounds(bounds);
+
+				config.map = map;
+
+
+				for (var i = 0; i < config.polyfills.length; i++) {
+					var decodedPoints = google.maps.geometry.encoding.decodePath(config.polyfills[i]);
+
+					var encodedPolyline = new google.maps.Polyline({
+						strokeColor: "#970E04",
+						strokeOpacity: 1.0,
+						strokeWeight: 2,
+						path: decodedPoints,
+						clickable: false
+					});
+
+					encodedPolyline.setMap(config.map);
+				}
+			}
+		}
+	})(jQuery);
+
+	$(function() {
+		$('#map').cartographer({
+			polyfills: {{ collection[0].getWaypoints().getAllEncodedPolyfills().jsonEncode() | raw }}
+		});
+	});
 </script>
 {% endblock %}
 
 {% block content %}
-
-{% for currentPolyfill in collection[0].getWaypoints().getAllEncodedPolyfills() %}
-	{{ currentPolyfill }}
-{% endfor %}
-
-		
+<div id="map" style="width:800px;height:800px"></div>
 <h1>{{ collection[0].getName() }}</h1>
 <ul>
 	<li>Starts: {{ collection[0].getStartDateTime() }}</li>

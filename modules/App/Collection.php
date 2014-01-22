@@ -46,6 +46,15 @@ class Collection implements \Iterator {
 	}
 
 	/**
+	 * json-encode the current stack's items
+	 *
+	 * @return string
+	 */
+	public function jsonEncode() {
+		return json_encode($this->getStack());
+	}
+
+	/**
 	 * Get the last element
 	 *
 	 * @return mixed
