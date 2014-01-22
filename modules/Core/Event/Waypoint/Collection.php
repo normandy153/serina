@@ -85,6 +85,10 @@ class Collection extends \App\Collection {
 
 				$i++;
 			}
+
+			/* Any remainders not already added
+			 */
+			$allCollections->add($currentCollection);
 		}
 
 		/* A Collection of Collections

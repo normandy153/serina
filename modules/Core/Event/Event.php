@@ -75,66 +75,11 @@ class Event {
 		$waypointCollection = new \Core\Event\Waypoint\Collection();
 
 		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('300 Swanston St, Melbourne');
+		$node->setAddress('169-171 Berkeley Street, Melbourne, VIC, 3000');
 		$waypointCollection->add($node);
 
 		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('1 Flinders St, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('10 Toorak Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('50 Sydney Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('70 Lygon St, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('100 Barkers Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('80 Blackburn Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('200 Canterbury Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node->setAddress('300 Swanston St, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('1 Flinders St, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('10 Toorak Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('50 Sydney Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('70 Lygon St, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('100 Barkers Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('80 Blackburn Rd, Melbourne');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('200 Canterbury Rd, Melbourne');
+		$node->setAddress('Mansfield, Victoria, Australia');
 		$waypointCollection->add($node);
 
 		/* Transcode nodes into a single polyfill collection
