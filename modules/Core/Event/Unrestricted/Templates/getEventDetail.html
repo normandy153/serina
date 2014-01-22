@@ -17,9 +17,14 @@
 			options = options || {}
 
 			var config = init($(this), options);
-			console.log(config);
 
-			plot();
+			/* Set up map canvas
+			 */
+			setupCanvas();
+
+			/* Plot polyfills and center map
+			 */
+			plotRoutes();
 
 			/**
 			 * Init
@@ -40,10 +45,10 @@
 				return merged;
 			}
 
-			function plot() {
-
-				/* Set bounds
-				 */
+			/**
+			 * Determine bounding box for plotted polyfills
+			 */
+			function getBounds() {
 				var bounds = new google.maps.LatLngBounds();
 
 				for (var i = 0; i < config.bounds.length; i++) {
@@ -54,18 +59,13 @@
 					bounds.extend(coords);
 				}
 
-				/* Set up map
-				 */
-				var mapOptions = {
-					mapTypeId: google.maps.MapTypeId.MAP
-				};
+				return bounds;
+			}
 
-				var map = new google.maps.Map(document.getElementById(config.element.attr('id')), mapOptions);
-				map.fitBounds(bounds);
-
-				config.map = map;
-
-
+			/**
+			 * Plot polyfills on map canvas
+			 */
+			function plotRoutes() {
 				for (var i = 0; i < config.polyfills.length; i++) {
 					var decodedPoints = google.maps.geometry.encoding.decodePath(config.polyfills[i]);
 
@@ -79,6 +79,20 @@
 
 					encodedPolyline.setMap(config.map);
 				}
+			}
+
+			/**
+			 * Plot map canvas
+			 */
+			function setupCanvas() {
+				var mapOptions = {
+					mapTypeId: google.maps.MapTypeId.MAP
+				};
+
+				var map = new google.maps.Map(document.getElementById(config.element.attr('id')), mapOptions);
+				map.fitBounds(getBounds());
+
+				config.map = map;
 			}
 		}
 	})(jQuery);
