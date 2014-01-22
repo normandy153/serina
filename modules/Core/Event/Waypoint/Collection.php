@@ -33,16 +33,29 @@ class Collection extends \App\Collection {
 	private $maxItems = 4;
 
 	/**
+	 * An instance of \App\Collection
+	 *
+	 * @var null
+	 */
+	private $allCollections = null;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
 
 	}
 
+	/**
+	 * Break full stack into substacks
+	 *
+	 * @return \App\Collection
+	 */
 	public function regroup() {
 		$allCollections = new \App\Collection();
 
 		if ($this->length()) {
+			$currentCollection = new \App\Collection();
 			$i = 1;
 
 			/* Each currentCollection holds maxItems
@@ -50,8 +63,6 @@ class Collection extends \App\Collection {
 			 * Last element of the previous Collection is the first element
 			 * of the next, for polyfill continuity
 			 */
-			$currentCollection = new \App\Collection();
-
 			foreach($this as $currentItem) {
 				if ($i && !($i % $this->getMaxItems())) {
 					$currentCollection->add($currentItem);
@@ -69,7 +80,9 @@ class Collection extends \App\Collection {
 			}
 		}
 
-		return $allCollections;
+		/* A Collection of Collections
+		 */
+		$this->setAllCollections($allCollections);
 	}
 
 	/**
@@ -188,5 +201,23 @@ class Collection extends \App\Collection {
 	 */
 	private function getMaxItems() {
 		return $this->maxItems;
+	}
+
+	/**
+	 * Set all collections
+	 *
+	 * @param null $allCollections
+	 */
+	private function setAllCollections($allCollections) {
+		$this->allCollections = $allCollections;
+	}
+
+	/**
+	 * Get all collections
+	 *
+	 * @return null
+	 */
+	private function getAllCollections() {
+		return $this->allCollections;
 	}
 }

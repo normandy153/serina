@@ -136,7 +136,7 @@ class Event {
 		$node = new \Core\Event\Waypoint\Node();
 		$node->setAddress('200 Canterbury Rd, Melbourne');
 		$waypointCollection->add($node);
-	
+
 		/* Transcode nodes into a single polyfill
 		 */
 
