@@ -51,9 +51,11 @@ class Collection extends \App\Collection {
 		/* json_decode google response data
 		 * Remember it
 		 */
-		$data = json_decode($result);
+		if (!strlen($errors)) {
+			$data = json_decode($result);
 
-		$this->setEncodedPolyfill($data->routes[0]->overiew_polyline->points);
+			$this->setEncodedPolyfill($data->routes[0]->overview_polyline->points);
+		}
 	}
 
 	/**
