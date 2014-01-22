@@ -30,13 +30,46 @@ class Collection extends \App\Collection {
 	 *
 	 * @var int
 	 */
-	private $maxItems = 8;
+	private $maxItems = 4;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 
+	}
+
+	public function regroup() {
+		$allCollections = new \App\Collection();
+
+		if ($this->length()) {
+			$i = 1;
+
+			/* Each currentCollection holds maxItems
+			 *
+			 * Last element of the previous Collection is the first element
+			 * of the next, for polyfill continuity
+			 */
+			$currentCollection = new \App\Collection();
+
+			foreach($this as $currentItem) {
+				if ($i && !($i % $this->getMaxItems())) {
+					$currentCollection->add($currentItem);
+
+					$allCollections->add($currentCollection);
+
+					/* Reset for next batch
+					 */
+					$currentCollection = new \App\Collection();
+				}
+
+				$currentCollection->add($currentItem);
+
+				$i++;
+			}
+		}
+
+		return $allCollections;
 	}
 
 	/**
@@ -137,5 +170,23 @@ class Collection extends \App\Collection {
 	 */
 	private function getApiUrl() {
 		return $this->apiUrl;
+	}
+
+	/**
+	 * Set max items
+	 *
+	 * @param int $maxItems
+	 */
+	private function setMaxItems($maxItems) {
+		$this->maxItems = $maxItems;
+	}
+
+	/**
+	 * Get max items
+	 *
+	 * @return int
+	 */
+	private function getMaxItems() {
+		return $this->maxItems;
 	}
 }
