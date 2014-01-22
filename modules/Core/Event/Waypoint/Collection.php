@@ -16,7 +16,7 @@ class Collection extends \App\Collection {
 	 *
 	 * @var string
 	 */
-	private $encodedPolyfill = '';
+	private $allEncodedPolyfills = '';
 
 	/**
 	 * The Google Maps API Url
@@ -169,9 +169,7 @@ class Collection extends \App\Collection {
 
 		/* Store all the polyfill results
 		 */
-		$this->setEncodedPolyfill($allEncodedPolyfills);
-
-		new \App\Probe($allEncodedPolyfills);
+		$this->setAllEncodedPolyfills($allEncodedPolyfills);
 	}
 
 	/* Getters/Setters
@@ -180,10 +178,10 @@ class Collection extends \App\Collection {
 	/**
 	 * Set encoded polyfill
 	 *
-	 * @param string $encodedPolyfill
+	 * @param string $allEncodedPolyfills
 	 */
-	public function setEncodedPolyfill($encodedPolyfill) {
-		$this->encodedPolyfill = $encodedPolyfill;
+	public function setAllEncodedPolyfills($allEncodedPolyfills) {
+		$this->allEncodedPolyfills = $allEncodedPolyfills;
 	}
 
 	/**
@@ -191,8 +189,8 @@ class Collection extends \App\Collection {
 	 *
 	 * @return string
 	 */
-	public function getEncodedPolyfill() {
-		return $this->encodedPolyfill;
+	public function getAllEncodedPolyfills() {
+		return $this->allEncodedPolyfills;
 	}
 
 	/**
