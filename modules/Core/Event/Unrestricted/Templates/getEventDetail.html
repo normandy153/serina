@@ -3,9 +3,18 @@
 {% block head %}
 <title>{{ collection[0].getName() }}</title>
 <meta name='description' content="{{ collection[0].getName() }}" />
+<script type="text/javascript">
+
+</script>
 {% endblock %}
 
 {% block content %}
+
+{% for currentPolyfill in collection[0].getWaypoints().getAllEncodedPolyfills() %}
+	{{ currentPolyfill }}
+{% endfor %}
+
+		
 <h1>{{ collection[0].getName() }}</h1>
 <ul>
 	<li>Starts: {{ collection[0].getStartDateTime() }}</li>
