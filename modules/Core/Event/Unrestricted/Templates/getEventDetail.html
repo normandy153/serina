@@ -17,6 +17,7 @@
 			options = options || {}
 
 			var config = init($(this), options);
+			console.log(config);
 
 			plot();
 
@@ -26,7 +27,9 @@
 			function init(element, options) {
 				var defaults = {
 					map: '',
-					element: element
+					element: element,
+					bounds: [],
+					polyfills: []
 				}
 
 				var derived = {
@@ -41,8 +44,15 @@
 
 				/* Set bounds
 				 */
-				var coords = new google.maps.LatLng(-37.794593, 144.965973);
-				var bounds = new google.maps.LatLngBounds().extend(coords);
+				var bounds = new google.maps.LatLngBounds();
+
+				for (var i = 0; i < config.bounds.length; i++) {
+					var coords = new google.maps.LatLng(config.bounds[i].northeast.lat, config.bounds[i].northeast.lng);
+					bounds.extend(coords);
+
+					var coords = new google.maps.LatLng(config.bounds[i].southwest.lat, config.bounds[i].southwest.lng);
+					bounds.extend(coords);
+				}
 
 				/* Set up map
 				 */
@@ -75,6 +85,7 @@
 
 	$(function() {
 		$('#map').cartographer({
+			bounds: {{ collection[0].getWaypoints().getAllBounds().jsonEncode() | raw }},
 			polyfills: {{ collection[0].getWaypoints().getAllEncodedPolyfills().jsonEncode() | raw }}
 		});
 	});

@@ -12,11 +12,18 @@ namespace Core\Event\Waypoint;
 class Collection extends \App\Collection {
 
 	/**
+	 * All bounding data for maps
+	 *
+	 * @var null
+	 */
+	private $allBounds = null;
+
+	/**
 	 * Encoded polyfill for the Nodes contained within
 	 *
-	 * @var string
+	 * @var null
 	 */
-	private $allEncodedPolyfills = '';
+	private $allEncodedPolyfills = null;
 
 	/**
 	 * The Google Maps API Url
@@ -145,6 +152,10 @@ class Collection extends \App\Collection {
 		 */
 		$this->regroup();
 
+		/* Bounds
+		 */
+		$allBounds = new \App\Collection();
+
 		/* A collection of polyfills
 		 */
 		$allEncodedPolyfills = new \App\Collection();
@@ -163,9 +174,14 @@ class Collection extends \App\Collection {
 			if (!strlen($errors)) {
 				$data = json_decode($result);
 
+				$allBounds->add($data->routes[0]->bounds);
 				$allEncodedPolyfills->add($data->routes[0]->overview_polyline->points);
 			}
 		}
+
+		/* Store all bounding data
+		 */
+		$this->setAllBounds($allBounds);
 
 		/* Store all the polyfill results
 		 */
@@ -245,5 +261,23 @@ class Collection extends \App\Collection {
 	 */
 	private function getAllCollections() {
 		return $this->allCollections;
+	}
+
+	/**
+	 * Set all bounds
+	 *
+	 * @param null $allBounds
+	 */
+	private function setAllBounds($allBounds) {
+		$this->allBounds = $allBounds;
+	}
+
+	/**
+	 * Get all bounds
+	 *
+	 * @return null
+	 */
+	public function getAllBounds() {
+		return $this->allBounds;
 	}
 }
