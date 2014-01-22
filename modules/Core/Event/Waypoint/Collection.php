@@ -51,7 +51,7 @@ class Collection extends \App\Collection {
 	 *
 	 * @return \App\Collection
 	 */
-	public function regroup() {
+	private function regroup() {
 		$allCollections = new \App\Collection();
 
 		if ($this->length()) {
@@ -86,64 +86,92 @@ class Collection extends \App\Collection {
 	}
 
 	/**
-	 * Encode all added Nodes into a single polyfill
-	 */
-	public function transcode() {
-		$curl = new \App\Curl($this->retrieveUrl());
-
-		$result = $curl->exec()->getResult();
-		$errors = $curl->exec()->getErrors();
-
-		/* json_decode google response data
-		 * Remember it
-		 */
-		if (!strlen($errors)) {
-			$data = json_decode($result);
-
-			$this->setEncodedPolyfill($data->routes[0]->overview_polyline->points);
-		}
-	}
-
-	/**
 	 * Derive a url for Google Maps API
 	 * This encodes all the waypoints between an origin and a destination
 	 *
 	 * @return string
 	 */
-	private function retrieveUrl() {
-		$url = '';
+	private function retrieveUrls() {
+		$allUrls = new \App\Collection();
 
-		/* A start and end Node must exist
+		/* Process each group of Nodes
 		 */
-		if ($this->length() >= 2) {
-			$waypoints = array();
+		foreach($this->getAllCollections() as $currentCollection) {
 
-			/* Multiple waypoints exist
+			/* A start and end Node must exist
 			 */
-			if ($this->length() > 2) {
-				for ($i = 1; $i < $this->length()-1; $i++) {
-					$currentNode = $this->stack[$i];
+			if ($currentCollection->length() >= 2) {
+				$waypoints = array();
 
-					$waypoints[] = $currentNode->getAddress();
+				/* Multiple waypoints exist
+				 */
+				if ($this->length() > 2) {
+					for ($i = 1; $i < $currentCollection->length()-1; $i++) {
+						$currentNode = $currentCollection->stack[$i];
+
+						$waypoints[] = $currentNode->getAddress();
+					}
 				}
+
+				/* Combine them all
+				 */
+				$origin = urlencode($currentCollection->first()->getAddress());
+				$allWaypoints = urlencode(implode('|', $waypoints));
+				$destination = urlencode($currentCollection->last()->getAddress());
+
+				/* Inject them into the url
+				 */
+				$url = strtr($this->getApiUrl(), array(
+					'{ORIGIN}' => $origin,
+					'{WAYPOINTS}' => $allWaypoints,
+					'{DESTINATION}' => $destination
+				));
+
+				/* Keep a register of all urls that need curling
+				 */
+				$allUrls->add($url);
 			}
-
-			/* Combine them all
-			 */
-			$origin = urlencode($this->first()->getAddress());
-			$allWaypoints = urlencode(implode('|', $waypoints));
-			$destination = urlencode($this->last()->getAddress());
-
-			/* Inject them into the url
-			 */
-			$url = strtr($this->getApiUrl(), array(
-				'{ORIGIN}' => $origin,
-				'{WAYPOINTS}' => $allWaypoints,
-				'{DESTINATION}' => $destination
-			));
 		}
 
-		return $url;
+		return $allUrls;
+	}
+
+	/**
+	 * Encode all added Nodes into a single polyfill
+	 */
+	public function transcode() {
+
+		/* Assemble a Collection of Collections, for Google Maps API
+		 */
+		$this->regroup();
+
+		/* A collection of polyfills
+		 */
+		$allEncodedPolyfills = new \App\Collection();
+
+		/* Process each polyfill url individually
+		 */
+		foreach($this->retrieveUrls() as $currentUrl) {
+			$curl = new \App\Curl($currentUrl);
+
+			$result = $curl->exec()->getResult();
+			$errors = $curl->exec()->getErrors();
+
+			/* json_decode google response data
+			 * Remember it
+			 */
+			if (!strlen($errors)) {
+				$data = json_decode($result);
+
+				$allEncodedPolyfills->add($data->routes[0]->overview_polyline->points);
+			}
+		}
+
+		/* Store all the polyfill results
+		 */
+		$this->setEncodedPolyfill($allEncodedPolyfills);
+
+		new \App\Probe($allEncodedPolyfills);
 	}
 
 	/* Getters/Setters

@@ -137,11 +137,9 @@ class Event {
 		$node->setAddress('200 Canterbury Rd, Melbourne');
 		$waypointCollection->add($node);
 
-		/* Transcode nodes into a single polyfill
+		/* Transcode nodes into a single polyfill collection
 		 */
-
-		new \App\Probe($waypointCollection->regroup());
-//		$waypointCollection->transcode();
+		$waypointCollection->transcode();
 
 		/* Attendees
 		 */
