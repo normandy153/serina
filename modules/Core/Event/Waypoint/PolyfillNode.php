@@ -1,6 +1,6 @@
 <?php
 /**
- * Node
+ * PolyfillNode
  *
  * This represents a place in the world represented by an address. This is
  * transcoded by Google Maps API for route plotting on a map canvas
@@ -12,7 +12,7 @@
 namespace Core\Event\Waypoint;
 
 
-class Node {
+class PolyfillNode {
 
 	/**
 	 * Address of a waypoint to be geocoded

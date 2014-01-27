@@ -56,7 +56,7 @@ class PolyfillCollection extends \App\Collection {
 	public function __construct($allWaypoints) {
 		if (is_array($allWaypoints) && count($allWaypoints)) {
 			foreach($allWaypoints as $currentWaypoint) {
-				$node = new \Core\Event\Waypoint\Node();
+				$node = new PolyfillNode();
 				$node->setAddress($currentWaypoint);
 				$this->add($node);
 			}
