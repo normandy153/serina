@@ -9,7 +9,7 @@
 namespace App;
 
 
-class Collection implements \Iterator {
+class Collection implements \Iterator, \JsonSerializable {
 
 	/**
 	 * Current position
@@ -50,8 +50,14 @@ class Collection implements \Iterator {
 	 *
 	 * @return string
 	 */
-	public function jsonEncode() {
-		return json_encode($this->getStack());
+	public function jsonSerialize() {
+		$encoded = array();
+
+		foreach($this->getStack() as $currentItem) {
+			$encoded[] = $currentItem->jsonSerialize();
+		}
+
+		return json_encode($encoded);
 	}
 
 	/**
