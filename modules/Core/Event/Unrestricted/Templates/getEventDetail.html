@@ -24,17 +24,13 @@
 	<li>Ends: {{ collection[0].getEndDateTime() }}</li>
 </ul>
 
-<div>
-	<p>
-		{{ collection[0].getDescription() }}
-	</p>
-</div>
+<section class="event-brief">
+	{{ collection[0].getBrief() | raw }}
+</section>
 
-<ul>
-	{% for currentWaypoint in collection[0].getWaypoints() %}
-	<li>{{ currentWaypoint.latitude }} / {{ currentWaypoint.longitude }}</li>
-	{% endfor %}
-</ul>
+<section class="event-description">
+	{{ collection[0].getDescription() | raw }}
+</section>
 
 <ul>
 	{% for currentAttendee in collection[0].getAttendees() %}

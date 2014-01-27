@@ -24,11 +24,23 @@ class Event {
 	private $name = 'Test Event';
 
 	/**
+	 * Event brief
+	 *
+	 * @var string
+	 */
+	private $brief = '<p>Dynamically target high-payoff intellectual capital for customized technologies. Objectively integrate emerging core competencies before process-centric communities. Dramatically evisculate holistic innovation rather than client-centric data.</p>';
+
+	/**
 	 * Event description
 	 *
 	 * @var string
 	 */
-	private $description = 'A description for Test Event';
+	private $description = '
+		<p>Credibly reintermediate backend ideas for cross-platform models. Continually reintermediate integrated processes through technically sound intellectual capital. Holistically foster superior methodologies without market-driven best practices.</p>
+		<p>Distinctively exploit optimal alignments for intuitive bandwidth. Quickly coordinate e-business applications through revolutionary catalysts for change. Seamlessly underwhelm optimal testing procedures whereas bricks-and-clicks processes.</p>
+		<p>Synergistically evolve 2.0 technologies rather than just in time initiatives. Quickly deploy strategic networks with compelling e-business. Credibly pontificate highly efficient manufactured products and enabled data.</p>
+		<p>Dynamically target high-payoff intellectual capital for customized technologies. Objectively integrate emerging core competencies before process-centric communities. Dramatically evisculate holistic innovation rather than client-centric data.</p>
+		<p>Progressively maintain extensive infomediaries via extensible niches. Dramatically disseminate standardized metrics after resource-leveling processes. Objectively pursue diverse catalysts for change for interoperable meta-services.</p>';
 
 	/**
 	 * Start date
@@ -47,7 +59,7 @@ class Event {
 	/**
 	 * A collection of Waypoint instances
 	 *
-	 * @var null
+	 * @var Event\Waypoint\PolyfillCollection
 	 */
 	private $waypoints = null;
 
@@ -250,5 +262,19 @@ class Event {
 		return $this->leaders;
 	}
 
+	/**
+	 * Set event brief
+	 *
+	 * @param string $brief
+	 */
+	public function setBrief($brief) {
+		$this->brief = $brief;
+	}
 
+	/**
+	 * @return string
+	 */
+	public function getBrief() {
+		return $this->brief;
+	}
 }
