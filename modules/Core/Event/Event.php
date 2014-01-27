@@ -57,6 +57,34 @@ class Event {
 	private $endDateTime = '2014-01-17 17:00:00';
 
 	/**
+	 * Whether this event is hidden from the public
+	 *
+	 * @var bool
+	 */
+	private $hidden = false;
+
+	/**
+	 * When this event was created
+	 *
+	 * @var string
+	 */
+	private $createdAt = '';
+
+	/**
+	 * When this event was last updated
+	 *
+	 * @var string
+	 */
+	private $updatedAt = '';
+
+	/**
+	 * When this event was softdeleted
+	 *
+	 * @var string
+	 */
+	private $deletedAt = '';
+
+	/**
 	 * A collection of Waypoint instances
 	 *
 	 * @var Event\Waypoint\PolyfillCollection
@@ -272,9 +300,84 @@ class Event {
 	}
 
 	/**
+	 * Get brief
+	 *
 	 * @return string
 	 */
 	public function getBrief() {
 		return $this->brief;
+	}
+
+
+	/**
+	 * Set hidden
+	 *
+	 * @param boolean $hidden
+	 */
+	public function setHidden($hidden) {
+		$this->hidden = $hidden;
+	}
+
+	/**
+	 * Get hidden
+	 *
+	 * @return boolean
+	 */
+	public function getHidden() {
+		return $this->hidden;
+	}
+
+	/**
+	 * Set created at
+	 *
+	 * @param string $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
+
+	/**
+	 * Get created at
+	 *
+	 * @return string
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set updated at
+	 *
+	 * @param string $updatedAt
+	 */
+	public function setUpdatedAt($updatedAt) {
+		$this->updatedAt = $updatedAt;
+	}
+
+	/**
+	 * Get updated at
+	 *
+	 * @return string
+	 */
+	public function getUpdatedAt() {
+		return $this->updatedAt;
+	}
+
+	/**
+	 * Set deleted at
+	 *
+	 * @param string $deletedAt
+	 */
+	public function setDeletedAt($deletedAt) {
+		$this->deletedAt = $deletedAt;
+	}
+
+	/**
+	 * Get deleted at
+	 *
+	 * @return string
+	 */
+	public function getDeletedAt() {
+		return $this->deletedAt;
 	}
 }
