@@ -1,6 +1,8 @@
 <?php
 /**
- * Unencoded.php
+ * Marker
+ *
+ * A latitude/longitude represented location in the world
  *
  * Date: 21/01/2014
  * Time: 10:58 PM
