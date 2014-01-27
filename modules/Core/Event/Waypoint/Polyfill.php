@@ -10,7 +10,7 @@
 namespace Core\Event\Waypoint;
 
 
-class Polyfill {
+class Polyfill implements \JsonSerializable {
 
 	/**
 	 * Polyfill string from Google Maps result
