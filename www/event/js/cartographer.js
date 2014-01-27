@@ -18,6 +18,10 @@
          */
         plotRoutes();
 
+		/* Plot markers
+		 */
+		plotMarkers();
+
         /**
          * Init
          */
@@ -26,7 +30,8 @@
                 map: '',
                 element: element,
                 bounds: [],
-                polyfills: []
+                polyfills: [],
+				markers: []
             }
 
             var derived = {
@@ -72,6 +77,26 @@
                 encodedPolyline.setMap(config.map);
             }
         }
+
+		/**
+		 * Plot markers on map canvas
+		 */
+		function plotMarkers() {
+			var image = '/event/img/marker.png';
+
+			for (var i = 0; i < config.markers.length; i++) {
+				if (config.markers[i].latitude != undefined) {
+					var definition = {
+						title: config.markers[i].description,
+						icon: image,
+						position: new google.maps.LatLng(config.markers[i].latitude, config.markers[i].longitude),
+						map: config.map
+					}
+
+					var marker = new google.maps.Marker(definition);
+				}
+			}
+		}
 
         /**
          * Plot map canvas

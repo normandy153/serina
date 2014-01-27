@@ -139,6 +139,12 @@ class Event {
 		$marker->setDescription('A random place.');
 		$markerCollection->add($marker);
 
+		$marker = new \Core\Event\Waypoint\Marker();
+		$marker->setLatitude('-36.732281');
+		$marker->setLongitude('147.306061');
+		$marker->setDescription('Mt. Bogong Summit');
+		$markerCollection->add($marker);
+
 		/* Attendees
 		 */
 		$attendees = new \App\Collection();
