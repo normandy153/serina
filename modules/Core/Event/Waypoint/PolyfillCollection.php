@@ -9,7 +9,7 @@
 namespace Core\Event\Waypoint;
 
 
-class Collection extends \App\Collection {
+class PolyfillCollection extends \App\Collection {
 
 	/**
 	 * All bounding data for maps

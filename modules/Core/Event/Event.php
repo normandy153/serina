@@ -79,7 +79,7 @@ class Event {
 			'Tawonga South, Australia',
 		);
 
-		$waypointCollection = new \Core\Event\Waypoint\Collection($allWaypoints);
+		$waypointCollection = new \Core\Event\Waypoint\PolyfillCollection($allWaypoints);
 		$waypointCollection->transcode();
 
 		/* Attendees
