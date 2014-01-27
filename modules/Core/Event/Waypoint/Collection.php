@@ -48,9 +48,19 @@ class Collection extends \App\Collection {
 
 	/**
 	 * Constructor
+	 *
+	 * Construct a collection of Nodes from an array of addresses
+	 *
+	 * @param $allWaypoints
 	 */
-	public function __construct() {
-
+	public function __construct($allWaypoints) {
+		if (is_array($allWaypoints) && count($allWaypoints)) {
+			foreach($allWaypoints as $currentWaypoint) {
+				$node = new \Core\Event\Waypoint\Node();
+				$node->setAddress($currentWaypoint);
+				$this->add($node);
+			}
+		}
 	}
 
 	/**

@@ -71,19 +71,15 @@ class Event {
 	public function __construct() {
 
 		/* Assemble waypoints
+		 * Transcode nodes into a single polyfill collection
 		 */
-		$waypointCollection = new \Core\Event\Waypoint\Collection();
+		$allWaypoints = array(
+			'169-171 Berkeley Street, Melbourne, VIC, 3000',
+			'Mansfield, Victoria, Australia',
+			'Tawonga South, Australia',
+		);
 
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('169-171 Berkeley Street, Melbourne, VIC, 3000');
-		$waypointCollection->add($node);
-
-		$node = new \Core\Event\Waypoint\Node();
-		$node->setAddress('Mansfield, Victoria, Australia');
-		$waypointCollection->add($node);
-
-		/* Transcode nodes into a single polyfill collection
-		 */
+		$waypointCollection = new \Core\Event\Waypoint\Collection($allWaypoints);
 		$waypointCollection->transcode();
 
 		/* Attendees
