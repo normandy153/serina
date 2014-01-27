@@ -9,28 +9,28 @@
 namespace Core\Event\Waypoint;
 
 
-class Node {
+class Marker implements \JsonSerializable {
 
 	/**
-	 * Address of a waypoint to be geocoded
-	 *
-	 * @var string
-	 */
-	private $address = '';
-
-	/**
-	 * Latitude of a waypoint
+	 * Latitude of a marker
 	 *
 	 * @var string
 	 */
 	private $latitude = '';
 
 	/**
-	 * Longitude of a waypoint
+	 * Longitude of a marker
 	 *
 	 * @var string
 	 */
 	private $longitude = '';
+
+	/**
+	 * A description for this marker
+	 *
+	 * @var string
+	 */
+	private $description = '';
 
 	/**
 	 * Constructor
@@ -38,29 +38,21 @@ class Node {
 	public function __construct() {
 	}
 
+	/**
+	 * Convert this to a json_encode friendly format
+	 *
+	 * @return array|mixed
+	 */
+	public function jsonSerialize() {
+		return array(
+			'latitude' => $this->getLatitude(),
+			'longitude' => $this->getLongitude(),
+			'description' => $this->getDescription()
+		);
+	}
+
 	/* Getters/Setters
 	 */
-
-	/**
-	 * Set address
-	 *
-	 * @param string $address
-	 * @return $this
-	 */
-	public function setAddress($address) {
-		$this->address = $address;
-
-		return $this;
-	}
-
-	/**
-	 * Get address
-	 *
-	 * @return string
-	 */
-	public function getAddress() {
-		return $this->address;
-	}
 
 	/**
 	 * Set latitude
@@ -103,4 +95,22 @@ class Node {
 	public function getLongitude() {
 		return $this->longitude;
 	}
-} 
+
+	/**
+	 * Set description
+	 *
+	 * @param string $description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
+	/**
+	 * Get description
+	 *
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+}

@@ -85,11 +85,18 @@ class Event {
 	private $deletedAt = '';
 
 	/**
-	 * A collection of Waypoint instances
+	 * A collection of Node instances which used addresses
 	 *
 	 * @var Event\Waypoint\PolyfillCollection
 	 */
 	private $waypoints = null;
+
+	/**
+	 * A collection of Marker instances which used lat/long
+	 *
+	 * @var \App\Collection
+	 */
+	private $markers = null;
 
 	/**
 	 * A collection of User instances
@@ -122,6 +129,16 @@ class Event {
 		$waypointCollection = new \Core\Event\Waypoint\PolyfillCollection($allWaypoints);
 		$waypointCollection->transcode();
 
+		/* Markers (Points of Interest)
+		 */
+		$markerCollection = new \App\Collection();
+
+		$marker = new \Core\Event\Waypoint\Marker();
+		$marker->setLatitude('-37.777185');
+		$marker->setLongitude('144.834234');
+		$marker->setDescription('A random place.');
+		$markerCollection->add($marker);
+
 		/* Attendees
 		 */
 		$attendees = new \App\Collection();
@@ -139,6 +156,7 @@ class Event {
 		));
 
 		$this->setWaypoints($waypointCollection);
+		$this->setMarkers($markerCollection);
 		$this->setAttendees($attendees);
 		$this->setLeaders($leaders);
 	}
@@ -234,6 +252,24 @@ class Event {
 	 */
 	public function getWaypoints() {
 		return $this->waypoints;
+	}
+
+	/**
+	 * Set markers
+	 *
+	 * @param null $markers
+	 */
+	public function setMarkers($markers) {
+		$this->markers = $markers;
+	}
+
+	/**
+	 * Get markers
+	 *
+	 * @return null
+	 */
+	public function getMarkers() {
+		return $this->markers;
 	}
 
 	/**
