@@ -188,8 +188,16 @@ class PolyfillCollection extends \App\Collection {
 			if (!strlen($errors)) {
 				$data = json_decode($result);
 
-				$allBounds->add($data->routes[0]->bounds);
-				$allEncodedPolyfills->add($data->routes[0]->overview_polyline->points);
+				/* Add polyfil
+				 */
+				$polyfill = new Polyfill($data->routes[0]->overview_polyline->points);
+				$allEncodedPolyfills->add($polyfill);
+
+				/* Map bounds
+				 * For jsonSerialize interface
+				 */
+				$bounds = new Bounds($data->routes[0]->bounds);
+				$allBounds->add($bounds);
 			}
 		}
 
