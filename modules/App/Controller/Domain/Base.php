@@ -1,13 +1,13 @@
 <?php
 /**
- * ControllerAbstract
+ * Base
  *
  * Date: 24/12/13
  * Time: 3:57 PM
  */
 
 
-namespace App\Controller\Type;
+namespace App\Controller\Domain;
 
 
 abstract class Base {
