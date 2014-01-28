@@ -1,6 +1,8 @@
 <?php
 /**
- * Collection.php
+ * PolyfillCollection
+ *
+ * A collection of PolyfillNodes which get converted into Polyfill objects
  *
  * Date: 21/01/2014
  * Time: 11:28 PM
