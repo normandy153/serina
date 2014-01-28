@@ -1,0 +1,32 @@
+article div.event-brief p {
+	font-size: 16px;
+	font-style: italic;
+}
+
+/* Overcome css-reset problems with controls
+ * https://groups.google.com/forum/#!topic/google-maps-js-api-v3/3YIftYyNmyk
+ */
+#event-map img {
+	max-width: inherit;
+}
+
+#event-map {
+	width: auto;
+	height: 400px;
+	display: block;
+}
+
+@media screen and (min-width: 63.237em) {
+}
+
+@media screen and (min-width: 33.236em) and (max-width: 63.236em) {
+	#event-map {
+		height: 325px;
+	}
+}
+
+@media screen and (max-width: 33.235em) {
+	#event-map {
+		height: 250px;
+	}
+}

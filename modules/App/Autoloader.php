@@ -47,15 +47,29 @@ class Autoloader {
 	 */
 	private function app($classname) {
 		$prefix = dirname(__FILE__) . '/../';
-		$filename = str_replace('\\', '/', $classname) . '.php';
+		$basename = str_replace('\\', '/', $classname);
+		$filename = $basename . '.php';
 
+		$bits = explode('/', $basename);
+
+		if (count($bits)) {
+			$model = array_pop($bits) . '.php';
+		}
+		else {
+			$model = $classname;
+		}
+
+		$modelPath = $prefix . $basename . '/' . $model;
 		$directPath =  $prefix . $filename;
 		$customPath = $prefix . 'Custom/' . $filename;
 		$corePath = $prefix . 'Core/' . $filename;
 
 		/* Try three possible locations in order
 		 */
-		if (file_exists($directPath)) {
+		if (file_exists($modelPath)) {
+			require_once($modelPath);
+		}
+		else if (file_exists($directPath)) {
 			require_once($directPath);
 		}
 		else if (file_exists($customPath)) {
