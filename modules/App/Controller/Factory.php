@@ -56,7 +56,7 @@ class Factory {
 		 * Spawn one and return it if found; otherwise frag out
 		 */
 		foreach($this->getDirs() as $currentDir) {
-			$className = "\\{$currentDir}\\{$this->getRequest()->getModule()}\\{$this->getRequest()->getType()}\\Controller";
+			$className = "\\{$currentDir}\\{$this->getRequest()->getModule()}\\Domain\\{$this->getRequest()->getType()}\\Controller";
 
 			/* Remember where it was found
 			 */

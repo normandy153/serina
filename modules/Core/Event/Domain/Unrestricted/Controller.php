@@ -6,10 +6,10 @@
  * Time: 11:46 PM
  */
 
-namespace Core\Event\Unrestricted;
+namespace Core\Event\Domain\Unrestricted;
 
 
-class Controller extends \App\Controller\Type\Unrestricted {
+class Controller extends \App\Controller\Domain\Unrestricted {
 
 	/**
 	 * Detail view of a particular event

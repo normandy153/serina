@@ -7,7 +7,7 @@
  */
 
 
-namespace App\Controller\Type;
+namespace App\Controller\Domain;
 
 
 abstract class Restricted extends Base {

@@ -1,16 +1,16 @@
 <?php
 /**
- * Unrestricted
+ * Admin
  *
  * Date: 2/01/14
  * Time: 11:12 PM
  */
 
 
-namespace App\Controller\Type;
+namespace App\Controller\Domain;
 
 
-abstract class Unrestricted extends Base {
+abstract class Admin extends Base {
 
 	/**
 	 * Hook method
