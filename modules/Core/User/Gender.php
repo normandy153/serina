@@ -12,6 +12,13 @@ namespace Core\User;
 class Gender {
 
 	/**
+	 * Id
+	 *
+	 * @var int
+	 */
+	private $id = -1;
+
+	/**
 	 * Single-letter representation
 	 *
 	 * @var string
@@ -89,5 +96,23 @@ class Gender {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+
+	/**
+	 * Set id
+	 *
+	 * @param int $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	/**
+	 * Get id
+	 *
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
 	}
 } 
