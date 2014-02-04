@@ -75,13 +75,6 @@ class User {
 	private $email = '';
 
 	/**
-	 * The date when the user account was requested to be updated
-	 *
-	 * @var string
-	 */
-	private $applicationDate = '';
-
-	/**
 	 * A collection of emergency contacts
 	 *
 	 * @var null
@@ -164,24 +157,6 @@ class User {
 	 */
 	public function getAddress() {
 		return $this->address;
-	}
-
-	/**
-	 * Set application date
-	 *
-	 * @param string $applicationDate
-	 */
-	public function setApplicationDate($applicationDate) {
-		$this->applicationDate = $applicationDate;
-	}
-
-	/**
-	 * Get application date
-	 *
-	 * @return string
-	 */
-	public function getApplicationDate() {
-		return $this->applicationDate;
 	}
 
 	/**
