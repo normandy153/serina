@@ -21,8 +21,7 @@ class Email {
 	/**
 	 * Constructor
 	 */
-	public function __construct($address) {
-		$this->setAddress($address);
+	public function __construct() {
 	}
 
 	/**
@@ -38,6 +37,8 @@ class Email {
 	 */
 
 	/**
+	 * Set address
+	 *
 	 * @param string $address
 	 */
 	public function setAddress($address) {
@@ -45,6 +46,8 @@ class Email {
 	}
 
 	/**
+	 * Get address
+	 *
 	 * @return string
 	 */
 	public function getAddress() {
