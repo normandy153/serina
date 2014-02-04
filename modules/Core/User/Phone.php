@@ -29,7 +29,6 @@ class Phone {
 	 * Constructor
 	 */
 	public function __construct() {
-
 	}
 
 	/* Getters/Setters
