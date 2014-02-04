@@ -76,6 +76,8 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$account = new \Core\User\Account();
 		$account->setUsername('smithj');
 		$account->setPassword($account->encode('smithjpassword'));
+		$account->setActivationDate('2014-02-03 22:10:01');
+		$account->setExpiryDate('2015-02-03 22:10:01');
 
 		/* Define test User
 		 */
@@ -88,7 +90,6 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$user->setPhone($phone);
 		$user->setMobile($mobile);
 		$user->setEmail($email);
-		$user->setApplicationDate('2014-02-03');
 		$user->setEmergencyContact($contact);
 		$user->setAccount($account);
 		$user->setCreatedAt('2010-06-19 14:45:34');
