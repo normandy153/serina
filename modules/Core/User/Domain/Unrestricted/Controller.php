@@ -91,6 +91,8 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$user->setApplicationDate('2014-02-03');
 		$user->setEmergencyContact($contact);
 		$user->setAccount($account);
+		$user->setCreatedAt('2010-06-19 14:45:34');
+		$user->setUpdatedAt('2010-06-19 14:45:34');
 
 		new \App\Probe($user);
 		exit();
