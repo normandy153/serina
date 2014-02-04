@@ -26,10 +26,34 @@ class Account {
 	private $password = '';
 
 	/**
+	 * The date when the account was activated
+	 *
+	 * @var string
+	 */
+	private $activationDate = '';
+
+	/**
+	 * The date when the account will be deactivated
+	 *
+	 * @var string
+	 */
+	private $expiryDate = '';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
 
+	}
+
+	/**
+	 * One-way hash
+	 *
+	 * @param $value
+	 * @return string
+	 */
+	public function encode($value) {
+		return sha1($value);
 	}
 
 	/* Getters/Setters
@@ -72,12 +96,38 @@ class Account {
 	}
 
 	/**
-	 * One-way hash
+	 * Set activation date
 	 *
-	 * @param $value
+	 * @param string $activationDate
+	 */
+	public function setActivationDate($activationDate) {
+		$this->activationDate = $activationDate;
+	}
+
+	/**
+	 * Get activation date
+	 *
 	 * @return string
 	 */
-	public function encode($value) {
-		return sha1($value);
+	public function getActivationDate() {
+		return $this->activationDate;
+	}
+
+	/**
+	 * Set expiry date
+	 *
+	 * @param string $expiryDate
+	 */
+	public function setExpiryDate($expiryDate) {
+		$this->expiryDate = $expiryDate;
+	}
+
+	/**
+	 * Get expiry date
+	 *
+	 * @return string
+	 */
+	public function getExpiryDate() {
+		return $this->expiryDate;
 	}
 } 
