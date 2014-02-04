@@ -47,9 +47,10 @@ class Gender {
 			case 'f':
 			case 'female':
 				$this->setAbbreviation('F')->setName('Female');
-			break;
+				break;
 
-			default: break;
+			default:
+				break;
 		}
 	}
 
