@@ -37,7 +37,7 @@ class Gender {
 	 *
 	 * @param $string
 	 */
-	public function construct($string) {
+	public function __construct($string) {
 		switch(strtolower($string)) {
 			case 'm':
 			case 'male':
