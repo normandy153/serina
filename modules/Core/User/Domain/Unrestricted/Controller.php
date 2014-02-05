@@ -82,6 +82,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		/* Define test User
 		 */
 		$user = new \Core\User();
+		$user->setUuid(crypt(uniqid() . sha1(microtime())));
 		$user->setFirstname('John');
 		$user->setLastname('Smith');
 		$user->setBirthdate('1990-11-07');

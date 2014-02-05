@@ -19,6 +19,13 @@ class User {
 	private $id = -1;
 
 	/**
+	 * Non-incrementing unique identifier
+	 *
+	 * @var string
+	 */
+	private $uuid = '';
+
+	/**
 	 * User's first name
 	 *
 	 * @var string
@@ -393,5 +400,21 @@ class User {
 		return $this->updatedAt;
 	}
 
+	/**
+	 * Set uuid
+	 *
+	 * @param string $uuid
+	 */
+	public function setUuid($uuid) {
+		$this->uuid = $uuid;
+	}
 
+	/**
+	 * Get uuid
+	 *
+	 * @return string
+	 */
+	public function getUuid() {
+		return $this->uuid;
+	}
 } 
