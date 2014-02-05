@@ -1,8 +1,8 @@
 {% extends 'Unrestricted.html' %}
 
 {% block head %}
-<title>{{ collection[0].getName() }}</title>
-<meta name='description' content="{{ collection[0].getName() }}" />
+<title>{{ event.getName() }}</title>
+<meta name='description' content="{{ event.getName() }}" />
 <link href='/theme/mumc/css/event.css' rel="stylesheet" media="all" />
 <script src="/jquery/jquery-2.0.3.min.js" type="text/javascript"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfuFD28VOdTEGDuASvI27nAZEKomFys38&libraries=geometry&sensor=true" type="text/javascript"></script>
@@ -10,29 +10,29 @@
 <script type="text/javascript">
 	$(function() {
 		$('#event-map').cartographer({
-			bounds: {{ collection[0].getWaypoints().getAllBounds().jsonSerialize() | raw }},
-			polyfills: {{ collection[0].getWaypoints().getAllEncodedPolyfills().jsonSerialize() | raw }},
-			markers: {{ collection[0].getMarkers().jsonSerialize() | raw }}
+			bounds: {{ event.getWaypoints().getAllBounds().jsonSerialize() | raw }},
+			polyfills: {{ event.getWaypoints().getAllEncodedPolyfills().jsonSerialize() | raw }},
+			markers: {{ event.getMarkers().jsonSerialize() | raw }}
 		});
 	});
 </script>
 {% endblock %}
 
 {% block content %}
-<h1>{{ collection[0].getName() }}</h1>
+<h1>{{ event.getName() }}</h1>
 <ul>
-	<li>Starts: {{ collection[0].getStartDateTime() }}</li>
-	<li>Ends: {{ collection[0].getEndDateTime() }}</li>
+	<li>Starts: {{ event.getStartDateTime() }}</li>
+	<li>Ends: {{ event.getEndDateTime() }}</li>
 </ul>
 
 <div class="grid2">
 	<section>
 		<article>
 			<div class="event-brief">
-				{{ collection[0].getBrief() | raw }}
+				{{ event.getBrief() | raw }}
 			</div>
 
-			{{ collection[0].getDescription() | raw }}
+			{{ event.getDescription() | raw }}
 		</article>
 	</section>
 	<section>
@@ -44,14 +44,14 @@
 
 <h2>Leaders</h2>
 <ul>
-	{% for currentLeader in collection[0].getLeaders() %}
+	{% for currentLeader in event.getLeaders() %}
 	<li>{{ currentLeader.lastname }}, {{ currentLeader.firstname }}</li>
 	{% endfor %}
 </ul>
-		
+
 <h2>Attendees</h2>
 <ul>
-	{% for currentAttendee in collection[0].getAttendees() %}
+	{% for currentAttendee in event.getAttendees() %}
 	<li>
 		<strong>{{ currentAttendee.getLastname() }}, {{ currentAttendee.getFirstname() }}</strong>
 	</li>

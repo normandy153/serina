@@ -18,9 +18,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$event = new \Core\Event();
 
 		$this->output('getEventDetail', array(
-			'collection' => array(
-				$event
-			)
+			'event' => $event
 		));
 	}
 }
