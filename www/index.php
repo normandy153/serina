@@ -6,6 +6,8 @@
 require_once('../modules/App/Autoloader.php');
 \App\Autoloader::init();
 
+date_default_timezone_set('Australia/Melbourne');
+
 /* Manufacture dependencies
  */
 

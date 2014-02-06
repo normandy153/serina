@@ -117,29 +117,29 @@ class Event {
 	 */
 	public function __construct() {
 
-		/* Assemble waypoints
-		 * Transcode nodes into a single polyfill collection
-		 */
-		$allWaypoints = array(
-			'169-171 Berkeley Street, Melbourne, VIC, 3000',
-			'Mansfield, Victoria, Australia',
-			'Tawonga South, Australia',
-		);
-
-		$waypointCollection = new \Core\Event\Waypoint\PolyfillCollection($allWaypoints);
-		$waypointCollection->transcode();
-
-		/* Markers (Points of Interest)
-		 */
-		$markerCollection = new \App\Collection();
-
-		$marker = new \Core\Event\Waypoint\Marker();
-		$marker->setLatitude('-37.777185')->setLongitude('144.834234')->setDescription('A random place.');
-		$markerCollection->add($marker);
-
-		$marker = new \Core\Event\Waypoint\Marker();
-		$marker->setLatitude('-36.732281')->setLongitude('147.306061')->setDescription('Mt. Bogong Summit');
-		$markerCollection->add($marker);
+//		/* Assemble waypoints
+//		 * Transcode nodes into a single polyfill collection
+//		 */
+//		$allWaypoints = array(
+//			'169-171 Berkeley Street, Melbourne, VIC, 3000',
+//			'Mansfield, Victoria, Australia',
+//			'Tawonga South, Australia',
+//		);
+//
+//		$waypointCollection = new \Core\Event\Waypoint\PolyfillCollection($allWaypoints);
+//		$waypointCollection->transcode();
+//
+//		/* Markers (Points of Interest)
+//		 */
+//		$markerCollection = new \App\Collection();
+//
+//		$marker = new \Core\Event\Waypoint\Marker();
+//		$marker->setLatitude('-37.777185')->setLongitude('144.834234')->setDescription('A random place.');
+//		$markerCollection->add($marker);
+//
+//		$marker = new \Core\Event\Waypoint\Marker();
+//		$marker->setLatitude('-36.732281')->setLongitude('147.306061')->setDescription('Mt. Bogong Summit');
+//		$markerCollection->add($marker);
 
 		/* Attendees
 		 */
@@ -154,8 +154,8 @@ class Event {
 			'lastname' => 'Doe',
 		));
 
-		$this->setWaypoints($waypointCollection);
-		$this->setMarkers($markerCollection);
+//		$this->setWaypoints($waypointCollection);
+//		$this->setMarkers($markerCollection);
 		$this->setAttendees($attendees);
 		$this->setLeaders($leaders);
 	}
@@ -167,86 +167,10 @@ class Event {
 	 * @return User
 	 */
 	private function tempSpawnUser() {
+		$userFactory = new \Core\User\Generator\UserFactory();
+		$user = $userFactory->spawn();
 
-		/* Define State
-		 */
-		$state = new \Core\User\State();
-		$state->setAbbreviation('VIC');
-		$state->setName('Victoria');
-
-		/* Define Country
-		 */
-		$country = new \Core\User\Country();
-		$country->setAbbreviation('AU');
-		$country->setName('Australia');
-
-		/* Define Full Address
-		 */
-		$address = new \Core\User\Address();
-		$address->setAddress1('Unit 1');
-		$address->setAddress2('10 Test St');
-		$address->setSuburb('Test Suburb');
-		$address->setState($state);
-		$address->setPostcode('1234');
-		$address->setCountry($country);
-
-		/* Define Gender
-		 */
-		$gender = new \Core\User\Gender('M');
-
-		/* Define Phone numbers
-		 */
-		$phone = new \Core\User\Phone();
-		$phone->setNumber('02 1234 5678');
-
-		/* Define Mobile numbers
-		 */
-		$mobile = new \Core\User\Phone();
-		$mobile->setNumber('0111 234 567');
-
-		/* Define Email
-		 */
-		$email = new \Core\User\Email();
-		$email->setAddress('test@test.com');
-
-		/* Define Emergency Contact info
-		 */
-		$contactPhone = new \Core\User\Phone();
-		$contactPhone->setNumber('5555 6666');
-
-		$contactMobile = new \Core\User\Phone();
-		$contactMobile->setNumber('7777 8888');
-
-		$contact = new \Core\User();
-		$contact->setFirstname('Joe');
-		$contact->setLastname('Smith');
-		$contact->setPhone($contactPhone);
-		$contact->setMobile($contactMobile);
-
-		/* Define account
-		 */
-		$account = new \Core\User\Account();
-		$account->setUsername('smithj');
-		$account->setPassword($account->encode('smithjpassword'));
-		$account->setActivationDate('2014-02-03 22:10:01');
-		$account->setExpiryDate('2015-02-03 22:10:01');
-
-		/* Define test User
-		 */
-		$user = new \Core\User();
-		$user->setUuid(crypt(uniqid() . sha1(microtime())));
-		$user->setFirstname('John');
-		$user->setLastname('Smith');
-		$user->setBirthdate('1990-11-07');
-		$user->setGender($gender);
-		$user->setAddress($address);
-		$user->setPhone($phone);
-		$user->setMobile($mobile);
-		$user->setEmail($email);
-		$user->setEmergencyContact($contact);
-		$user->setAccount($account);
-		$user->setCreatedAt('2010-06-19 14:45:34');
-		$user->setUpdatedAt('2010-06-19 14:45:34');
+		new \App\Probe($user);
 
 		return $user;
 	}
