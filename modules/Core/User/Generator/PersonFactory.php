@@ -103,8 +103,13 @@ class PersonFactory extends Base {
 
 		$firstname = $this->firstnames[$index1];
 		$lastname = $this->lastnames[$index2];
-		
+
 		$emailAddress = 'test' . rand(100,999) . '@test.com';
+
+		$lower = $_SERVER['REQUEST_TIME'] - 60*60*24*365*50;
+		$upper = $_SERVER['REQUEST_TIME'] - 60*60*24*365*18;
+
+		$birthday = date('Y-m-d', rand($lower, $upper));
 
 		$addressFactory = new AddressFactory();
 		$address = $addressFactory->spawn();
@@ -124,6 +129,7 @@ class PersonFactory extends Base {
 		$user->setUuid(crypt(uniqid() . sha1(microtime())));
 		$user->setFirstname($firstname);
 		$user->setLastname($lastname);
+		$user->setBirthdate($birthday);
 		$user->setAddress($address);
 		$user->setGender($gender);
 		$user->setPhone($landline);
@@ -132,7 +138,7 @@ class PersonFactory extends Base {
 		$user->setAccount($account);
 		$user->setCreatedAt(date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']));
 		$user->setUpdatedAt(date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']));
-
+new \App\Probe($user);
 		return $user;
 	}
 } 
