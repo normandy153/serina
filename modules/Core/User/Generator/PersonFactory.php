@@ -98,10 +98,12 @@ class PersonFactory extends Base {
 	 * @return \Core\User|mixed
 	 */
 	public function spawn() {
-		$index = rand(0, count($this->firstnames)-1);
+		$index1 = rand(0, count($this->firstnames)-1);
+		$index2 = rand(0, count($this->firstnames)-1);
 
-		$firstname = $this->firstnames[$index];
-		$lastname = $this->lastnames[$index];
+		$firstname = $this->firstnames[$index1];
+		$lastname = $this->lastnames[$index2];
+		
 		$emailAddress = 'test' . rand(100,999) . '@test.com';
 
 		$addressFactory = new AddressFactory();
