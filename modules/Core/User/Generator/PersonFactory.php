@@ -138,7 +138,7 @@ class PersonFactory extends Base {
 		$user->setAccount($account);
 		$user->setCreatedAt(date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']));
 		$user->setUpdatedAt(date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']));
-new \App\Probe($user);
+
 		return $user;
 	}
 } 

@@ -46,7 +46,7 @@ class AccountFactory {
 		$password = sha1($username);
 
 		$activationDate = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
-		$expiryDate = $_SERVER['REQUEST_TIME'] + 60*60*24*365;
+		$expiryDate = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME'] + 60*60*24*365);
 
 		$account = new \Core\User\Account();
 		$account->setUsername($username);
