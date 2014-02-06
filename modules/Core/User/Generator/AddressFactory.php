@@ -43,7 +43,7 @@ class AddressFactory extends Base {
 
 	/**
 	 * Spawn item
-	 * 
+	 *
 	 * @return mixed|void
 	 */
 	public function spawn() {

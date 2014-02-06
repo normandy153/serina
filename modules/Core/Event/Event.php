@@ -143,36 +143,29 @@ class Event {
 
 		/* Attendees
 		 */
+		$userFactory = new \Core\User\Generator\UserFactory();
+
 		$attendees = new \App\Collection();
-		$attendees->add($this->tempSpawnUser());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+
 
 		/* People
 		 */
 		$leaders = new \App\Collection();
-		$leaders->add(array(
-			'firstname' => 'John',
-			'lastname' => 'Doe',
-		));
+		$leaders->add($userFactory->spawn());
+		$leaders->add($userFactory->spawn());
 
 //		$this->setWaypoints($waypointCollection);
 //		$this->setMarkers($markerCollection);
 		$this->setAttendees($attendees);
 		$this->setLeaders($leaders);
-	}
-
-	/**
-	 * Spawn a temporary user
-	 * @deprecated
-	 *
-	 * @return User
-	 */
-	private function tempSpawnUser() {
-		$userFactory = new \Core\User\Generator\UserFactory();
-		$user = $userFactory->spawn();
-
-		new \App\Probe($user);
-
-		return $user;
 	}
 
 	/* Getters/Setters
