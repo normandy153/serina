@@ -122,6 +122,7 @@ class PersonFactory extends Base {
 		$landline = $phoneFactory->spawnLandline();
 		$mobile = $phoneFactory->spawnMobile();
 
+
 		$accountFactory = new AccountFactory($firstname, $lastname);
 		$account = $accountFactory->spawn();
 

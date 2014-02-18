@@ -53,6 +53,7 @@
 <ul>
 	{% for currentAttendee in event.getAttendees() %}
 	<li>
+		<img src="/user/avatar/{{ currentAttendee.getAccount().getAvatar().getFilepath() }}" width="32" height="32" />
 		<strong>{{ currentAttendee.getLastname() }}, {{ currentAttendee.getFirstname() }}</strong>
 	</li>
 	{% endfor %}

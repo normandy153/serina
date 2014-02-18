@@ -26,6 +26,13 @@ class Account {
 	private $password = '';
 
 	/**
+	 * An instance of Avatar
+	 *
+	 * @var Avatar
+	 */
+	private $avatar = null;
+
+	/**
 	 * The date when the account was activated
 	 *
 	 * @var string
@@ -129,5 +136,23 @@ class Account {
 	 */
 	public function getExpiryDate() {
 		return $this->expiryDate;
+	}
+
+	/**
+	 * Set avatar
+	 *
+	 * @param \Core\User\Avatar $avatar
+	 */
+	public function setAvatar($avatar) {
+		$this->avatar = $avatar;
+	}
+
+	/**
+	 * Get avatar
+	 *
+	 * @return \Core\User\Avatar
+	 */
+	public function getAvatar() {
+		return $this->avatar;
 	}
 } 

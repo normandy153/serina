@@ -48,11 +48,15 @@ class AccountFactory {
 		$activationDate = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
 		$expiryDate = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME'] + 60*60*24*365);
 
+		$avatarFactory = new AvatarFactory();
+		$avatar = $avatarFactory->spawn();
+
 		$account = new \Core\User\Account();
 		$account->setUsername($username);
 		$account->setPassword($password);
 		$account->setActivationDate($activationDate);
 		$account->setExpiryDate($expiryDate);
+		$account->setAvatar($avatar);
 
 		return $account;
 	}
