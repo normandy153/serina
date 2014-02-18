@@ -45,7 +45,10 @@
 <h2>Leaders</h2>
 <ul>
 	{% for currentLeader in event.getLeaders() %}
-	<li>{{ currentLeader.lastname }}, {{ currentLeader.firstname }}</li>
+	<li>
+		<img src="/user/avatar/{{ currentLeader.getAccount().getAvatar().getFilepath() }}" width="32" height="32" />
+		{{ currentLeader.lastname }}, {{ currentLeader.firstname }}
+	</li>
 	{% endfor %}
 </ul>
 
