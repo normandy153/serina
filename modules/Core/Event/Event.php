@@ -117,29 +117,29 @@ class Event {
 	 */
 	public function __construct() {
 
-//		/* Assemble waypoints
-//		 * Transcode nodes into a single polyfill collection
-//		 */
-//		$allWaypoints = array(
-//			'169-171 Berkeley Street, Melbourne, VIC, 3000',
-//			'Mansfield, Victoria, Australia',
-//			'Tawonga South, Australia',
-//		);
-//
-//		$waypointCollection = new \Core\Event\Waypoint\PolyfillCollection($allWaypoints);
-//		$waypointCollection->transcode();
-//
-//		/* Markers (Points of Interest)
-//		 */
-//		$markerCollection = new \App\Collection();
-//
-//		$marker = new \Core\Event\Waypoint\Marker();
-//		$marker->setLatitude('-37.777185')->setLongitude('144.834234')->setDescription('A random place.');
-//		$markerCollection->add($marker);
-//
-//		$marker = new \Core\Event\Waypoint\Marker();
-//		$marker->setLatitude('-36.732281')->setLongitude('147.306061')->setDescription('Mt. Bogong Summit');
-//		$markerCollection->add($marker);
+		/* Assemble waypoints
+		 * Transcode nodes into a single polyfill collection
+		 */
+		$allWaypoints = array(
+			'169-171 Berkeley Street, Melbourne, VIC, 3000',
+			'Mansfield, Victoria, Australia',
+			'Tawonga South, Australia',
+		);
+
+		$waypointCollection = new \Core\Event\Waypoint\PolyfillCollection($allWaypoints);
+		$waypointCollection->transcode();
+
+		/* Markers (Points of Interest)
+		 */
+		$markerCollection = new \App\Collection();
+
+		$marker = new \Core\Event\Waypoint\Marker();
+		$marker->setLatitude('-37.777185')->setLongitude('144.834234')->setDescription('A random place.');
+		$markerCollection->add($marker);
+
+		$marker = new \Core\Event\Waypoint\Marker();
+		$marker->setLatitude('-36.732281')->setLongitude('147.306061')->setDescription('Mt. Bogong Summit');
+		$markerCollection->add($marker);
 
 		/* Attendees
 		 */
@@ -161,8 +161,8 @@ class Event {
 		$leaders->add($userFactory->spawn());
 		$leaders->add($userFactory->spawn());
 
-//		$this->setWaypoints($waypointCollection);
-//		$this->setMarkers($markerCollection);
+		$this->setWaypoints($waypointCollection);
+		$this->setMarkers($markerCollection);
 		$this->setAttendees($attendees);
 		$this->setLeaders($leaders);
 	}
