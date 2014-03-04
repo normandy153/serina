@@ -69,5 +69,7 @@ class AddressFactory extends Base {
 		$address->setState($state);
 		$address->setPostcode($postcode);
 		$address->setCountry($country);
+
+		return $address;
 	}
 } 

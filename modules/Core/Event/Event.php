@@ -154,7 +154,7 @@ class Event {
 		$attendees->add($userFactory->spawn());
 		$attendees->add($userFactory->spawn());
 		$attendees->add($userFactory->spawn());
-
+new \App\Probe($userFactory->spawn());
 		/* People
 		 */
 		$leaders = new \App\Collection();
