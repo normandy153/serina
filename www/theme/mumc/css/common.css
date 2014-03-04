@@ -54,6 +54,10 @@ div.grid3 section
 
 /* Lists
  */
+ul.listing-horizontal li {
+	float: left;
+}
+
 div.listing-alternate li:nth-of-type(2n+1) {
 	margin-left: 0px;
 	clear: left;

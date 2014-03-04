@@ -143,19 +143,23 @@ class Event {
 
 		/* Attendees
 		 */
+		$userFactory = new \Core\User\Generator\UserFactory();
+
 		$attendees = new \App\Collection();
-		$attendees->add(array(
-			'firstname' => 'Test Firstname',
-			'lastname' => 'Test Lastname',
-		));
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
+		$attendees->add($userFactory->spawn());
 
 		/* People
 		 */
 		$leaders = new \App\Collection();
-		$leaders->add(array(
-			'firstname' => 'John',
-			'lastname' => 'Doe',
-		));
+		$leaders->add($userFactory->spawn());
+		$leaders->add($userFactory->spawn());
 
 		$this->setWaypoints($waypointCollection);
 		$this->setMarkers($markerCollection);
