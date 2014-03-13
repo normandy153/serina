@@ -11,6 +11,15 @@ namespace Core\Event\Domain\Unrestricted;
 
 class Controller extends \App\Controller\Domain\Unrestricted {
 
+	public function getEventList() {
+
+		$database = new \App\Database();
+
+		$database->testQuery();
+
+		exit();
+	}
+
 	/**
 	 * Detail view of a particular event
 	 */
