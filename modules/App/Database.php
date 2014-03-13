@@ -75,18 +75,13 @@ class Database {
 		$this->setConnection(new \PDO($this->getDsn(), $this->getUsername(), $this->getPassword()));
 	}
 
-	public function testQuery() {
-		$query = "
-			SELECT *
-			FROM test
-		";
-
-		$statement = $this->getConnection()->prepare($query);
-		$statement->execute();
-
-		foreach($statement as $row) {
-			new \App\Probe($row);
-		}
+	/**
+	 * Delegation method
+	 *
+	 * @param $query
+	 */
+	public function prepare($query) {
+		return $this->getConnection()->prepare($query);
 	}
 
 	/* Getters/Setters

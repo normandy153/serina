@@ -13,9 +13,9 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 
 	public function getEventList() {
 
-		$database = new \App\Database();
+		$mapper = new \App\Mapper();
 
-		$database->testQuery();
+		$mapper->testQuery();
 
 		exit();
 	}
