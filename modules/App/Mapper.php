@@ -102,7 +102,8 @@ class Mapper {
 	public function testQuery() {
 		$query = "
 			SELECT *
-			FROM test
+			FROM `user` AS u
+			LEFT JOIN gender g ON u.gender_id = g.id
 		";
 
 		$statement = $this->getDatabase()->prepare($query);
