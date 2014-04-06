@@ -8,6 +8,7 @@
 
 namespace App;
 
+use \App\Mapper\PropertyDefinition as PropertyDefinition;
 
 class Mapper {
 
@@ -55,30 +56,11 @@ class Mapper {
 		$this->setModel('\\Core\\User');
 		$this->setTable('user');
 
-		$this->addProperty(array(
-			'property' => 'id',
-			'column' => 'id'
-		));
-
-		$this->addProperty(array(
-			'property' => 'uuid',
-			'column' => 'uuid'
-		));
-
-		$this->addProperty(array(
-			'property' => 'firstname',
-			'column' => 'firstname'
-		));
-
-		$this->addProperty(array(
-			'property' => 'lastname',
-			'column' => 'lastname'
-		));
-
-		$this->addProperty(array(
-			'property' => 'birthdate',
-			'column' => 'birthdate'
-		));
+		$this->addProperty(new PropertyDefinition('id', 'id'));
+		$this->addProperty(new PropertyDefinition('uuid', 'uuid'));
+		$this->addProperty(new PropertyDefinition('firstname', 'firstname'));
+		$this->addProperty(new PropertyDefinition('lastname', 'lastname'));
+		$this->addProperty(new PropertyDefinition('birthdate', 'birthdate'));
 	}
 
 	/**
@@ -98,16 +80,6 @@ class Mapper {
 	}
 
 	/**
-	 * Figure out which model setter to use
-	 *
-	 * @param $property
-	 * @return string
-	 */
-	protected function deriveMethod($property) {
-		return 'set' . ucwords($property);
-	}
-
-	/**
 	 * Populate the specified object
 	 *
 	 * @param $row
@@ -116,9 +88,9 @@ class Mapper {
 		$model = $this->getModel();
 		$instance = new $model();
 
-		foreach($this->getProperties() as $definition) {
-			$method = $this->deriveMethod($definition['property']);
-			$column = $definition['column'];
+		foreach($this->getProperties() as $currentDefinition) {
+			$method = $currentDefinition->deriveMethod();
+			$column = $currentDefinition->getColumn();
 
 			$instance->$method($row[$column]);
 		}
