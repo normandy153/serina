@@ -56,11 +56,11 @@ class Mapper {
 		$this->setModel('\\Core\\User');
 		$this->setTable('user');
 
-		$this->addProperty(new PropertyDefinition('id', 'id'));
-		$this->addProperty(new PropertyDefinition('uuid', 'uuid'));
-		$this->addProperty(new PropertyDefinition('firstname', 'firstname'));
-		$this->addProperty(new PropertyDefinition('lastname', 'lastname'));
-		$this->addProperty(new PropertyDefinition('birthdate', 'birthdate'));
+		$this->addProperty('id', 'id');
+		$this->addProperty('uuid', 'uuid');
+		$this->addProperty('firstname', 'firstname');
+		$this->addProperty('lastname', 'lastname');
+		$this->addProperty('birthdate', 'birthdate');
 	}
 
 	/**
@@ -74,9 +74,10 @@ class Mapper {
 	 * Add a property definition
 	 *
 	 * @param $property
+	 * @param $column
 	 */
-	protected function addProperty($property) {
-		$this->properties[] = $property;
+	protected function addProperty($property, $column) {
+		$this->properties[] = new PropertyDefinition($property, $column);
 	}
 
 	/**
