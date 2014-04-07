@@ -61,6 +61,27 @@ class Address {
 	private $country = null;
 
 	/**
+	 * Created timestamp
+	 *
+	 * @var string
+	 */
+	private $createdAt = '';
+
+	/**
+	 * Updated timestamp
+	 *
+	 * @var string
+	 */
+	private $updatedAt = '';
+
+	/**
+	 * Deleted timestamp
+	 *
+	 * @var string
+	 */
+	private $deletedAt = '';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -192,5 +213,59 @@ class Address {
 	 */
 	public function getId() {
 		return $this->id;
+	}
+
+	/**
+	 * Set created at
+	 *
+	 * @param string $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
+
+	/**
+	 * Get created at
+	 *
+	 * @return string
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set deleted at
+	 *
+	 * @param string $deletedAt
+	 */
+	public function setDeletedAt($deletedAt) {
+		$this->deletedAt = $deletedAt;
+	}
+
+	/**
+	 * Get deleted at
+	 *
+	 * @return string
+	 */
+	public function getDeletedAt() {
+		return $this->deletedAt;
+	}
+
+	/**
+	 * Set updated at
+	 *
+	 * @param string $updatedAt
+	 */
+	public function setUpdatedAt($updatedAt) {
+		$this->updatedAt = $updatedAt;
+	}
+
+	/**
+	 * Get updated at
+	 *
+	 * @return string
+	 */
+	public function getUpdatedAt() {
+		return $this->updatedAt;
 	}
 } 

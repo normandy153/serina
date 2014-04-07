@@ -33,13 +33,16 @@ class UserMapper extends \App\Mapper {
 	public function testQuery() {
 		$userMapper = $this;
 		$genderMapper = new \Core\User\GenderMapper();
+		$addressMapper = new \Core\User\AddressMapper();
 
 		$query = "
 			SELECT
 				{$userMapper->select('u')},
-				{$genderMapper->select('g')}
+				{$genderMapper->select('g')},
+				{$addressMapper->select('a')}
 			FROM `user` AS u
 			LEFT JOIN gender g ON u.gender_id = g.id
+			LEFT JOIN address a ON u.address_id = a.id
 		";
 
 		$statement = $this->getDatabase()->prepare($query);
@@ -48,8 +51,11 @@ class UserMapper extends \App\Mapper {
 		foreach($statement as $row) {
 			$user = $userMapper->hydrate('u', $row);
 			$gender = $genderMapper->hydrate('g', $row);
+			$address = $addressMapper->hydrate('a', $row);
 
 			$user->setGender($gender);
+			$user->setAddress($address);
+
 			new \App\Probe($user);
 		}
 	}
