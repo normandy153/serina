@@ -42,9 +42,7 @@ class UserMapper extends \App\Mapper {
 
 		foreach($statement as $row) {
 			new \App\Probe($row);
-			new \App\Probe($this->hydrate($row));
+			new \App\Probe($this->hydrate('u', $row));
 		}
 	}
-
-
 } 

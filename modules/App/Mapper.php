@@ -74,22 +74,18 @@ abstract class Mapper {
 	}
 
 	/**
-	 * Populate the specified object
+	 * Populate the specified object from columns with $alias prefix
 	 *
+	 * @param $alias
 	 * @param $row
+	 * @return
 	 */
-	protected function hydrate($row) {
+	protected function hydrate($alias, $row) {
 		$model = $this->getModel();
-		$instance = new $model();
 
-		foreach($this->getProperties() as $currentDefinition) {
-			$method = $currentDefinition->deriveMethod();
-			$column = $currentDefinition->getColumn();
+		$hydrator = new Mapper\Hydrator(new $model(), $this->getProperties(), $alias, $row);
 
-			$instance->$method($row[$column]);
-		}
-
-		return $instance;
+		return $hydrator->getProduct();
 	}
 
 	/**
@@ -104,7 +100,7 @@ abstract class Mapper {
 	 */
 	public function select($alias) {
 		$string = array();
-		$template = "{COLUMN} AS {ALIAS}__{COLUMN}";
+		$template = "{ALIAS}.{COLUMN} AS {ALIAS}__{COLUMN}";
 
 		$pattern = array(
 			'{COLUMN}',
