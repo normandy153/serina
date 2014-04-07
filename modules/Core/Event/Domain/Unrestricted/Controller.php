@@ -11,9 +11,11 @@ namespace Core\Event\Domain\Unrestricted;
 
 class Controller extends \App\Controller\Domain\Unrestricted {
 
+	/**
+	 * Get a list of events
+	 */
 	public function getEventList() {
-
-		$mapper = new \App\Mapper();
+		$mapper = new \Core\User\UserMapper();
 
 		$mapper->testQuery();
 

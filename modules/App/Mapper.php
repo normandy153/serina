@@ -10,7 +10,7 @@ namespace App;
 
 use \App\Mapper\PropertyDefinition as PropertyDefinition;
 
-class Mapper {
+abstract class Mapper {
 
 	/**
 	 * An instance of Database
@@ -50,18 +50,11 @@ class Mapper {
 	}
 
 	/**
-	 * TODO: Move to individual class mappers
+	 * Define properties
+	 *
+	 * @return mixed
 	 */
-	protected function properties() {
-		$this->setModel('\\Core\\User');
-		$this->setTable('user');
-
-		$this->addProperty('id', 'id');
-		$this->addProperty('uuid', 'uuid');
-		$this->addProperty('firstname', 'firstname');
-		$this->addProperty('lastname', 'lastname');
-		$this->addProperty('birthdate', 'birthdate');
-	}
+	abstract protected function properties();
 
 	/**
 	 * Setup hook method
@@ -99,20 +92,37 @@ class Mapper {
 		return $instance;
 	}
 
-	public function testQuery() {
-		$query = "
-			SELECT *
-			FROM `user` AS u
-			LEFT JOIN gender g ON u.gender_id = g.id
-		";
+	/**
+	 * Exact select macro, used mostly when joining tables where the
+	 * column names might clash. This deconflicts shared names like
+	 * id, name, created_at, etc.
+	 *
+	 * Pass it a table alias to use it as a prefix
+	 *
+	 * @param $alias
+	 * @return string
+	 */
+	public function select($alias) {
+		$string = array();
+		$template = "{COLUMN} AS {ALIAS}__{COLUMN}";
 
-		$statement = $this->getDatabase()->prepare($query);
-		$statement->execute();
+		$pattern = array(
+			'{COLUMN}',
+			'{ALIAS}'
+		);
 
-		foreach($statement as $row) {
-			new \App\Probe($row);
-			new \App\Probe($this->hydrate($row));
+		foreach ($this->getProperties() as $currentProperty) {
+			$replace = array(
+				$currentProperty->getColumn(),
+				$alias
+			);
+
+			$string[] = str_replace($pattern, $replace, $template);
 		}
+
+		$str = implode(', ', $string);
+
+		return $str;
 	}
 
 	/* Getters/Setters
