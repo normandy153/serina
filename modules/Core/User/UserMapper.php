@@ -31,8 +31,13 @@ class UserMapper extends \App\Mapper {
 	 * TODO: Test method
 	 */
 	public function testQuery() {
+		$userMapper = $this;
+		$genderMapper = new \Core\User\GenderMapper();
+
 		$query = "
-			SELECT {$this->select('u')}
+			SELECT
+				{$userMapper->select('u')},
+				{$genderMapper->select('g')}
 			FROM `user` AS u
 			LEFT JOIN gender g ON u.gender_id = g.id
 		";
@@ -43,6 +48,7 @@ class UserMapper extends \App\Mapper {
 		foreach($statement as $row) {
 			new \App\Probe($row);
 			new \App\Probe($this->hydrate('u', $row));
+			new \App\Probe($genderMapper->hydrate('g', $row));
 		}
 	}
 } 
