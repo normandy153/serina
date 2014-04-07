@@ -46,9 +46,11 @@ class UserMapper extends \App\Mapper {
 		$statement->execute();
 
 		foreach($statement as $row) {
-			new \App\Probe($row);
-			new \App\Probe($this->hydrate('u', $row));
-			new \App\Probe($genderMapper->hydrate('g', $row));
+			$user = $userMapper->hydrate('u', $row);
+			$gender = $genderMapper->hydrate('g', $row);
+
+			$user->setGender($gender);
+			new \App\Probe($user);
 		}
 	}
 } 
