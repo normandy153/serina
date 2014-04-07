@@ -24,7 +24,8 @@ class GenderFactory extends Base {
 	 * @return \Core\User\Gender
 	 */
 	public function spawn() {
-		$gender = new \Core\User\Gender($this->getOption());
+		$gender = new \Core\User\Gender();
+		$gender->selectGender($this->getOption());
 
 		return $gender;
 	}

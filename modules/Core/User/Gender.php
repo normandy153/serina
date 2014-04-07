@@ -33,11 +33,17 @@ class Gender {
 	private $name = '';
 
 	/**
-	 * From a string, set values
+	 * Constructor
+	 */
+	public function __construct() {
+	}
+
+	/**
+	 * Select gender based on string
 	 *
 	 * @param $string
 	 */
-	public function __construct($string) {
+	public function selectGender($string) {
 		switch(strtolower($string)) {
 			case 'm':
 			case 'male':
@@ -63,7 +69,7 @@ class Gender {
 	 * @param string $abbreviation
 	 * @return $this
 	 */
-	private function setAbbreviation($abbreviation) {
+	public function setAbbreviation($abbreviation) {
 		$this->abbreviation = $abbreviation;
 
 		return $this;
@@ -84,7 +90,7 @@ class Gender {
 	 * @param string $name
 	 * @return $this
 	 */
-	private function setName($name) {
+	public function setName($name) {
 		$this->name = $name;
 
 		return $this;
