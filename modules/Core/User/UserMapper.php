@@ -34,15 +34,18 @@ class UserMapper extends \App\Mapper {
 		$userMapper = $this;
 		$genderMapper = new \Core\User\GenderMapper();
 		$addressMapper = new \Core\User\AddressMapper();
+		$stateMapper = new \Core\User\StateMapper();
 
 		$query = "
 			SELECT
 				{$userMapper->select('u')},
 				{$genderMapper->select('g')},
-				{$addressMapper->select('a')}
+				{$addressMapper->select('a')},
+				{$stateMapper->select('s')}
 			FROM `user` AS u
 			LEFT JOIN gender g ON u.gender_id = g.id
 			LEFT JOIN address a ON u.address_id = a.id
+			LEFT JOIN state s ON a.state = s.id
 		";
 
 		$statement = $this->getDatabase()->prepare($query);
@@ -52,6 +55,9 @@ class UserMapper extends \App\Mapper {
 			$user = $userMapper->hydrate('u', $row);
 			$gender = $genderMapper->hydrate('g', $row);
 			$address = $addressMapper->hydrate('a', $row);
+			$state = $stateMapper->hydrate('s', $row);
+
+			$address->setState($state);
 
 			$user->setGender($gender);
 			$user->setAddress($address);
