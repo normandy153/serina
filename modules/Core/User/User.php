@@ -65,13 +65,6 @@ class User {
 	 *
 	 * @var null
 	 */
-	private $mobile = null;
-
-	/**
-	 * An instance of User\Phone
-	 *
-	 * @var null
-	 */
 	private $phone = null;
 
 	/**
@@ -344,24 +337,6 @@ class User {
 	 */
 	public function getLastname() {
 		return $this->lastname;
-	}
-
-	/**
-	 * Set mobile
-	 *
-	 * @param null $mobile
-	 */
-	public function setMobile($mobile) {
-		$this->mobile = $mobile;
-	}
-
-	/**
-	 * Get mobile
-	 *
-	 * @return null
-	 */
-	public function getMobile() {
-		return $this->mobile;
 	}
 
 	/**
