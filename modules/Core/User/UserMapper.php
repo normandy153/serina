@@ -36,6 +36,7 @@ class UserMapper extends \App\Mapper {
 		$addressMapper = new \Core\User\AddressMapper();
 		$stateMapper = new \Core\User\StateMapper();
 		$countryMapper = new \Core\User\CountryMapper();
+		$phoneMapper = new \Core\User\PhoneMapper();
 
 		$query = "
 			SELECT
@@ -43,12 +44,14 @@ class UserMapper extends \App\Mapper {
 				{$genderMapper->select('g')},
 				{$addressMapper->select('a')},
 				{$stateMapper->select('s')},
-				{$countryMapper->select('c')}
+				{$countryMapper->select('c')},
+				{$phoneMapper->select('p')}
 			FROM `user` AS u
 			LEFT JOIN gender g ON u.gender_id = g.id
 			LEFT JOIN address a ON u.address_id = a.id
 			LEFT JOIN state s ON a.state = s.id
 			LEFT JOIN country c ON a.country = c.id
+			LEFT JOIN phone p ON u.id = p.user_id
 		";
 
 		$statement = $this->getDatabase()->prepare($query);
@@ -60,6 +63,9 @@ class UserMapper extends \App\Mapper {
 			$address = $addressMapper->hydrate('a', $row);
 			$state = $stateMapper->hydrate('s', $row);
 			$country = $countryMapper->hydrate('c', $row);
+			$phone = $phoneMapper->hydrate('p', $row);
+
+			new \App\Probe($phone);
 
 			$address->setState($state);
 			$address->setCountry($country);
