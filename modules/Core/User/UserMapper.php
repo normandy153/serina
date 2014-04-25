@@ -76,16 +76,12 @@ class UserMapper extends \App\Mapper {
 		$statement = $this->getDatabase()->prepare($query->prepare());
 		$statement->execute();
 
-		$objectGraph = $query->getObjectGraph();
-
 		/* Use cached mapper spawns
 		 */
 		$userMapper = $query->getMapper('\Core\User\User', 'u');
 		$addressMapper = $query->getMapper('\Core\User\Address', 'a');
 		$stateMapper = $query->getMapper('\Core\User\State', 's');
 		$phoneMapper = $query->getMapper('\Core\User\Phone', 'p');
-
-		$graph = new \App\Collection();
 
 		$userCollection = new \App\Collection();
 		$addressCollection = new \App\Collection();
@@ -108,61 +104,39 @@ class UserMapper extends \App\Mapper {
 
 		/* Build address/state relation
 		 */
-		$allKeys = array_keys($addressCollection->getStack());
-
-		foreach($allKeys as $currentKey) {
-			$collection = new \App\Collection();
-
-			$address = $addressCollection->getItemAt($currentKey);
-			$stateCollection->reindex();
-
-			foreach($stateCollection as $current) {
-				if ($current->getId() == $address->getState()) {
-					$collection->add($current);
-				}
-			}
-
-			$address->setState($collection);
-		}
+		$this->joinCollections($addressCollection, $stateCollection, 'getState', 'getId', 'setState');
 
 		/* Build user/address relation
 		 */
-		$allKeys = array_keys($userCollection->getStack());
-
-		foreach($allKeys as $currentKey) {
-			$collection = new \App\Collection();
-
-			$user = $userCollection->getItemAt($currentKey);
-			$addressCollection->reindex();
-
-			foreach($addressCollection as $current) {
-				if ($current->getId() == $user->getAddress()) {
-					$collection->add($current);
-				}
-			}
-
-			$user->setAddress($collection);
-		}
+		$this->joinCollections($userCollection, $addressCollection, 'getAddress', 'getId', 'setAddress');
 
 		/* Build user/phone relation
 		 */
-		$allKeys = array_keys($userCollection->getStack());
+		$this->joinCollections($userCollection, $phoneCollection, 'getId', 'getUserId', 'setPhone');
+
+		new \App\Probe($userCollection);
+
+		return $userCollection;
+	}
+
+	
+	private function joinCollections($collection1, $collection2, $key1, $key2, $destination) {
+		$allKeys = array_keys($collection1->getStack());
+
 
 		foreach($allKeys as $currentKey) {
-			$collection = new \App\Collection();
+			$final = new \App\Collection();
 
-			$user = $userCollection->getItemAt($currentKey);
-			$phoneCollection->reindex();
+			$rootNode = $collection1->getItemAt($currentKey);
+			$collection2->reindex();
 
-			foreach($phoneCollection as $current) {
-				if ($current->getUserId() == $user->getId()) {
-					$collection->add($current);
+			foreach($collection2 as $current) {
+				if ($rootNode->$key1() == $current->$key2()) {
+					$final->add($current);
 				}
 			}
 
-			$user->setPhone($collection);
+			$rootNode->$destination($final);
 		}
-
-		new \App\Probe($userCollection);
 	}
 } 
