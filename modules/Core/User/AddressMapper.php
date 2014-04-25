@@ -43,5 +43,17 @@ class AddressMapper extends \App\Mapper {
 				'key' => 'id',
 			),
 		));
+
+		$this->addJoin('Country', array(
+			'this' => array(
+				'model' => '\Core\User\Address',
+				'key' => 'country',
+				'collection' => 'country',
+			),
+			'other' => array(
+				'model' => '\Core\User\Country',
+				'key' => 'id',
+			),
+		));
 	}
 } 

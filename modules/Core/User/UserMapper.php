@@ -87,12 +87,14 @@ class UserMapper extends \App\Mapper {
 			'\Core\User\User u',
 			'\Core\User\Address a',
 			'\Core\User\State s',
+			'\Core\User\Country c',
 			'\Core\User\Phone p',
 			'\Core\User\Gender g'
 		)
 			->from('\Core\User\User u')
 			->leftJoin('\Core\User\User u', 'Address a')
 			->leftJoin('\Core\User\Address a', 'State s')
+			->leftJoin('\Core\User\Address a', 'Country c')
 			->leftJoin('\Core\User\User u', 'Phone p')
 			->leftJoin('\Core\User\User u', 'Gender g');
 
@@ -104,12 +106,14 @@ class UserMapper extends \App\Mapper {
 		$userMapper = $query->getMapper('\Core\User\User', 'u');
 		$addressMapper = $query->getMapper('\Core\User\Address', 'a');
 		$stateMapper = $query->getMapper('\Core\User\State', 's');
+		$countryMapper = $query->getMapper('\Core\User\Country', 'c');
 		$phoneMapper = $query->getMapper('\Core\User\Phone', 'p');
 		$genderMapper = $query->getMapper('\Core\User\Gender', 'g');
 
 		$userCollection = new \App\Collection();
 		$addressCollection = new \App\Collection();
 		$stateCollection = new \App\Collection();
+		$countryCollection = new \App\Collection();
 		$phoneCollection = new \App\Collection();
 		$genderCollection = new \App\Collection();
 
@@ -123,12 +127,19 @@ class UserMapper extends \App\Mapper {
 			$state = $stateMapper->hydrate('s', $row);
 			$stateCollection->setItemAt($state->getId(), $state);
 
+			$country = $countryMapper->hydrate('c', $row);
+			$countryCollection->setItemAt($country->getId(), $country);
+			
 			$phone = $phoneMapper->hydrate('p', $row);
 			$phoneCollection->setItemAt($phone->getId(), $phone);
 
 			$gender = $genderMapper->hydrate('g', $row);
 			$genderCollection->setItemAt($gender->getId(), $gender);
 		}
+
+		/* Build address/country relation
+ 		 */
+		$this->joinCollections($addressCollection, $countryCollection, 'Country', $query);
 
 		/* Build address/state relation
 		 */
@@ -145,6 +156,10 @@ class UserMapper extends \App\Mapper {
 		/* Build user/gender relation
 		 */
 		$this->joinCollections($userCollection, $genderCollection, 'Gender', $query);
+
+		/* Reindex
+		 */
+		$userCollection->reindex();
 
 		return $userCollection;
 	}
