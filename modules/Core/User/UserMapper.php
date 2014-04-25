@@ -31,9 +31,9 @@ class UserMapper extends \App\Mapper {
 		$this->addProperty('gender', 'gender_id');
 
 		/* Join the Phone record onto the User record using
-		 * the following columns as a match. otherTable and
-		 * otherKey refer to the table and key being joined
-		 * onto this current mapper's model
+		 * the following columns as a match. 'other' model and
+		 * key refer to the table (via corresponding mapper)
+		 * being joined onto 'this' model
 		 *
 		 * These definitions, when combined into the final
 		 * sql query, mustn't create a syntactically incorrect
