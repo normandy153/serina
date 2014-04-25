@@ -27,6 +27,7 @@ class UserMapper extends \App\Mapper {
 		$this->addProperty('birthdate', 'birthdate');
 		$this->addProperty('address', 'address_id');
 		$this->addProperty('phone', 'phone_id');
+		$this->addProperty('email', 'email');
 		$this->addProperty('gender', 'gender_id');
 
 		/* Join the Phone record onto the User record using
@@ -76,6 +77,18 @@ class UserMapper extends \App\Mapper {
 				'key' => 'id',
 			)
 		));
+
+		$this->addJoin('Email', array(
+			'this' => array(
+				'model' => '\Core\User\User',
+				'key' => 'id',
+				'collection' => 'email',
+			),
+			'other' => array(
+				'model' => '\Core\User\Email',
+				'key' => 'user_id',
+			),
+		));
 	}
 
 	/**
@@ -89,6 +102,7 @@ class UserMapper extends \App\Mapper {
 			'\Core\User\State s',
 			'\Core\User\Country c',
 			'\Core\User\Phone p',
+			'\Core\User\Email e',
 			'\Core\User\Gender g'
 		)
 			->from('\Core\User\User u')
@@ -96,6 +110,7 @@ class UserMapper extends \App\Mapper {
 			->leftJoin('\Core\User\Address a', 'State s')
 			->leftJoin('\Core\User\Address a', 'Country c')
 			->leftJoin('\Core\User\User u', 'Phone p')
+			->leftJoin('\Core\User\User u', 'Email e')
 			->leftJoin('\Core\User\User u', 'Gender g');
 
 		$statement = $this->getDatabase()->prepare($query->prepare());
@@ -108,6 +123,7 @@ class UserMapper extends \App\Mapper {
 		$stateMapper = $query->getMapper('\Core\User\State', 's');
 		$countryMapper = $query->getMapper('\Core\User\Country', 'c');
 		$phoneMapper = $query->getMapper('\Core\User\Phone', 'p');
+		$emailMapper = $query->getMapper('\Core\User\Email', 'e');
 		$genderMapper = $query->getMapper('\Core\User\Gender', 'g');
 
 		$userCollection = new \App\Collection();
@@ -115,6 +131,7 @@ class UserMapper extends \App\Mapper {
 		$stateCollection = new \App\Collection();
 		$countryCollection = new \App\Collection();
 		$phoneCollection = new \App\Collection();
+		$emailCollection = new \App\Collection();
 		$genderCollection = new \App\Collection();
 
 		foreach($statement as $row) {
@@ -132,6 +149,9 @@ class UserMapper extends \App\Mapper {
 			
 			$phone = $phoneMapper->hydrate('p', $row);
 			$phoneCollection->setItemAt($phone->getId(), $phone);
+
+			$email = $emailMapper->hydrate('e', $row);
+			$emailCollection->setItemAt($email->getId(), $email);
 
 			$gender = $genderMapper->hydrate('g', $row);
 			$genderCollection->setItemAt($gender->getId(), $gender);
@@ -153,6 +173,10 @@ class UserMapper extends \App\Mapper {
 		 */
 		$this->joinCollections($userCollection, $phoneCollection, 'Phone', $query);
 
+		/* Build user/email relation
+ 		 */
+		$this->joinCollections($userCollection, $emailCollection, 'Email', $query);
+
 		/* Build user/gender relation
 		 */
 		$this->joinCollections($userCollection, $genderCollection, 'Gender', $query);
@@ -161,6 +185,7 @@ class UserMapper extends \App\Mapper {
 		 */
 		$userCollection->reindex();
 
+		new \App\Probe($userCollection);
 		return $userCollection;
 	}
 } 
