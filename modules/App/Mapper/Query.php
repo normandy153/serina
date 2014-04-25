@@ -217,6 +217,17 @@ class Query {
 		return implode(' ', $this->getQueryString());
 	}
 
+	/**
+	 * Get a mapper out of the QueryRegistry since they've already spawned
+	 *
+	 * @param $model
+	 * @param $alias
+	 * @return mixed
+	 */
+	public function getMapper($model, $alias) {
+		return $this->getQueryRegistry()->getMapper($model, $alias);
+	}
+
 	/* Getters/Setters
 	 */
 
@@ -252,7 +263,7 @@ class Query {
 	 *
 	 * @return \App\Mapper\QueryRegistry
 	 */
-	private function getQueryRegistry() {
+	public function getQueryRegistry() {
 		return $this->queryRegistry;
 	}
 

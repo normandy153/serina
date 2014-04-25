@@ -64,11 +64,6 @@ class UserMapper extends \App\Mapper {
 	 * TODO: Test method
 	 */
 	public function testQuery() {
-		$userMapper = $this;
-		$addressMapper = new \Core\User\AddressMapper();
-		$stateMapper = new \Core\User\StateMapper();
-		$phoneMapper = new \Core\User\PhoneMapper();
-
 		$query = new Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p')
 			->from('\Core\User\User u')
@@ -79,14 +74,26 @@ class UserMapper extends \App\Mapper {
 		$statement = $this->getDatabase()->prepare($query->prepare());
 		$statement->execute();
 
-		new \App\Probe($query);
 		new \App\Probe($query->getObjectGraph());
+
+		/* Use cached mapper spawns
+		 */
+		$userMapper = $query->getMapper('\Core\User\User', 'u');
+		$addressMapper = $query->getMapper('\Core\User\Address', 'a');
+		$stateMapper = $query->getMapper('\Core\User\State', 's');
+		$phoneMapper = $query->getMapper('\Core\User\Phone', 'p');
 
 		foreach($statement as $row) {
 			$user = $userMapper->hydrate('u', $row);
 			$address = $addressMapper->hydrate('a', $row);
 			$state = $stateMapper->hydrate('s', $row);
 			$phone = $phoneMapper->hydrate('p', $row);
+
+			new \App\Probe($user);
+			new \App\Probe($address);
+			new \App\Probe($state);
+			new \App\Probe($phone);
+
 		}
 	}
 } 
