@@ -83,6 +83,26 @@ class Collection implements \Iterator, \JsonSerializable {
 	}
 
 	/**
+	 * Add an item to the stack at an index equivalent to the primary key
+	 * of the item
+	 *
+	 * @param $item
+	 */
+	public function addUniquely($item) {
+		$this->stack[$item->getId()] = $item;
+	}
+
+	/**
+	 * Merge two stacks
+	 *
+	 * @param Collection $collection
+	 * @internal param $item
+	 */
+	public function merge(\App\Collection $collection) {
+		$this->stack[] = array_merge($this->stack, $collection->getStack());
+	}
+
+	/**
 	 * Is the current element valid?
 	 *
 	 * @return bool
