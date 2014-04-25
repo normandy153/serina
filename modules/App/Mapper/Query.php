@@ -6,15 +6,6 @@
  * Time: 2:04 PM
  */
 
-
-//$query
-//	->select('User u', 'Address a', 'State s', 'Phone p')
-//	->from('u')
-//	->join('User Address')
-//	->join('Address State')
-//	->join('User Phone')
-//	->execute();
-
 namespace App\Mapper;
 
 
