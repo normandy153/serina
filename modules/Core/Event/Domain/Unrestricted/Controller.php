@@ -17,7 +17,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 	public function getEventList() {
 		$mapper = new \Core\User\UserMapper();
 
-		$mapper->testQuery();
+		$mapper->findAll();
 
 		exit();
 	}
