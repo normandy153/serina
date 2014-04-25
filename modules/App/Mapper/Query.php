@@ -19,6 +19,13 @@ class Query {
 	private $queryString = array();
 
 	/**
+	 * A list of model/alias pairs
+	 *
+	 * @var array
+	 */
+	private $registry = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -61,6 +68,11 @@ class Query {
 
 				$string[] = str_replace($pattern, $replace, $template);
 			}
+
+			/* Remember instances of everything we found in the select
+			 */
+			$this->addModelToRegistry($alias, $model);
+			$this->addMapperToRegistry($alias, $mapper);
 		}
 
 		$str = implode(', ', $string);
@@ -74,15 +86,71 @@ class Query {
 	}
 
 	/**
+	 * Add a model to the registry for a particular alias
+	 *
+	 * @param $alias
+	 * @param $model
+	 */
+	private function addModelToRegistry($alias, $model) {
+		$this->registry[$alias]['model'] = $model;
+	}
+
+	/**
+	 * Add a mapper to the registry for a particular alias
+	 *
+	 * @param $alias
+	 * @param $mapper
+	 */
+	private function addMapperToRegistry($alias, $mapper) {
+		$this->registry[$alias]['mapper'] = $mapper;
+	}
+
+	/**
+	 * Get a mapper out of the registry, spawning and remembering an instance
+	 * of one if it didn't already exist
+	 *
+	 * @param $model
+	 * @param $alias
+	 * @return mixed
+	 */
+	private function getMapperFromRegistry($model, $alias) {
+
+		/* If the alias wasn't known, spawn some defaults
+		 */
+		if (!isset($this->registry[$alias])) {
+			$this->registry[$alias] = array(
+				'model' => false,
+				'mapper' => false,
+			);
+		}
+
+		/* Try to get an existing mapper
+		 */
+		$mapper = $this->registry[$alias]['mapper'];
+
+		if (!$mapper) {
+			$mapper = $this->getMapperClassFromModel($model);
+
+			/* Remember instances of everything we found in the select
+  			 */
+			$this->addModelToRegistry($alias, $model);
+			$this->addMapperToRegistry($alias, $mapper);
+		}
+
+		return $this->registry[$alias]['mapper'];
+	}
+
+	/**
 	 * From
 	 */
 	public function from($from) {
 		list($model, $alias) = explode(' ', $from);
 
 		/* Spawn a mapper to get to the model property definitions
-		 * and to find the table name
+		 * and to find the table name. Add to registry if it doesn't
+		 * already exist there
 		 */
-		$mapper = $this->getMapperClassFromModel($model);
+		$mapper = $this->getMapperFromRegistry($model, $alias);
 
 		/* Augment query string
 		 */
@@ -134,7 +202,7 @@ class Query {
 		/* Spawn a mapper to get to the model property definitions
 		 * and to find the table name
 		 */
-		$mapper1 = $this->getMapperClassFromModel($rootModel);
+		$mapper1 = $this->getMapperFromRegistry($rootModel, $rootAlias);
 
 		/* Find out about the other table to join upon
 		 */
@@ -142,7 +210,7 @@ class Query {
 
 		/* Find the stuff onto which $mapper2 objects should be joined
 		 */
-		$mapper2 = $this->getMapperClassFromModel($rule['other']['model']);
+		$mapper2 = $this->getMapperFromRegistry($rule['other']['model'], $otherAlias);
 
 		/* Assemble join querystring
 		 */

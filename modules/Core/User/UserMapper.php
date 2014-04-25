@@ -70,11 +70,12 @@ class UserMapper extends \App\Mapper {
 		$phoneMapper = new \Core\User\PhoneMapper();
 
 		$query = new \App\Mapper\Query();
-		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p')
+		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s')
 			->from('\Core\User\User u')
 			->leftJoin('\Core\User\User u', 'Address', 'a')
 			->innerJoin('\Core\User\Address a', 'State', 's')
 			->innerJoin('\Core\User\User u', 'Phone', 'p');
+
 
 		new \App\Probe($query);
 		$statement = $this->getDatabase()->prepare($query);
