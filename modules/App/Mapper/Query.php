@@ -31,7 +31,6 @@ class Query {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->augmentQueryString('SELECT');
 	}
 
 	/**
@@ -76,6 +75,9 @@ class Query {
 
 		$str = implode(', ', $string);
 
+		/* Augment query string
+		 */
+		$this->augmentQueryString('SELECT');
 		$this->augmentQueryString($str);
 
 		return $this;
@@ -84,7 +86,19 @@ class Query {
 	/**
 	 * From
 	 */
-	public function from() {
+	public function from($from) {
+		list($model, $alias) = explode(' ', $from);
+
+		/* Spawn a mapper to get to the model property definitions
+		 * and to find the table name
+		 */
+		$mapperClass = $model . 'Mapper';
+		$mapper = new $mapperClass();
+
+		/* Augment query string
+		 */
+		$this->augmentQueryString('FROM');
+		$this->augmentQueryString("`{$mapper->getTable()}` {$alias}");
 
 		return $this;
 	}

@@ -191,6 +191,9 @@ abstract class Mapper {
 	/**
 	 * Get table
 	 *
+	 * Made public so it can be used to dynamically hydrate and
+	 * map objects in the Query
+	 *
 	 * @return string
 	 */
 	public function getTable() {
