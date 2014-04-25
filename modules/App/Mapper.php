@@ -88,10 +88,22 @@ abstract class Mapper {
 		return $hydrator->getProduct();
 	}
 
+	/**
+	 * Add a join rule
+	 *
+	 * @param $name
+	 * @param $item
+	 */
 	public function addJoin($name, $item) {
 		$this->joins[$name] = $item;
 	}
 
+	/**
+	 * Get a join rule by its name
+	 * 
+	 * @param $name
+	 * @return mixed
+	 */
 	public function getJoin($name) {
 		return $this->joins[$name];
 	}
