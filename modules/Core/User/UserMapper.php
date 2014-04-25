@@ -76,16 +76,6 @@ class UserMapper extends \App\Mapper {
 			->innerJoin('\Core\User\Address a', 'State', 's')
 			->innerJoin('\Core\User\User u', 'Phone', 'p');
 
-
-//		$query
-//			->select('User u', 'Address a', 'State s', 'Phone p')
-//			->from('u')
-//			->join('User Address')
-//			->join('Address State')
-//			->join('User Phone')
-//			->execute();
-
-
 		new \App\Probe($query);
 		$statement = $this->getDatabase()->prepare($query);
 		$statement->execute();
