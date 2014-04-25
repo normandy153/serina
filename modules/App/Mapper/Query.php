@@ -51,8 +51,7 @@ class Query {
 
 			/* Spawn a mapper to get to the model property definitions
 			 */
-			$mapperClass = $model . 'Mapper';
-			$mapper = new $mapperClass();
+			$mapper = $this->getMapperClassFromModel($model);
 
 			foreach ($mapper->getProperties() as $currentProperty) {
 				$replace = array(
@@ -177,7 +176,7 @@ class Query {
 
 		throw new \Exception("Mapper class $mapperClass does not exist.");
 	}
-	
+
 	/**
 	 * Add a piece to the existing query string
 	 * Condense and trim multiple whitespace characters
