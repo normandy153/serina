@@ -66,9 +66,9 @@ class UserMapper extends \App\Mapper {
 	}
 
 	/**
-	 * TODO: Test method
+	 * Find all the users with all their extra data
 	 */
-	public function testQuery() {
+	public function findAll() {
 		$query = new Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p')
 			->from('\Core\User\User u')
