@@ -38,15 +38,14 @@ class UserMapper extends \App\Mapper {
 		 * query, or it'll just snap
 		 */
 		$this->addJoin('Phone', array(
+			'this' => array(
+				'model' => '\Core\User\User',
+				'key' => 'id',
+			),
 			'other' => array(
-				'table' => 'phone',
-				'alias' => 'p',
+				'model' => '\Core\User\Phone',
 				'key' => 'user_id',
 			),
-			'this' => array(
-				'alias' => 'u',
-				'key' => 'id',
-			)
 		));
 
 		$this->addJoin('Address', array(
@@ -70,23 +69,12 @@ class UserMapper extends \App\Mapper {
 		$stateMapper = new \Core\User\StateMapper();
 		$phoneMapper = new \Core\User\PhoneMapper();
 
-//		$query = "
-//			SELECT
-//				{$userMapper->select('u')},
-//				{$addressMapper->select('a')},
-//				{$stateMapper->select('s')},
-//				{$phoneMapper->select('p')}
-//			{$userMapper->from('User', 'u')}
-//			{$userMapper->join('Address', 'a')}
-//			{$addressMapper->join('State', 's')}
-//			{$userMapper->join('Phone', 'p')}
-//		";
-
 		$query = new \App\Mapper\Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p')
 			->from('\Core\User\User u')
 			->join('\Core\User\User u', 'Address', 'a')
-			->join('\Core\User\Address a', 'State', 's');
+			->join('\Core\User\Address a', 'State', 's')
+			->join('\Core\User\User u', 'Phone', 'p');
 
 
 //		$query
