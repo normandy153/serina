@@ -83,8 +83,7 @@ class Query {
 		/* Spawn a mapper to get to the model property definitions
 		 * and to find the table name
 		 */
-		$mapperClass = $model . 'Mapper';
-		$mapper = new $mapperClass();
+		$mapper = $this->getMapperClassFromModel($model);
 
 		/* Augment query string
 		 */
@@ -136,15 +135,15 @@ class Query {
 		/* Spawn a mapper to get to the model property definitions
 		 * and to find the table name
 		 */
-		$mapperClass = $rootModel . 'Mapper';
-		$mapper1 = new $mapperClass();
+		$mapper1 = $this->getMapperClassFromModel($rootModel);
 
+		/* Find out about the other table to join upon
+		 */
 		$rule = $mapper1->getJoin($joinRule);
 
 		/* Find the stuff onto which $mapper2 objects should be joined
 		 */
-		$mapperClass = $rule['other']['model'] . 'Mapper';
-		$mapper2 = new $mapperClass();
+		$mapper2 = $this->getMapperClassFromModel($rule['other']['model']);
 
 		/* Assemble join querystring
 		 */
@@ -162,6 +161,23 @@ class Query {
 		return $this;
 	}
 
+	/**
+	 * Spawn a mapper class from model name
+	 *
+	 * @param $modelName
+	 * @throws \Exception
+	 * @return mixed
+	 */
+	private function getMapperClassFromModel($modelName) {
+		$mapperClass = $modelName . 'Mapper';
+
+		if (class_exists($mapperClass)) {
+			return new $mapperClass();
+		}
+
+		throw new \Exception("Mapper class $mapperClass does not exist.");
+	}
+	
 	/**
 	 * Add a piece to the existing query string
 	 * Condense and trim multiple whitespace characters
