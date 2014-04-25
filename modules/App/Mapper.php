@@ -88,7 +88,6 @@ abstract class Mapper {
 		return $hydrator->getProduct();
 	}
 
-
 	public function addJoin($name, $item) {
 		$this->joins[$name] = $item;
 	}
@@ -97,30 +96,75 @@ abstract class Mapper {
 		return $this->joins[$name];
 	}
 
-	// User u
-	public function from($thisModel, $alias) {
-		return "FROM `{$this->getTable()}` {$alias}";
-	}
+	/**
+	 * Join two collections using the rule $rule used in $query
+	 *
+	 * @param $collection1
+	 * @param $collection2
+	 * @param $rule
+	 * @param $query
+	 * @throws \Exception
+	 */
+	protected function joinCollections($collection1, $collection2, $rule, $query) {
+		$rules = $query->getRules();
 
-	// User Phone
-	public function join($otherModel, $otherAlias) {
-		$otherTable = $this->joins[$otherModel]['other']['table'];
-		$otherAlias = $otherAlias;
-		$otherKey = $this->joins[$otherModel]['other']['key'];
-		$thisTable = $this->getTable();
-		$thisAlias = $this->joins[$otherModel]['this']['alias'];
-		$thisKey = $this->joins[$otherModel]['this']['key'];
+		$useRule = false;
+		$getter1 = false;
+		$getter2 = false;
 
-		$str = "
-			LEFT JOIN {$otherTable} {$otherAlias}
-			ON {$otherAlias}.{$otherKey} = {$thisAlias}.{$thisKey}
-		";
+		foreach($rules as $currentRule) {
+			if ($currentRule['name'] == $rule) {
+				$useRule = $currentRule['rule'];
 
-		return $str;
-	}
+				/* Find stuff in $collection1 using this key
+				 */
+				$key1 = $useRule['this']['key'];
 
-	public function build(\App\Collection $rowCollection) {
+				/* Find stuff from $collection2 using this key
+				 */
+				$key2 = $useRule['other']['key'];
 
+				/* Stuff from $collection2 gets dumped into $key1
+ 				 */
+				$key3 = $useRule['this']['collection'];
+
+				/* Set the resultant collection of $collection2 items
+				 * into items from $collection1
+				 */
+				$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['model'] . 'Mapper');
+
+				/* Used to compare keys for matching items
+				 */
+				$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
+				$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['model'] . 'Mapper');
+
+				break;
+			}
+		}
+
+		/* Proceed if all bits are found
+		 */
+		if ($useRule && $getter1 && $getter2) {
+			$allKeys = array_keys($collection1->getStack());
+
+			foreach($allKeys as $currentKey) {
+				$final = new \App\Collection();
+
+				$rootNode = $collection1->getItemAt($currentKey);
+				$collection2->reindex();
+
+				foreach($collection2 as $current) {
+					if ($rootNode->$getter1() == $current->$getter2()) {
+						$final->add($current);
+					}
+				}
+
+				$rootNode->$setter($final);
+			}
+		}
+		else {
+			throw new \Exception('Join rule not found.');
+		}
 	}
 
 	/* Getters/Setters
