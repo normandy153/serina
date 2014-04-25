@@ -19,16 +19,17 @@ class Query {
 	private $queryString = array();
 
 	/**
-	 * A list of model/alias pairs
+	 * A QueryRegistry instance
 	 *
-	 * @var array
+	 * @var QueryRegistry
 	 */
-	private $registry = array();
+	private $queryRegistry = null;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
+		$this->setQueryRegistry(new QueryRegistry());
 	}
 
 	/**
@@ -58,7 +59,7 @@ class Query {
 
 			/* Spawn a mapper to get to the model property definitions
 			 */
-			$mapper = $this->getMapperClassFromModel($model);
+			$mapper = $this->getQueryRegistry()->getMapper($model, $alias);
 
 			foreach ($mapper->getProperties() as $currentProperty) {
 				$replace = array(
@@ -71,8 +72,8 @@ class Query {
 
 			/* Remember instances of everything we found in the select
 			 */
-			$this->addModelToRegistry($alias, $model);
-			$this->addMapperToRegistry($alias, $mapper);
+			$this->getQueryRegistry()->addModel($alias, $model);
+			$this->getQueryRegistry()->addMapper($alias, $mapper);
 		}
 
 		$str = implode(', ', $string);
@@ -85,60 +86,6 @@ class Query {
 		return $this;
 	}
 
-	/**
-	 * Add a model to the registry for a particular alias
-	 *
-	 * @param $alias
-	 * @param $model
-	 */
-	private function addModelToRegistry($alias, $model) {
-		$this->registry[$alias]['model'] = $model;
-	}
-
-	/**
-	 * Add a mapper to the registry for a particular alias
-	 *
-	 * @param $alias
-	 * @param $mapper
-	 */
-	private function addMapperToRegistry($alias, $mapper) {
-		$this->registry[$alias]['mapper'] = $mapper;
-	}
-
-	/**
-	 * Get a mapper out of the registry, spawning and remembering an instance
-	 * of one if it didn't already exist
-	 *
-	 * @param $model
-	 * @param $alias
-	 * @return mixed
-	 */
-	private function getMapperFromRegistry($model, $alias) {
-
-		/* If the alias wasn't known, spawn some defaults
-		 */
-		if (!isset($this->registry[$alias])) {
-			$this->registry[$alias] = array(
-				'model' => false,
-				'mapper' => false,
-			);
-		}
-
-		/* Try to get an existing mapper
-		 */
-		$mapper = $this->registry[$alias]['mapper'];
-
-		if (!$mapper) {
-			$mapper = $this->getMapperClassFromModel($model);
-
-			/* Remember instances of everything we found in the select
-  			 */
-			$this->addModelToRegistry($alias, $model);
-			$this->addMapperToRegistry($alias, $mapper);
-		}
-
-		return $this->registry[$alias]['mapper'];
-	}
 
 	/**
 	 * From
@@ -150,7 +97,7 @@ class Query {
 		 * and to find the table name. Add to registry if it doesn't
 		 * already exist there
 		 */
-		$mapper = $this->getMapperFromRegistry($model, $alias);
+		$mapper = $this->getQueryRegistry()->getMapper($model, $alias);
 
 		/* Augment query string
 		 */
@@ -202,7 +149,7 @@ class Query {
 		/* Spawn a mapper to get to the model property definitions
 		 * and to find the table name
 		 */
-		$mapper1 = $this->getMapperFromRegistry($rootModel, $rootAlias);
+		$mapper1 = $this->getQueryRegistry()->getMapper($rootModel, $rootAlias);
 
 		/* Find out about the other table to join upon
 		 */
@@ -210,7 +157,7 @@ class Query {
 
 		/* Find the stuff onto which $mapper2 objects should be joined
 		 */
-		$mapper2 = $this->getMapperFromRegistry($rule['other']['model'], $otherAlias);
+		$mapper2 = $this->getQueryRegistry()->getMapper($rule['other']['model'], $otherAlias);
 
 		/* Assemble join querystring
 		 */
@@ -228,22 +175,6 @@ class Query {
 		return $this;
 	}
 
-	/**
-	 * Spawn a mapper class from model name
-	 *
-	 * @param $modelName
-	 * @throws \Exception
-	 * @return mixed
-	 */
-	private function getMapperClassFromModel($modelName) {
-		$mapperClass = $modelName . 'Mapper';
-
-		if (class_exists($mapperClass)) {
-			return new $mapperClass();
-		}
-
-		throw new \Exception("Mapper class $mapperClass does not exist.");
-	}
 
 	/**
 	 * Add a piece to the existing query string
@@ -274,5 +205,23 @@ class Query {
 	 */
 	private function getQueryString() {
 		return $this->queryString;
+	}
+
+	/**
+	 * Set query registry
+	 *
+	 * @param \App\Mapper\QueryRegistry $queryRegistry
+	 */
+	private function setQueryRegistry($queryRegistry) {
+		$this->queryRegistry = $queryRegistry;
+	}
+
+	/**
+	 * Get query registry
+	 *
+	 * @return \App\Mapper\QueryRegistry
+	 */
+	private function getQueryRegistry() {
+		return $this->queryRegistry;
 	}
 } 
