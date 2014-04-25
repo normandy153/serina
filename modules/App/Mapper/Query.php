@@ -86,7 +86,6 @@ class Query {
 		return $this;
 	}
 
-
 	/**
 	 * From
 	 */
@@ -184,6 +183,16 @@ class Query {
 	 */
 	private function augmentQueryString($string) {
 		$this->queryString[] = preg_replace('/\s+/m', ' ', trim($string));
+	}
+
+	/**
+	 * Return the querystring bits as a string which can be executed
+	 *
+	 *
+	 * @return string
+	 */
+	public function prepare() {
+		return implode(' ', $this->getQueryString());
 	}
 
 	/* Getters/Setters
