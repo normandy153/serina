@@ -93,6 +93,10 @@ abstract class Mapper {
 		$this->joins[$name] = $item;
 	}
 
+	public function getJoin($name) {
+		return $this->joins[$name];
+	}
+
 	// User u
 	public function from($thisModel, $alias) {
 		return "FROM `{$this->getTable()}` {$alias}";

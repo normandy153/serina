@@ -104,12 +104,55 @@ class Query {
 	}
 
 	/**
+	 * Join
+	 *
+	 * Joins the left model onto another specified in left model's $joinRule
+	 * This is left centric; the $rootModel contains the relationship rule
+	 *
+	 * @param $rootModel
+	 * @param $joinRule
+	 * @param $otherAlias
+	 * @return $this
+	 */
+	public function join($rootModel, $joinRule, $otherAlias) {
+
+		list($rootModel, $rootAlias) = explode(' ', $rootModel);
+
+		/* Spawn a mapper to get to the model property definitions
+		 * and to find the table name
+		 */
+		$mapperClass = $rootModel . 'Mapper';
+		$mapper1 = new $mapperClass();
+
+		$rule = $mapper1->getJoin($joinRule);
+
+		/* Find the stuff onto which $mapper2 objects should be joined
+		 */
+		$mapperClass = $rule['other']['model'] . 'Mapper';
+		$mapper2 = new $mapperClass();
+
+		/* Assemble join querystring
+		 */
+		$str = "
+			LEFT JOIN {$mapper2->getTable()} {$otherAlias}
+			ON {$rootAlias}.{$rule['this']['key']} = {$otherAlias}.{$rule['other']['key']}
+		";
+
+		/* Augment query string
+		 */
+		$this->augmentQueryString($str);
+
+		return $this;
+	}
+
+	/**
 	 * Add a piece to the existing query string
+	 * Condense and trim multiple whitespace characters
 	 *
 	 * @param $string
 	 */
 	private function augmentQueryString($string) {
-		$this->queryString[] = $string;
+		$this->queryString[] = preg_replace('/\s+/m', ' ', trim($string));
 	}
 
 	/* Getters/Setters

@@ -50,15 +50,14 @@ class UserMapper extends \App\Mapper {
 		));
 
 		$this->addJoin('Address', array(
+			'this' => array(
+				'model' => '\Core\User\User',
+				'key' => 'address_id',
+			),
 			'other' => array(
-				'table' => 'address',
-				'alias' => 'a',
+				'model' => '\Core\User\Address',
 				'key' => 'id',
 			),
-			'this' => array(
-				'alias' => 'u',
-				'key' => 'address_id',
-			)
 		));
 	}
 
@@ -85,7 +84,8 @@ class UserMapper extends \App\Mapper {
 
 		$query = new \App\Mapper\Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p')
-			->from('\Core\User\User u');
+			->from('\Core\User\User u')
+			->join('\Core\User\User u', 'Address', 'a');
 
 
 //		$query
