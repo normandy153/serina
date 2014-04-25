@@ -26,6 +26,13 @@ class Query {
 	private $queryRegistry = null;
 
 	/**
+	 * An object graph represented by an array of alias relations
+	 *
+	 * @var array
+	 */
+	private $objectGraph = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -171,9 +178,25 @@ class Query {
 		 */
 		$this->augmentQueryString($str);
 
+		/* Augment object graph
+		 */
+		$this->addToObjectGraph($rootAlias, $otherAlias);
+
 		return $this;
 	}
 
+	/**
+	 * Makes a relationship representation between $rootAlias and $otherAlias
+	 *
+	 * This makes $otherAlias an element of $rootAlias, which allows us to find
+	 * out later which objects are related to which other objects
+	 *
+	 * @param $rootAlias
+	 * @param $otherAlias
+	 */
+	private function addToObjectGraph($rootAlias, $otherAlias) {
+		$this->objectGraph[$rootAlias][] = $otherAlias;
+	}
 
 	/**
 	 * Add a piece to the existing query string
@@ -232,5 +255,23 @@ class Query {
 	 */
 	private function getQueryRegistry() {
 		return $this->queryRegistry;
+	}
+
+	/**
+	 * Set object graph
+	 *
+	 * @param array $objectGraph
+	 */
+	private function setObjectGraph($objectGraph) {
+		$this->objectGraph = $objectGraph;
+	}
+
+	/**
+	 * Get object graph
+	 *
+	 * @return array
+	 */
+	public function getObjectGraph() {
+		return $this->objectGraph;
 	}
 } 

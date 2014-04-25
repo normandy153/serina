@@ -79,21 +79,13 @@ class UserMapper extends \App\Mapper {
 		$statement = $this->getDatabase()->prepare($query->prepare());
 		$statement->execute();
 
+		new \App\Probe($query->getObjectGraph());
+
 		foreach($statement as $row) {
 			$user = $userMapper->hydrate('u', $row);
 			$address = $addressMapper->hydrate('a', $row);
 			$state = $stateMapper->hydrate('s', $row);
 			$phone = $phoneMapper->hydrate('p', $row);
-
-			$rowCollection = new \App\Collection();
-			$rowCollection->add($user);
-			$rowCollection->add($address);
-			$rowCollection->add($state);
-			$rowCollection->add($phone);
-
-			$this->build($rowCollection);
 		}
-
-//		new \App\Probe($rowCollection);
 	}
 } 
