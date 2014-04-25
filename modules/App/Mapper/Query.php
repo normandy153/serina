@@ -118,11 +118,10 @@ class Query {
 	 *
 	 * @param $rootModel
 	 * @param $joinRule
-	 * @param $otherAlias
 	 * @return $this
 	 */
-	public function leftJoin($rootModel, $joinRule, $otherAlias) {
-		return $this->join('left', $rootModel, $joinRule, $otherAlias);
+	public function leftJoin($rootModel, $joinRule) {
+		return $this->join('left', $rootModel, $joinRule);
 	}
 
 	/**
@@ -130,11 +129,10 @@ class Query {
 	 *
 	 * @param $rootModel
 	 * @param $joinRule
-	 * @param $otherAlias
 	 * @return $this
 	 */
-	public function innerJoin($rootModel, $joinRule, $otherAlias) {
-		return $this->join('inner', $rootModel, $joinRule, $otherAlias);
+	public function innerJoin($rootModel, $joinRule) {
+		return $this->join('inner', $rootModel, $joinRule);
 	}
 
 	/**
@@ -146,10 +144,9 @@ class Query {
 	 * @param $type
 	 * @param $rootModel
 	 * @param $joinRule
-	 * @param $otherAlias
 	 * @return $this
 	 */
-	private function join($type, $rootModel, $joinRule, $otherAlias) {
+	private function join($type, $rootModel, $joinRule) {
 		list($rootModel, $rootAlias) = explode(' ', $rootModel);
 
 		/* Spawn a mapper to get to the model property definitions
@@ -159,7 +156,9 @@ class Query {
 
 		/* Find out about the other table to join upon
 		 */
-		$rule = $mapper1->getJoin($joinRule);
+		list($ruleName, $otherAlias) = explode(' ', $joinRule);
+
+		$rule = $mapper1->getJoin($ruleName);
 
 		/* Find the stuff onto which $mapper2 objects should be joined
 		 */

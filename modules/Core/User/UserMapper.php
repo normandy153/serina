@@ -72,13 +72,14 @@ class UserMapper extends \App\Mapper {
 		$query = new Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p')
 			->from('\Core\User\User u')
-			->leftJoin('\Core\User\User u', 'Address', 'a')
-			->innerJoin('\Core\User\Address a', 'State', 's')
-			->innerJoin('\Core\User\User u', 'Phone', 'p');
+			->leftJoin('\Core\User\User u', 'Address a')
+			->innerJoin('\Core\User\Address a', 'State s')
+			->innerJoin('\Core\User\User u', 'Phone p');
 
 		$statement = $this->getDatabase()->prepare($query->prepare());
 		$statement->execute();
 
+		new \App\Probe($query);
 		new \App\Probe($query->getObjectGraph());
 
 		foreach($statement as $row) {
