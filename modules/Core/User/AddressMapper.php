@@ -33,15 +33,14 @@ class AddressMapper extends \App\Mapper {
 		$this->addProperty('deletedAt', 'deleted_at');
 
 		$this->addJoin('State', array(
+			'this' => array(
+				'model' => '\Core\User\Address',
+				'key' => 'state',
+			),
 			'other' => array(
-				'table' => 'state',
-				'alias' => 's',
+				'model' => '\Core\User\State',
 				'key' => 'id',
 			),
-			'this' => array(
-				'alias' => 'a',
-				'key' => 'state',
-			)
 		));
 	}
 } 
