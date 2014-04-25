@@ -7,7 +7,7 @@
  */
 
 namespace Core\User;
-
+use \App\Mapper\Query as Query;
 
 class UserMapper extends \App\Mapper {
 
@@ -69,7 +69,7 @@ class UserMapper extends \App\Mapper {
 		$stateMapper = new \Core\User\StateMapper();
 		$phoneMapper = new \Core\User\PhoneMapper();
 
-		$query = new \App\Mapper\Query();
+		$query = new Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s')
 			->from('\Core\User\User u')
 			->leftJoin('\Core\User\User u', 'Address', 'a')
