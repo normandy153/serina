@@ -36,11 +36,15 @@ class UserMapper extends \App\Mapper {
 		 * These definitions, when combined into the final
 		 * sql query, mustn't create a syntactically incorrect
 		 * query, or it'll just snap
+		 *
+		 * The 'collection' key is the database column into
+		 * which the final joined collections are placed
 		 */
 		$this->addJoin('Phone', array(
 			'this' => array(
 				'model' => '\Core\User\User',
 				'key' => 'id',
+				'collection' => 'phone_id',
 			),
 			'other' => array(
 				'model' => '\Core\User\Phone',
@@ -52,6 +56,7 @@ class UserMapper extends \App\Mapper {
 			'this' => array(
 				'model' => '\Core\User\User',
 				'key' => 'address_id',
+				'collection' => 'address_id',
 			),
 			'other' => array(
 				'model' => '\Core\User\Address',
@@ -110,15 +115,20 @@ class UserMapper extends \App\Mapper {
 
 		/* Build user/phone relation
 		 */
-//		$this->joinCollections($userCollection, $phoneCollection, 'Phone', $query);
+		$this->joinCollections($userCollection, $phoneCollection, 'Phone', $query);
 
-//		new \App\Probe($query->getObjectGraph());
-		new \App\Probe($userCollection);
-new \App\Probe($query->getRules());
 		return $userCollection;
 	}
 
-
+	/**
+	 * Join two collections using the rule $rule used in $query
+	 *
+	 * @param $collection1
+	 * @param $collection2
+	 * @param $rule
+	 * @param $query
+	 * @throws \Exception
+	 */
 	private function joinCollections($collection1, $collection2, $rule, $query) {
 		$rules = $query->getRules();
 
@@ -130,13 +140,22 @@ new \App\Probe($query->getRules());
 			if ($currentRule['name'] == $rule) {
 				$useRule = $currentRule['rule'];
 
+				/* Find stuff in $collection1 using this key
+				 */
 				$key1 = $useRule['this']['key'];
+
+				/* Find stuff from $collection2 using this key
+				 */
 				$key2 = $useRule['other']['key'];
+
+				/* Stuff from $collection2 gets dumped into $key1
+ 				 */
+				$key3 = $useRule['this']['collection'];
 
 				/* Set the resultant collection of $collection2 items
 				 * into items from $collection1
 				 */
-				$setter = $query->deriveSetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
+				$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['model'] . 'Mapper');
 
 				/* Used to compare keys for matching items
 				 */
@@ -171,23 +190,4 @@ new \App\Probe($query->getRules());
 			throw new \Exception('Join rule not found.');
 		}
 	}
-
-//	private function joinCollections($collection1, $collection2, $key1, $key2, $destination) {
-//		$allKeys = array_keys($collection1->getStack());
-//
-//		foreach($allKeys as $currentKey) {
-//			$final = new \App\Collection();
-//
-//			$rootNode = $collection1->getItemAt($currentKey);
-//			$collection2->reindex();
-//
-//			foreach($collection2 as $current) {
-//				if ($rootNode->$key1() == $current->$key2()) {
-//					$final->add($current);
-//				}
-//			}
-//
-//			$rootNode->$destination($final);
-//		}
-//	}
 } 

@@ -36,6 +36,7 @@ class AddressMapper extends \App\Mapper {
 			'this' => array(
 				'model' => '\Core\User\Address',
 				'key' => 'state',
+				'collection' => 'state',
 			),
 			'other' => array(
 				'model' => '\Core\User\State',
