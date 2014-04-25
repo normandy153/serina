@@ -185,7 +185,6 @@ class UserMapper extends \App\Mapper {
 		 */
 		$userCollection->reindex();
 
-		new \App\Probe($userCollection);
 		return $userCollection;
 	}
 } 
