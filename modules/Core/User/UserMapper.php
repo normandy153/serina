@@ -11,8 +11,6 @@ use \App\Mapper\Query as Query;
 
 class UserMapper extends \App\Mapper {
 
-	protected $finalGraph = array();
-
 	/**
 	 * Define properties
 	 *
@@ -119,10 +117,9 @@ class UserMapper extends \App\Mapper {
 		return $userCollection;
 	}
 
-	
+
 	private function joinCollections($collection1, $collection2, $key1, $key2, $destination) {
 		$allKeys = array_keys($collection1->getStack());
-
 
 		foreach($allKeys as $currentKey) {
 			$final = new \App\Collection();
