@@ -41,7 +41,7 @@ class Query {
 	 *
 	 * Pass it a table alias to use it as a prefix
 	 *
-	 * @return string
+	 * @return $this
 	 */
 	public function select() {
 		$string = array();
@@ -77,6 +77,14 @@ class Query {
 		$str = implode(', ', $string);
 
 		$this->augmentQueryString($str);
+
+		return $this;
+	}
+
+	/**
+	 * From
+	 */
+	public function from() {
 
 		return $this;
 	}
