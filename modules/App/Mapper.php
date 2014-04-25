@@ -41,6 +41,13 @@ abstract class Mapper {
 	protected $properties = array();
 
 	/**
+	 * A list of joins
+	 *
+	 * @var array
+	 */
+	protected $joins = array();
+
+	/**
 	 * Constructor
 	 */
 	final public function __construct() {
