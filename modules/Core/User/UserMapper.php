@@ -85,6 +85,7 @@ class UserMapper extends \App\Mapper {
 
 		$query = new \App\Mapper\Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p');
+
 //		$query
 //			->select('User u', 'Address a', 'State s', 'Phone p')
 //			->from('u')

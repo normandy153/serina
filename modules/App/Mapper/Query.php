@@ -21,10 +21,17 @@ namespace App\Mapper;
 class Query {
 
 	/**
+	 * The resultant query string to be executed
+	 *
+	 * @var string
+	 */
+	private $queryString = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
-
+		$this->augmentQueryString('SELECT');
 	}
 
 	/**
@@ -69,6 +76,38 @@ class Query {
 
 		$str = implode(', ', $string);
 
-		return $str;
+		$this->augmentQueryString($str);
+
+		return $this;
+	}
+
+	/**
+	 * Add a piece to the existing query string
+	 *
+	 * @param $string
+	 */
+	private function augmentQueryString($string) {
+		$this->queryString[] = $string;
+	}
+
+	/* Getters/Setters
+	 */
+
+	/**
+	 * Set query string
+	 *
+	 * @param array $queryString
+	 */
+	private function setQueryString($queryString) {
+		$this->queryString = $queryString;
+	}
+
+	/**
+	 * Get query string
+	 *
+	 * @return array
+	 */
+	private function getQueryString() {
+		return $this->queryString;
 	}
 } 
