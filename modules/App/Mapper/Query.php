@@ -263,7 +263,7 @@ class Query {
 	 *
 	 * @return \App\Mapper\QueryRegistry
 	 */
-	public function getQueryRegistry() {
+	private function getQueryRegistry() {
 		return $this->queryRegistry;
 	}
 
