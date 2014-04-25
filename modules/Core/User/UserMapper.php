@@ -41,51 +41,25 @@ class UserMapper extends \App\Mapper {
 			'other' => array(
 				'table' => 'phone',
 				'alias' => 'p',
-				'key' => 'user_id'
+				'key' => 'user_id',
 			),
 			'this' => array(
 				'alias' => 'u',
 				'key' => 'id',
 			)
 		));
-	}
 
-	public function addJoin($name, $item) {
-		$this->joins[$name] = $item;
-	}
-
-	// User u
-	public function from($thisModel, $alias) {
-		$this->graph[$this->getTable()] = array();
-
-		return "FROM `{$this->getTable()}` {$alias}";
-	}
-
-	// User Phone
-	public function join($otherModel) {
-		$otherTable = $this->joins[$otherModel]['other']['table'];
-		$otherAlias = $this->joins[$otherModel]['other']['alias'];
-		$otherKey = $this->joins[$otherModel]['other']['key'];
-		$thisTable = $this->getTable();
-		$thisAlias = $this->joins[$otherModel]['this']['alias'];
-		$thisKey = $this->joins[$otherModel]['this']['key'];
-
-		$str = "
-			LEFT JOIN {$otherTable} {$otherAlias}
-			ON {$otherAlias}.{$otherKey} = {$thisAlias}.{$thisKey}
-		";
-
-		$this->graph[$thisTable][$otherAlias] = '';
-
-		return $str;
-	}
-
-	public function build(\App\Collection $rowCollection) {
-
-		foreach($rowCollection as $currentInstance) {
-
-
-		}
+		$this->addJoin('Address', array(
+			'other' => array(
+				'table' => 'address',
+				'alias' => 'a',
+				'key' => 'id',
+			),
+			'this' => array(
+				'alias' => 'u',
+				'key' => 'address_id',
+			)
+		));
 	}
 
 	/**
@@ -93,25 +67,47 @@ class UserMapper extends \App\Mapper {
 	 */
 	public function testQuery() {
 		$userMapper = $this;
+		$addressMapper = new \Core\User\AddressMapper();
+		$stateMapper = new \Core\User\StateMapper();
 		$phoneMapper = new \Core\User\PhoneMapper();
 
-		$query = "
-			SELECT
-				{$userMapper->select('u')},
-				{$phoneMapper->select('p')}
-			{$userMapper->from('User', 'u')}
-			{$userMapper->join('Phone')}
-		";
+//		$query = "
+//			SELECT
+//				{$userMapper->select('u')},
+//				{$addressMapper->select('a')},
+//				{$stateMapper->select('s')},
+//				{$phoneMapper->select('p')}
+//			{$userMapper->from('User', 'u')}
+//			{$userMapper->join('Address', 'a')}
+//			{$addressMapper->join('State', 's')}
+//			{$userMapper->join('Phone', 'p')}
+//		";
 
+		$query = new \App\Mapper\Query();
+		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p');
+//		$query
+//			->select('User u', 'Address a', 'State s', 'Phone p')
+//			->from('u')
+//			->join('User Address')
+//			->join('Address State')
+//			->join('User Phone')
+//			->execute();
+
+
+		new \App\Probe($query);
 		$statement = $this->getDatabase()->prepare($query);
 		$statement->execute();
 
 		foreach($statement as $row) {
 			$user = $userMapper->hydrate('u', $row);
+			$address = $addressMapper->hydrate('a', $row);
+			$state = $stateMapper->hydrate('s', $row);
 			$phone = $phoneMapper->hydrate('p', $row);
 
 			$rowCollection = new \App\Collection();
 			$rowCollection->add($user);
+			$rowCollection->add($address);
+			$rowCollection->add($state);
 			$rowCollection->add($phone);
 
 			$this->build($rowCollection);

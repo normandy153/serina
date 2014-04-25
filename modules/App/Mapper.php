@@ -88,37 +88,35 @@ abstract class Mapper {
 		return $hydrator->getProduct();
 	}
 
-	/**
-	 * Exact select macro, used mostly when joining tables where the
-	 * column names might clash. This deconflicts shared names like
-	 * id, name, created_at, etc.
-	 *
-	 * Pass it a table alias to use it as a prefix
-	 *
-	 * @param $alias
-	 * @return string
-	 */
-	public function select($alias) {
-		$string = array();
-		$template = "{ALIAS}.{COLUMN} AS {ALIAS}__{COLUMN}";
 
-		$pattern = array(
-			'{COLUMN}',
-			'{ALIAS}'
-		);
+	public function addJoin($name, $item) {
+		$this->joins[$name] = $item;
+	}
 
-		foreach ($this->getProperties() as $currentProperty) {
-			$replace = array(
-				$currentProperty->getColumn(),
-				$alias
-			);
+	// User u
+	public function from($thisModel, $alias) {
+		return "FROM `{$this->getTable()}` {$alias}";
+	}
 
-			$string[] = str_replace($pattern, $replace, $template);
-		}
+	// User Phone
+	public function join($otherModel, $otherAlias) {
+		$otherTable = $this->joins[$otherModel]['other']['table'];
+		$otherAlias = $otherAlias;
+		$otherKey = $this->joins[$otherModel]['other']['key'];
+		$thisTable = $this->getTable();
+		$thisAlias = $this->joins[$otherModel]['this']['alias'];
+		$thisKey = $this->joins[$otherModel]['this']['key'];
 
-		$str = implode(', ', $string);
+		$str = "
+			LEFT JOIN {$otherTable} {$otherAlias}
+			ON {$otherAlias}.{$otherKey} = {$thisAlias}.{$thisKey}
+		";
 
 		return $str;
+	}
+
+	public function build(\App\Collection $rowCollection) {
+
 	}
 
 	/* Getters/Setters
@@ -172,9 +170,12 @@ abstract class Mapper {
 	/**
 	 * Get properties
 	 *
+	 * Made public so it can be used to dynamically hydrate and
+	 * map objects in the Query
+	 *
 	 * @return array
 	 */
-	protected function getProperties() {
+	public function getProperties() {
 		return $this->properties;
 	}
 

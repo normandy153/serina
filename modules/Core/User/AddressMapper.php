@@ -31,5 +31,17 @@ class AddressMapper extends \App\Mapper {
 		$this->addProperty('createdAt', 'created_at');
 		$this->addProperty('updatedAt', 'updated_at');
 		$this->addProperty('deletedAt', 'deleted_at');
+
+		$this->addJoin('State', array(
+			'other' => array(
+				'table' => 'state',
+				'alias' => 's',
+				'key' => 'id',
+			),
+			'this' => array(
+				'alias' => 'a',
+				'key' => 'state',
+			)
+		));
 	}
 } 
