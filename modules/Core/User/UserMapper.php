@@ -72,9 +72,9 @@ class UserMapper extends \App\Mapper {
 		$query = new \App\Mapper\Query();
 		$query->select('\Core\User\User u', '\Core\User\Address a', '\Core\User\State s', '\Core\User\Phone p')
 			->from('\Core\User\User u')
-			->join('\Core\User\User u', 'Address', 'a')
-			->join('\Core\User\Address a', 'State', 's')
-			->join('\Core\User\User u', 'Phone', 'p');
+			->leftJoin('\Core\User\User u', 'Address', 'a')
+			->innerJoin('\Core\User\Address a', 'State', 's')
+			->innerJoin('\Core\User\User u', 'Phone', 'p');
 
 
 //		$query

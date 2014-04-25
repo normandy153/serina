@@ -95,17 +95,42 @@ class Query {
 	}
 
 	/**
-	 * Join
-	 *
-	 * Joins the left model onto another specified in left model's $joinRule
-	 * This is left centric; the $rootModel contains the relationship rule
+	 * Alias to join()
 	 *
 	 * @param $rootModel
 	 * @param $joinRule
 	 * @param $otherAlias
 	 * @return $this
 	 */
-	public function join($rootModel, $joinRule, $otherAlias) {
+	public function leftJoin($rootModel, $joinRule, $otherAlias) {
+		return $this->join('left', $rootModel, $joinRule, $otherAlias);
+	}
+
+	/**
+	 * Alias to join()
+	 *
+	 * @param $rootModel
+	 * @param $joinRule
+	 * @param $otherAlias
+	 * @return $this
+	 */
+	public function innerJoin($rootModel, $joinRule, $otherAlias) {
+		return $this->join('inner', $rootModel, $joinRule, $otherAlias);
+	}
+
+	/**
+	 * Join
+	 *
+	 * Joins the left model onto another specified in left model's $joinRule
+	 * This is left centric; the $rootModel contains the relationship rule
+	 *
+	 * @param $type
+	 * @param $rootModel
+	 * @param $joinRule
+	 * @param $otherAlias
+	 * @return $this
+	 */
+	private function join($type, $rootModel, $joinRule, $otherAlias) {
 		list($rootModel, $rootAlias) = explode(' ', $rootModel);
 
 		/* Spawn a mapper to get to the model property definitions
@@ -123,8 +148,10 @@ class Query {
 
 		/* Assemble join querystring
 		 */
+		$joinType = strtoupper($type);
+
 		$str = "
-			LEFT JOIN {$mapper2->getTable()} {$otherAlias}
+			{$joinType} JOIN {$mapper2->getTable()} {$otherAlias}
 			ON {$rootAlias}.{$rule['this']['key']} = {$otherAlias}.{$rule['other']['key']}
 		";
 
