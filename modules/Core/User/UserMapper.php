@@ -27,6 +27,8 @@ class UserMapper extends \App\Mapper {
 		$this->addProperty('firstname', 'firstname');
 		$this->addProperty('lastname', 'lastname');
 		$this->addProperty('birthdate', 'birthdate');
+		$this->addProperty('address', 'address_id');
+		$this->addProperty('phone', 'phone_id');
 
 		/* Join the Phone record onto the User record using
 		 * the following columns as a match. otherTable and
@@ -74,7 +76,7 @@ class UserMapper extends \App\Mapper {
 		$statement = $this->getDatabase()->prepare($query->prepare());
 		$statement->execute();
 
-		new \App\Probe($query->getObjectGraph());
+		$objectGraph = $query->getObjectGraph();
 
 		/* Use cached mapper spawns
 		 */
@@ -83,17 +85,84 @@ class UserMapper extends \App\Mapper {
 		$stateMapper = $query->getMapper('\Core\User\State', 's');
 		$phoneMapper = $query->getMapper('\Core\User\Phone', 'p');
 
+		$graph = new \App\Collection();
+
+		$userCollection = new \App\Collection();
+		$addressCollection = new \App\Collection();
+		$stateCollection = new \App\Collection();
+		$phoneCollection = new \App\Collection();
+
 		foreach($statement as $row) {
 			$user = $userMapper->hydrate('u', $row);
+			$userCollection->setItemAt($user->getId(), $user);
+
 			$address = $addressMapper->hydrate('a', $row);
+			$addressCollection->setItemAt($address->getId(), $address);
+
 			$state = $stateMapper->hydrate('s', $row);
+			$stateCollection->setItemAt($state->getId(), $state);
+
 			$phone = $phoneMapper->hydrate('p', $row);
-
-			new \App\Probe($user);
-			new \App\Probe($address);
-			new \App\Probe($state);
-			new \App\Probe($phone);
-
+			$phoneCollection->setItemAt($phone->getId(), $phone);
 		}
+
+		/* Build address/state relation
+		 */
+		$allKeys = array_keys($addressCollection->getStack());
+
+		foreach($allKeys as $currentKey) {
+			$collection = new \App\Collection();
+
+			$address = $addressCollection->getItemAt($currentKey);
+			$stateCollection->reindex();
+
+			foreach($stateCollection as $current) {
+				if ($current->getId() == $address->getState()) {
+					$collection->add($current);
+				}
+			}
+
+			$address->setState($collection);
+		}
+
+		/* Build user/address relation
+		 */
+		$allKeys = array_keys($userCollection->getStack());
+
+		foreach($allKeys as $currentKey) {
+			$collection = new \App\Collection();
+
+			$user = $userCollection->getItemAt($currentKey);
+			$addressCollection->reindex();
+
+			foreach($addressCollection as $current) {
+				if ($current->getId() == $user->getAddress()) {
+					$collection->add($current);
+				}
+			}
+
+			$user->setAddress($collection);
+		}
+
+		/* Build user/phone relation
+		 */
+		$allKeys = array_keys($userCollection->getStack());
+
+		foreach($allKeys as $currentKey) {
+			$collection = new \App\Collection();
+
+			$user = $userCollection->getItemAt($currentKey);
+			$phoneCollection->reindex();
+
+			foreach($phoneCollection as $current) {
+				if ($current->getUserId() == $user->getId()) {
+					$collection->add($current);
+				}
+			}
+
+			$user->setPhone($collection);
+		}
+
+		new \App\Probe($userCollection);
 	}
 } 

@@ -86,10 +86,25 @@ class Collection implements \Iterator, \JsonSerializable {
 	 * Add an item to the stack at an index equivalent to the primary key
 	 * of the item
 	 *
+	 * @param $index
 	 * @param $item
 	 */
-	public function addUniquely($item) {
-		$this->stack[$item->getId()] = $item;
+	public function setItemAt($index, $item) {
+		$this->stack[$index] = $item;
+	}
+
+	/**
+	 * Get an item at a particular offset index
+	 *
+	 * @param $index
+	 * @return mixed
+	 */
+	public function getItemAt($index) {
+		return $this->stack[$index];
+	}
+
+	public function reindex() {
+		$this->stack = array_values($this->stack);
 	}
 
 	/**

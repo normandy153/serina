@@ -179,7 +179,9 @@ class Query {
 
 		/* Augment object graph
 		 */
-		$this->addToObjectGraph($rootAlias, $otherAlias);
+		$this->addToObjectGraph($rootAlias, array(
+			$otherAlias => $ruleName,
+		));
 
 		return $this;
 	}
