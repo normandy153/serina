@@ -106,7 +106,6 @@ class Query {
 	 * @return $this
 	 */
 	public function join($rootModel, $joinRule, $otherAlias) {
-
 		list($rootModel, $rootAlias) = explode(' ', $rootModel);
 
 		/* Spawn a mapper to get to the model property definitions
