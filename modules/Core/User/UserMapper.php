@@ -102,38 +102,92 @@ class UserMapper extends \App\Mapper {
 
 		/* Build address/state relation
 		 */
-		$this->joinCollections($addressCollection, $stateCollection, 'getState', 'getId', 'setState');
+		$this->joinCollections($addressCollection, $stateCollection, 'State', $query);
 
 		/* Build user/address relation
 		 */
-		$this->joinCollections($userCollection, $addressCollection, 'getAddress', 'getId', 'setAddress');
+		$this->joinCollections($userCollection, $addressCollection, 'Address', $query);
 
 		/* Build user/phone relation
 		 */
-		$this->joinCollections($userCollection, $phoneCollection, 'getId', 'getUserId', 'setPhone');
+//		$this->joinCollections($userCollection, $phoneCollection, 'Phone', $query);
 
+//		new \App\Probe($query->getObjectGraph());
 		new \App\Probe($userCollection);
-
+new \App\Probe($query->getRules());
 		return $userCollection;
 	}
 
 
-	private function joinCollections($collection1, $collection2, $key1, $key2, $destination) {
-		$allKeys = array_keys($collection1->getStack());
+	private function joinCollections($collection1, $collection2, $rule, $query) {
+		$rules = $query->getRules();
 
-		foreach($allKeys as $currentKey) {
-			$final = new \App\Collection();
+		$useRule = false;
+		$getter1 = false;
+		$getter2 = false;
 
-			$rootNode = $collection1->getItemAt($currentKey);
-			$collection2->reindex();
+		foreach($rules as $currentRule) {
+			if ($currentRule['name'] == $rule) {
+				$useRule = $currentRule['rule'];
 
-			foreach($collection2 as $current) {
-				if ($rootNode->$key1() == $current->$key2()) {
-					$final->add($current);
-				}
+				$key1 = $useRule['this']['key'];
+				$key2 = $useRule['other']['key'];
+
+				/* Set the resultant collection of $collection2 items
+				 * into items from $collection1
+				 */
+				$setter = $query->deriveSetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
+
+				/* Used to compare keys for matching items
+				 */
+				$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
+				$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['model'] . 'Mapper');
+
+				break;
 			}
+		}
 
-			$rootNode->$destination($final);
+		/* Proceed if all bits are found
+		 */
+		if ($useRule && $getter1 && $getter2) {
+			$allKeys = array_keys($collection1->getStack());
+
+			foreach($allKeys as $currentKey) {
+				$final = new \App\Collection();
+
+				$rootNode = $collection1->getItemAt($currentKey);
+				$collection2->reindex();
+
+				foreach($collection2 as $current) {
+					if ($rootNode->$getter1() == $current->$getter2()) {
+						$final->add($current);
+					}
+				}
+
+				$rootNode->$setter($final);
+			}
+		}
+		else {
+			throw new \Exception('Join rule not found.');
 		}
 	}
+
+//	private function joinCollections($collection1, $collection2, $key1, $key2, $destination) {
+//		$allKeys = array_keys($collection1->getStack());
+//
+//		foreach($allKeys as $currentKey) {
+//			$final = new \App\Collection();
+//
+//			$rootNode = $collection1->getItemAt($currentKey);
+//			$collection2->reindex();
+//
+//			foreach($collection2 as $current) {
+//				if ($rootNode->$key1() == $current->$key2()) {
+//					$final->add($current);
+//				}
+//			}
+//
+//			$rootNode->$destination($final);
+//		}
+//	}
 } 
