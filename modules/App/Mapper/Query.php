@@ -33,6 +33,13 @@ class Query {
 	private $objectGraph = array();
 
 	/**
+	 * A list of join rules used in this query
+	 *
+	 * @var array
+	 */
+	private $rules = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -179,8 +186,14 @@ class Query {
 
 		/* Augment object graph
 		 */
-		$this->addToObjectGraph($rootAlias, array(
-			$otherAlias => $ruleName,
+		$this->addToObjectGraph(
+			$rootAlias,
+			$otherAlias
+		);
+
+		$this->addToRules(array(
+			'name' => $ruleName,
+			'rule' => $rule
 		));
 
 		return $this;
@@ -196,8 +209,16 @@ class Query {
 	 * @param $otherAlias
 	 */
 	private function addToObjectGraph($rootAlias, $otherAlias) {
-		$this->objectGraph[$rootAlias][] = $otherAlias;
+		$this->objectGraph[] = array(
+			'thisAlias' => $rootAlias,
+			'otherAlias' => $otherAlias,
+		);
 	}
+
+	private function addToRules($rule) {
+		$this->rules[] = $rule;
+	}
+
 
 	/**
 	 * Add a piece to the existing query string
@@ -228,6 +249,47 @@ class Query {
 	 */
 	public function getMapper($model, $alias) {
 		return $this->getQueryRegistry()->getMapper($model, $alias);
+	}
+
+
+	/**
+	 * Find a method name from a property
+	 *
+	 * @param $column
+	 * @param $mapperName
+	 * @throws \Exception
+	 * @return mixed
+	 */
+	public function deriveSetterMethodFromColumn($column, $mapperName) {
+		$mapper = new $mapperName();
+
+		foreach($mapper->getProperties() as $current) {
+			if ($current->getColumn() == $column) {
+				return 'set' . ucwords($current->getProperty());
+			}
+		}
+
+		throw new \Exception('Column not found via setter property.');
+	}
+
+	/**
+	 * Find a method name from a property
+	 *
+	 * @param $column
+	 * @param $mapperName
+	 * @throws \Exception
+	 * @return mixed
+	 */
+	public function deriveGetterMethodFromColumn($column, $mapperName) {
+		$mapper = new $mapperName();
+
+		foreach($mapper->getProperties() as $current) {
+			if ($current->getColumn() == $column) {
+				return 'get' . ucwords($current->getProperty());
+			}
+		}
+
+		throw new \Exception('Column not found via getter property.');
 	}
 
 	/* Getters/Setters
@@ -286,4 +348,22 @@ class Query {
 	public function getObjectGraph() {
 		return $this->objectGraph;
 	}
-} 
+
+	/**
+	 * Set rules
+	 *
+	 * @param array $rules
+	 */
+	public function setRules($rules) {
+		$this->rules = $rules;
+	}
+
+	/**
+	 * Get rules
+	 *
+	 * @return array
+	 */
+	public function getRules() {
+		return $this->rules;
+	}
+}
