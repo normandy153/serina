@@ -8,8 +8,6 @@
 
 namespace App\Mapper;
 
-use \App\Mapper\PropertyDefinition as PropertyDefinition;
-
 abstract class Base {
 
 	/**
