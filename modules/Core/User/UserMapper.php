@@ -113,9 +113,12 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Phone', 'p')
 			->leftJoin('u', 'Email', 'e')
 			->leftJoin('u', 'Gender', 'g')
+			->where('u.id = :userId')
 			->prepare();
 
-		$statement = $query->execute();
+		$statement = $query->execute(array(
+			':userId' => 1
+		));
 
 		/* Set up collections
 		 */

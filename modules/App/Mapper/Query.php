@@ -214,6 +214,18 @@ class Query {
 	}
 
 	/**
+	 * Where
+	 *
+	 * @param $clause
+	 * @return $this
+	 */
+	public function where($clause) {
+		$this->augmentQueryString('WHERE ' . $clause);
+
+		return $this;
+	}
+
+	/**
 	 * Process the querystring bits as a string which can be executed
 	 *
 	 * @return $this
@@ -227,10 +239,20 @@ class Query {
 	/**
 	 * Execute the query
 	 *
+	 * @param $allParams
 	 * @return mixed
 	 */
-	public function execute() {
+	public function execute($allParams = false) {
 		$statement = $this->getDatabase()->prepare($this->getQuery());
+
+		/* Bind params
+		 */
+		if (is_array($allParams) && count($allParams)) {
+			foreach($allParams as $key => $value) {
+				$statement->bindParam($key, $value);
+			}
+		}
+
 		$statement->execute();
 
 		return $statement;
