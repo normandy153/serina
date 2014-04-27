@@ -80,7 +80,7 @@ class Query {
 
 			/* Spawn a mapper to get to the model property definitions
 			 */
-			$mapper = $this->getQueryRegistry()->getMapper($model.'Mapper', $alias);
+			$mapper = $this->getQueryRegistry()->getMapper($this->getMapperNameFromModel($model), $alias);
 
 			foreach ($mapper->getProperties() as $currentProperty) {
 				$replace = array(
