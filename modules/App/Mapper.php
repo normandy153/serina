@@ -118,6 +118,8 @@ abstract class Mapper {
 	/**
 	 * Join two collections using the rule $rule used in $query
 	 *
+	 * $collection2 items get joined into $collection1 items
+	 *
 	 * @param $collection1
 	 * @param $collection2
 	 * @param $rule
