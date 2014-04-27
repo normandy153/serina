@@ -40,6 +40,13 @@ class Query {
 	private $rules = array();
 
 	/**
+	 * The final query string ready to be passed to database layer
+	 *
+	 * @var string
+	 */
+	private $query = '';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -203,13 +210,14 @@ class Query {
 	}
 
 	/**
-	 * Return the querystring bits as a string which can be executed
+	 * Process the querystring bits as a string which can be executed
 	 *
-	 *
-	 * @return string
+	 * @return $this
 	 */
 	public function prepare() {
-		return implode(' ', $this->getQueryString());
+		$this->setQuery(implode("\n", $this->getQueryString()));
+
+		return $this;
 	}
 
 	/**
@@ -383,5 +391,23 @@ class Query {
 	 */
 	public function getRules() {
 		return $this->rules;
+	}
+
+	/**
+	 * Set query
+	 *
+	 * @param string $query
+	 */
+	private function setQuery($query) {
+		$this->query = $query;
+	}
+
+	/**
+	 * Get query
+	 *
+	 * @return string
+	 */
+	public function getQuery() {
+		return $this->query;
 	}
 }

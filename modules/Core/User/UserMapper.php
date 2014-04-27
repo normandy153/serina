@@ -112,9 +112,10 @@ class UserMapper extends \App\Mapper {
 			->leftJoin('\Core\User\Address a', 'Country c')
 			->leftJoin('\Core\User\User u', 'Phone p')
 			->leftJoin('\Core\User\User u', 'Email e')
-			->leftJoin('\Core\User\User u', 'Gender g');
+			->leftJoin('\Core\User\User u', 'Gender g')
+			->prepare();
 
-		$statement = $this->getDatabase()->prepare($query->prepare());
+		$statement = $this->getDatabase()->prepare($query->getQuery());
 		$statement->execute();
 
 		/* Use cached mapper spawns
