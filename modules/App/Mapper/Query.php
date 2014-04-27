@@ -130,8 +130,9 @@ class Query {
 	/**
 	 * Alias to join()
 	 *
-	 * @param $alias
+	 * @param $thisAlias
 	 * @param $joinRule
+	 * @param $otherAlias
 	 * @return $this
 	 */
 	public function leftJoin($thisAlias, $joinRule, $otherAlias) {
@@ -141,8 +142,9 @@ class Query {
 	/**
 	 * Alias to join()
 	 *
-	 * @param $alias
+	 * @param $thisAlias
 	 * @param $joinRule
+	 * @param $otherAlias
 	 * @return $this
 	 */
 	public function innerJoin($thisAlias, $joinRule, $otherAlias) {
