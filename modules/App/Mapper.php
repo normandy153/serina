@@ -127,6 +127,9 @@ abstract class Mapper {
 	protected function joinCollections($collection1, $collection2, $rule, $query) {
 		$rules = $query->getRules();
 
+		new \App\Probe($query->getRules());
+		new \App\Probe($query->getObjectGraph());
+
 		$useRule = false;
 		$getter1 = false;
 		$getter2 = false;
@@ -135,27 +138,58 @@ abstract class Mapper {
 			if ($currentRule['name'] == $rule) {
 				$useRule = $currentRule['rule'];
 
-				/* Find stuff in $collection1 using this key
+				/* For many-many relations, use different columns than
+				 * you'd use for one-many relations
 				 */
-				$key1 = $useRule['this']['key'];
+				if (isset($useRule['using'])) {
 
-				/* Find stuff from $collection2 using this key
-				 */
-				$key2 = $useRule['other']['key'];
+					/* Find stuff in $collection1 using this key
+					 */
+					$key1 = $useRule['using']['this'];
 
-				/* Stuff from $collection2 gets dumped into $key1
- 				 */
-				$key3 = $useRule['this']['collection'];
+					/* Find stuff from $collection2 using this key
+					 */
+					$key2 = $useRule['using']['other'];
 
-				/* Set the resultant collection of $collection2 items
-				 * into items from $collection1
-				 */
-				$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['model'] . 'Mapper');
+					/* Stuff from $collection2 gets dumped into $key1
+					  */
+					$key3 = $useRule['this']['collection'];
 
-				/* Used to compare keys for matching items
-				 */
-				$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
-				$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['model'] . 'Mapper');
+					echo "$key1 $key2 $key3";
+
+					/* Set the resultant collection of $collection2 items
+					 * into items from $collection1
+					 */
+					$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['model'] . 'Mapper');
+
+					/* Used to compare keys for matching items
+					 */
+					$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
+					$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['model'] . 'Mapper');
+				}
+				else {
+					/* Find stuff in $collection1 using this key
+					 */
+					$key1 = $useRule['this']['key'];
+
+					/* Find stuff from $collection2 using this key
+					 */
+					$key2 = $useRule['other']['key'];
+
+					/* Stuff from $collection2 gets dumped into $key1
+					 */
+					$key3 = $useRule['this']['collection'];
+
+					/* Set the resultant collection of $collection2 items
+					 * into items from $collection1
+					 */
+					$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['model'] . 'Mapper');
+
+					/* Used to compare keys for matching items
+					 */
+					$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
+					$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['model'] . 'Mapper');
+				}
 
 				break;
 			}

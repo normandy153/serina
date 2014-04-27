@@ -175,10 +175,23 @@ class Query {
 		 */
 		$joinType = strtoupper($type);
 
-		$str = "
-			{$joinType} JOIN {$mapper2->getTable()} {$otherAlias}
-			ON {$rootAlias}.{$rule['this']['key']} = {$otherAlias}.{$rule['other']['key']}
-		";
+		/* Decide whether it's a 1:n or n:n relation
+		 * Compound query string accordingly
+		 */
+		if (isset($rule['using'])) {
+			$str = "
+				INNER JOIN {$rule['using']['table']}
+				ON {$rootAlias}.{$rule['this']['key']} = {$rule['using']['table']}.{$rule['using']['this']}
+				INNER JOIN {$mapper2->getTable()} {$otherAlias}
+				ON {$otherAlias}.{$rule['other']['key']} = {$rule['using']['table']}.{$rule['using']['other']}
+			";
+		}
+		else {
+			$str = "
+				{$joinType} JOIN {$mapper2->getTable()} {$otherAlias}
+				ON {$rootAlias}.{$rule['this']['key']} = {$otherAlias}.{$rule['other']['key']}
+			";
+		}
 
 		/* Augment query string
 		 */
@@ -237,7 +250,7 @@ class Query {
 	 * @return string
 	 */
 	public function prepare() {
-		return implode(' ', $this->getQueryString());
+		return implode("\n", $this->getQueryString());
 	}
 
 	/**
@@ -250,7 +263,6 @@ class Query {
 	public function getMapper($model, $alias) {
 		return $this->getQueryRegistry()->getMapper($model, $alias);
 	}
-
 
 	/**
 	 * Find a method name from a property
@@ -269,7 +281,7 @@ class Query {
 			}
 		}
 
-		throw new \Exception('Column not found via setter property.');
+		throw new \Exception("Column {$column} not found in {$mapperName} via setter property.");
 	}
 
 	/**
@@ -289,7 +301,7 @@ class Query {
 			}
 		}
 
-		throw new \Exception('Column not found via getter property.');
+		throw new \Exception("Column {$column} not found in {$mapperName} via getter property.");
 	}
 
 	/* Getters/Setters

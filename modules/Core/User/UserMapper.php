@@ -42,6 +42,17 @@ class UserMapper extends \App\Mapper {
 		 * The 'collection' key is the database column into
 		 * which the final joined collections are placed
 		 */
+//		$this->addJoin('Phone', array(
+//			'this' => array(
+//				'model' => '\Core\User\User',
+//				'key' => 'id',
+//				'collection' => 'phone_id',
+//			),
+//			'other' => array(
+//				'model' => '\Core\User\Phone',
+//				'key' => 'user_id',
+//			),
+//		));
 		$this->addJoin('Phone', array(
 			'this' => array(
 				'model' => '\Core\User\User',
@@ -50,8 +61,27 @@ class UserMapper extends \App\Mapper {
 			),
 			'other' => array(
 				'model' => '\Core\User\Phone',
-				'key' => 'user_id',
+				'key' => 'id',
 			),
+
+			/* Results in an alternative parse using an intermediary
+			 * relation table for many-many relations. This should be
+			 * fine with the setup as it currently is, only requiring
+			 * a definition of the relationship table
+			 *
+			 * from u
+			 * inner join $using[table] on u.$this[key] = $using[table].$using[table][this]
+			 * inner join p on p.$other[key] = $using[table].$using[table][other]
+			 *
+			 * from u
+			 * inner join user_phone on u.id = user_phone.this
+			 * inner join phone on user.phone.other = phone.phone_id
+			 */
+			'using' => array(
+				'table' => 'user_phone',
+				'this' => 'user_id',
+				'other' => 'phone_id',
+			)
 		));
 
 		$this->addJoin('Address', array(
@@ -115,7 +145,7 @@ class UserMapper extends \App\Mapper {
 
 		$statement = $this->getDatabase()->prepare($query->prepare());
 		$statement->execute();
-
+		new \App\Probe($query->prepare());
 		/* Use cached mapper spawns
 		 */
 		$userMapper = $query->getMapper('\Core\User\User', 'u');
