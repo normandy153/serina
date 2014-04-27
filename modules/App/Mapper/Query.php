@@ -155,7 +155,7 @@ class Query {
 	 * Join
 	 *
 	 * Joins the left model onto another specified in left model's $joinRule
-	 * This is left centric; the $rootModel contains the relationship rule
+	 * This is left centric; the $thisAlias mapper contains the relationship rule
 	 *
 	 * @param $type
 	 * @param $thisAlias
