@@ -9,7 +9,7 @@
 namespace Core\User;
 
 
-class CountryMapper extends \App\Mapper {
+class CountryMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties

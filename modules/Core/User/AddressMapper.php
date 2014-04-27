@@ -9,7 +9,7 @@
 namespace Core\User;
 
 
-class AddressMapper extends \App\Mapper {
+class AddressMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties

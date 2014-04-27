@@ -9,7 +9,7 @@
 namespace Core\User;
 
 
-class EmailMapper extends \App\Mapper {
+class EmailMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties

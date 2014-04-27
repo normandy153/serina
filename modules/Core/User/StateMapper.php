@@ -9,7 +9,7 @@
 namespace Core\User;
 
 
-class StateMapper extends \App\Mapper {
+class StateMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties

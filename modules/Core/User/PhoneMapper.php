@@ -9,7 +9,7 @@
 namespace Core\User;
 
 
-class PhoneMapper extends \App\Mapper {
+class PhoneMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties

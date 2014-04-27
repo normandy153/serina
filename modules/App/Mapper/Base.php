@@ -1,16 +1,16 @@
 <?php
 /**
- * Mapper.php
+ * Base.php
  *
  * Date: 13/03/2014
  * Time: 10:14 PM
  */
 
-namespace App;
+namespace App\Mapper;
 
 use \App\Mapper\PropertyDefinition as PropertyDefinition;
 
-abstract class Mapper {
+abstract class Base {
 
 	/**
 	 * An instance of Database
@@ -51,7 +51,7 @@ abstract class Mapper {
 	 * Constructor
 	 */
 	final public function __construct() {
-		$this->setDatabase(new Database());
+		$this->setDatabase(new \App\Database());
 		$this->properties();
 		$this->setup();
 	}
@@ -90,7 +90,7 @@ abstract class Mapper {
 	protected function hydrate($alias, $row) {
 		$model = $this->getModel();
 
-		$hydrator = new Mapper\Hydrator(new $model(), $this->getProperties(), $alias, $row);
+		$hydrator = new Hydrator(new $model(), $this->getProperties(), $alias, $row);
 
 		return $hydrator->getProduct();
 	}
@@ -120,13 +120,13 @@ abstract class Mapper {
 	 *
 	 * $collection2 items get joined into $collection1 items
 	 *
-	 * @param Collection $collection1
-	 * @param Collection $collection2
+	 * @param \App\Collection $collection1
+	 * @param \App\Collection $collection2
 	 * @param $rule
-	 * @param Mapper\Query $query
+	 * @param Query $query
 	 * @throws \Exception
 	 */
-	protected function joinCollections(Collection $collection1, Collection $collection2, $rule, Mapper\Query $query) {
+	protected function joinCollections(\App\Collection $collection1, \App\Collection $collection2, $rule, Query $query) {
 		$rules = $query->getRules();
 
 		$useRule = false;

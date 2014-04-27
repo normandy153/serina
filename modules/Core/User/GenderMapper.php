@@ -9,7 +9,7 @@
 namespace Core\User;
 
 
-class GenderMapper extends \App\Mapper {
+class GenderMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties

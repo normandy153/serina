@@ -9,7 +9,7 @@
 namespace Core\User;
 use \App\Mapper\Query as Query;
 
-class UserMapper extends \App\Mapper {
+class UserMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties
