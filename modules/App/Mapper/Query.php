@@ -12,6 +12,13 @@ namespace App\Mapper;
 class Query {
 
 	/**
+	 * An instance of Database
+	 *
+	 * @var Database
+	 */
+	private $database = null;
+
+	/**
 	 * The resultant query string to be executed
 	 *
 	 * @var string
@@ -50,6 +57,7 @@ class Query {
 	 * Constructor
 	 */
 	public function __construct() {
+		$this->setDatabase(new \App\Database());
 		$this->setQueryRegistry(new QueryRegistry());
 	}
 
@@ -217,6 +225,18 @@ class Query {
 	}
 
 	/**
+	 * Execute the query
+	 *
+	 * @return mixed
+	 */
+	public function execute() {
+		$statement = $this->getDatabase()->prepare($this->getQuery());
+		$statement->execute();
+
+		return $statement;
+	}
+
+	/**
 	 * Makes a relationship representation between $thisAlias and $otherAlias
 	 *
 	 * This makes $otherAlias an element of $thisAlias, which allows us to find
@@ -317,6 +337,24 @@ class Query {
 	 */
 
 	/**
+	 * Set database
+	 *
+	 * @param \App\Database $database
+	 */
+	protected function setDatabase($database) {
+		$this->database = $database;
+	}
+
+	/**
+	 * Get database
+	 *
+	 * @return \App\Database
+	 */
+	protected function getDatabase() {
+		return $this->database;
+	}
+
+	/**
 	 * Set query string
 	 *
 	 * @param array $queryString
@@ -402,7 +440,7 @@ class Query {
 	 *
 	 * @return string
 	 */
-	public function getQuery() {
+	private function getQuery() {
 		return $this->query;
 	}
 }

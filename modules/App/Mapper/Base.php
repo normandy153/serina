@@ -11,13 +11,6 @@ namespace App\Mapper;
 abstract class Base {
 
 	/**
-	 * An instance of Database
-	 *
-	 * @var Database
-	 */
-	private $database = null;
-
-	/**
 	 * The model used by this mapper for automatic hydration
 	 *
 	 * @var string
@@ -49,7 +42,6 @@ abstract class Base {
 	 * Constructor
 	 */
 	final public function __construct() {
-		$this->setDatabase(new \App\Database());
 		$this->properties();
 		$this->setup();
 	}
@@ -188,24 +180,6 @@ abstract class Base {
 
 	/* Getters/Setters
 	 */
-
-	/**
-	 * Set database
-	 *
-	 * @param \App\Database $database
-	 */
-	protected function setDatabase($database) {
-		$this->database = $database;
-	}
-
-	/**
-	 * Get database
-	 *
-	 * @return \App\Database
-	 */
-	protected function getDatabase() {
-		return $this->database;
-	}
 
 	/**
 	 * Set model

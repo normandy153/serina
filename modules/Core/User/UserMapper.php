@@ -115,8 +115,7 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Gender', 'g')
 			->prepare();
 
-		$statement = $this->getDatabase()->prepare($query->getQuery());
-		$statement->execute();
+		$statement = $query->execute();
 
 		/* Set up collections
 		 */
