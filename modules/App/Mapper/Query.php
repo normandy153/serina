@@ -217,17 +217,17 @@ class Query {
 	}
 
 	/**
-	 * Makes a relationship representation between $rootAlias and $otherAlias
+	 * Makes a relationship representation between $thisAlias and $otherAlias
 	 *
-	 * This makes $otherAlias an element of $rootAlias, which allows us to find
+	 * This makes $otherAlias an element of $thisAlias, which allows us to find
 	 * out later which objects are related to which other objects
 	 *
-	 * @param $rootAlias
+	 * @param $thisAlias
 	 * @param $otherAlias
 	 */
-	private function addToObjectGraph($rootAlias, $otherAlias) {
+	private function addToObjectGraph($thisAlias, $otherAlias) {
 		$this->objectGraph[] = array(
-			'thisAlias' => $rootAlias,
+			'thisAlias' => $thisAlias,
 			'otherAlias' => $otherAlias,
 		);
 	}
