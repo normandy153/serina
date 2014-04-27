@@ -118,16 +118,8 @@ class UserMapper extends \App\Mapper {
 		$statement = $this->getDatabase()->prepare($query->getQuery());
 		$statement->execute();
 
-		/* Use cached mapper spawns
+		/* Set up collections
 		 */
-		$userMapper = $query->getMapper('\Core\User\User', 'u');
-		$addressMapper = $query->getMapper('\Core\User\Address', 'a');
-		$stateMapper = $query->getMapper('\Core\User\State', 's');
-		$countryMapper = $query->getMapper('\Core\User\Country', 'c');
-		$phoneMapper = $query->getMapper('\Core\User\Phone', 'p');
-		$emailMapper = $query->getMapper('\Core\User\Email', 'e');
-		$genderMapper = $query->getMapper('\Core\User\Gender', 'g');
-
 		$userCollection = new \App\Collection();
 		$addressCollection = new \App\Collection();
 		$stateCollection = new \App\Collection();
@@ -137,25 +129,25 @@ class UserMapper extends \App\Mapper {
 		$genderCollection = new \App\Collection();
 
 		foreach($statement as $row) {
-			$user = $userMapper->hydrate('u', $row);
+			$user = $query->getMapperForAlias('u')->hydrate('u', $row);
 			$userCollection->setItemAt($user->getId(), $user);
 
-			$address = $addressMapper->hydrate('a', $row);
+			$address = $query->getMapperForAlias('a')->hydrate('a', $row);
 			$addressCollection->setItemAt($address->getId(), $address);
 
-			$state = $stateMapper->hydrate('s', $row);
+			$state = $query->getMapperForAlias('s')->hydrate('s', $row);
 			$stateCollection->setItemAt($state->getId(), $state);
 
-			$country = $countryMapper->hydrate('c', $row);
+			$country = $query->getMapperForAlias('c')->hydrate('c', $row);
 			$countryCollection->setItemAt($country->getId(), $country);
 			
-			$phone = $phoneMapper->hydrate('p', $row);
+			$phone = $query->getMapperForAlias('p')->hydrate('p', $row);
 			$phoneCollection->setItemAt($phone->getId(), $phone);
 
-			$email = $emailMapper->hydrate('e', $row);
+			$email = $query->getMapperForAlias('e')->hydrate('e', $row);
 			$emailCollection->setItemAt($email->getId(), $email);
 
-			$gender = $genderMapper->hydrate('g', $row);
+			$gender = $query->getMapperForAlias('g')->hydrate('g', $row);
 			$genderCollection->setItemAt($gender->getId(), $gender);
 		}
 

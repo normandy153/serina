@@ -264,12 +264,13 @@ class Query {
 	 *
 	 * Get a mapper out of the QueryRegistry since they've already spawned
 	 *
-	 * @param $model
 	 * @param $alias
 	 * @return mixed
 	 */
-	public function getMapper($model, $alias) {
-		return $this->getQueryRegistry()->getMapper($model, $alias);
+	public function getMapperForAlias($alias) {
+		$registry = $this->getQueryRegistry()->getRegistry();
+
+		return $registry[$alias]['mapper'];
 	}
 
 	/**
