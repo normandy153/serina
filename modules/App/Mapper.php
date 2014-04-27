@@ -120,13 +120,13 @@ abstract class Mapper {
 	 *
 	 * $collection2 items get joined into $collection1 items
 	 *
-	 * @param $collection1
-	 * @param $collection2
+	 * @param Collection $collection1
+	 * @param Collection $collection2
 	 * @param $rule
-	 * @param $query
+	 * @param Mapper\Query $query
 	 * @throws \Exception
 	 */
-	protected function joinCollections($collection1, $collection2, $rule, $query) {
+	protected function joinCollections(Collection $collection1, Collection $collection2, $rule, Mapper\Query $query) {
 		$rules = $query->getRules();
 
 		$useRule = false;
