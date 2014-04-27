@@ -45,6 +45,16 @@ class QueryRegistry {
 	}
 
 	/**
+	 * Get a mapper out of the $registry since they've already spawned
+	 *
+	 * @param $alias
+	 * @return mixed
+	 */
+	public function getMapperForAlias($alias) {
+		return $this->registry[$alias]['mapper'];
+	}
+
+	/**
 	 * Get a mapper out of the registry, spawning and remembering an instance
 	 * of one if it didn't already exist
 	 *
@@ -69,30 +79,30 @@ class QueryRegistry {
 		$existingMapper = $this->registry[$alias]['mapper'];
 
 		if (!$existingMapper) {
-			$mapperInstance = $this->getMapperInstance($mapperName);
+			$mapper = $this->spawnMapperInstance($mapperName);
 
 			/* Remember instances of everything we found in the select
   			 */
-			$this->addModel($alias, $mapperInstance->getModel());
-			$this->addMapper($alias, $mapperInstance);
+			$this->addModel($alias, $mapper->getModel());
+			$this->addMapper($alias, $mapper);
 		}
 
-		return $this->registry[$alias]['mapper'];
+		return $this->getMapperForAlias($alias);
 	}
 
 	/**
 	 * Spawn a mapper class
 	 *
-	 * @param $mapper
+	 * @param $mapperName
 	 * @throws \Exception
 	 * @return mixed
 	 */
-	public function getMapperInstance($mapper) {
-		if (class_exists($mapper)) {
-			return new $mapper();
+	public function spawnMapperInstance($mapperName) {
+		if (class_exists($mapperName)) {
+			return new $mapperName();
 		}
 
-		throw new \Exception("Mapper class: $mapper does not exist.");
+		throw new \Exception("Mapper class: $mapperName does not exist.");
 	}
 
 	/* Getters/Setters

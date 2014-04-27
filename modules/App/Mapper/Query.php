@@ -268,9 +268,7 @@ class Query {
 	 * @return mixed
 	 */
 	public function getMapperForAlias($alias) {
-		$registry = $this->getQueryRegistry()->getRegistry();
-
-		return $registry[$alias]['mapper'];
+		return $this->getQueryRegistry()->getMapperForAlias($alias);
 	}
 
 	/**
