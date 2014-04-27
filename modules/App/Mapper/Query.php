@@ -110,14 +110,14 @@ class Query {
 	/**
 	 * From
 	 */
-	public function from($from) {
-		list($model, $alias) = explode(' ', $from);
+	public function from($alias) {
+		$registry = $this->getQueryRegistry()->getRegistry();
 
 		/* Spawn a mapper to get to the model property definitions
 		 * and to find the table name. Add to registry if it doesn't
 		 * already exist there
 		 */
-		$mapper = $this->getQueryRegistry()->getMapper($model, $alias);
+		$mapper = $this->getQueryRegistry()->getMapper($registry[$alias]['mapper'], $alias);
 
 		/* Augment query string
 		 */
@@ -130,23 +130,23 @@ class Query {
 	/**
 	 * Alias to join()
 	 *
-	 * @param $thisModel
+	 * @param $alias
 	 * @param $joinRule
 	 * @return $this
 	 */
-	public function leftJoin($thisModel, $joinRule) {
-		return $this->join('left', $thisModel, $joinRule);
+	public function leftJoin($thisAlias, $joinRule, $otherAlias) {
+		return $this->join('left', $thisAlias, $joinRule, $otherAlias);
 	}
 
 	/**
 	 * Alias to join()
 	 *
-	 * @param $thisModel
+	 * @param $alias
 	 * @param $joinRule
 	 * @return $this
 	 */
-	public function innerJoin($thisModel, $joinRule) {
-		return $this->join('inner', $thisModel, $joinRule);
+	public function innerJoin($thisAlias, $joinRule, $otherAlias) {
+		return $this->join('inner', $thisAlias, $joinRule, $otherAlias);
 	}
 
 	/**
@@ -156,24 +156,18 @@ class Query {
 	 * This is left centric; the $rootModel contains the relationship rule
 	 *
 	 * @param $type
-	 * @param $thisModel
+	 * @param $thisAlias
 	 * @param $joinRule
+	 * @param $otherAlias
 	 * @return $this
 	 */
-	private function join($type, $thisModel, $joinRule) {
-		list($thisModel, $thisAlias) = explode(' ', $thisModel);
+	private function join($type, $thisAlias, $joinRule, $otherAlias) {
+		$registry = $this->getQueryRegistry()->getRegistry();
 
 		/* Spawn a mapper to get to the model property definitions
 		 * and to find the table name
 		 */
-		$mapper1 = $this->getQueryRegistry()->getMapper($this->getMapperNameFromModel($thisModel), $thisAlias);
-
-		/* Find out about the other table to join upon
-		 * Look up the rule from the leftmost mapper in the relation
-		 */
-		list($ruleName, $otherAlias) = explode(' ', $joinRule);
-
-		$rule = $mapper1->getJoin($ruleName);
+		$rule = $registry[$thisAlias]['mapper']->getJoin($joinRule);
 
 		/* Find the stuff onto which $mapper2 objects should be joined
 		 */
@@ -202,7 +196,7 @@ class Query {
 		/* Augment list of join rules used in this query
 		 */
 		$this->addToRules(array(
-			'name' => $ruleName,
+			'name' => $joinRule,
 			'rule' => $rule
 		));
 

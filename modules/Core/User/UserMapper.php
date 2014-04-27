@@ -106,13 +106,13 @@ class UserMapper extends \App\Mapper {
 			'\Core\User\Email e',
 			'\Core\User\Gender g'
 		)
-			->from('\Core\User\User u')
-			->leftJoin('\Core\User\User u', 'Address a')
-			->leftJoin('\Core\User\Address a', 'State s')
-			->leftJoin('\Core\User\Address a', 'Country c')
-			->leftJoin('\Core\User\User u', 'Phone p')
-			->leftJoin('\Core\User\User u', 'Email e')
-			->leftJoin('\Core\User\User u', 'Gender g')
+			->from('u')
+			->leftJoin('u', 'Address', 'a')
+			->leftJoin('a', 'State', 's')
+			->leftJoin('a', 'Country', 'c')
+			->leftJoin('u', 'Phone', 'p')
+			->leftJoin('u', 'Email', 'e')
+			->leftJoin('u', 'Gender', 'g')
 			->prepare();
 
 		$statement = $this->getDatabase()->prepare($query->getQuery());

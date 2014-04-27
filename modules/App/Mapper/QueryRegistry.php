@@ -94,4 +94,25 @@ class QueryRegistry {
 
 		throw new \Exception("Mapper class: $mapper does not exist.");
 	}
+
+	/* Getters/Setters
+	 */
+
+	/**
+	 * Set registry
+	 *
+	 * @param array $registry
+	 */
+	private function setRegistry($registry) {
+		$this->registry = $registry;
+	}
+
+	/**
+	 * Get registry
+	 *
+	 * @return array
+	 */
+	public function getRegistry() {
+		return $this->registry;
+	}
 } 
