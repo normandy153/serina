@@ -73,7 +73,7 @@ class Query {
 
 			/* Spawn a mapper to get to the model property definitions
 			 */
-			$mapper = $this->getQueryRegistry()->getMapper($model, $alias);
+			$mapper = $this->getQueryRegistry()->getMapper($model.'Mapper', $alias);
 
 			foreach ($mapper->getProperties() as $currentProperty) {
 				$replace = array(
@@ -123,23 +123,23 @@ class Query {
 	/**
 	 * Alias to join()
 	 *
-	 * @param $rootModel
+	 * @param $thisModel
 	 * @param $joinRule
 	 * @return $this
 	 */
-	public function leftJoin($rootModel, $joinRule) {
-		return $this->join('left', $rootModel, $joinRule);
+	public function leftJoin($thisModel, $joinRule) {
+		return $this->join('left', $thisModel, $joinRule);
 	}
 
 	/**
 	 * Alias to join()
 	 *
-	 * @param $rootModel
+	 * @param $thisModel
 	 * @param $joinRule
 	 * @return $this
 	 */
-	public function innerJoin($rootModel, $joinRule) {
-		return $this->join('inner', $rootModel, $joinRule);
+	public function innerJoin($thisModel, $joinRule) {
+		return $this->join('inner', $thisModel, $joinRule);
 	}
 
 	/**
@@ -149,19 +149,20 @@ class Query {
 	 * This is left centric; the $rootModel contains the relationship rule
 	 *
 	 * @param $type
-	 * @param $rootModel
+	 * @param $thisModel
 	 * @param $joinRule
 	 * @return $this
 	 */
-	private function join($type, $rootModel, $joinRule) {
-		list($rootModel, $rootAlias) = explode(' ', $rootModel);
+	private function join($type, $thisModel, $joinRule) {
+		list($thisModel, $thisAlias) = explode(' ', $thisModel);
 
 		/* Spawn a mapper to get to the model property definitions
 		 * and to find the table name
 		 */
-		$mapper1 = $this->getQueryRegistry()->getMapper($rootModel, $rootAlias);
+		$mapper1 = $this->getQueryRegistry()->getMapper($this->getMapperNameFromModel($thisModel), $thisAlias);
 
 		/* Find out about the other table to join upon
+		 * Look up the rule from the leftmost mapper in the relation
 		 */
 		list($ruleName, $otherAlias) = explode(' ', $joinRule);
 
@@ -169,7 +170,7 @@ class Query {
 
 		/* Find the stuff onto which $mapper2 objects should be joined
 		 */
-		$mapper2 = $this->getQueryRegistry()->getMapper($rule['other']['model'], $otherAlias);
+		$mapper2 = $this->getQueryRegistry()->getMapper($rule['other']['mapper'], $otherAlias);
 
 		/* Assemble join querystring
 		 */
@@ -177,7 +178,7 @@ class Query {
 
 		$str = "
 			{$joinType} JOIN {$mapper2->getTable()} {$otherAlias}
-			ON {$rootAlias}.{$rule['this']['key']} = {$otherAlias}.{$rule['other']['key']}
+			ON {$thisAlias}.{$rule['this']['key']} = {$otherAlias}.{$rule['other']['key']}
 		";
 
 		/* Augment query string
@@ -187,16 +188,28 @@ class Query {
 		/* Augment object graph
 		 */
 		$this->addToObjectGraph(
-			$rootAlias,
+			$thisAlias,
 			$otherAlias
 		);
 
+		/* Augment list of join rules used in this query
+		 */
 		$this->addToRules(array(
 			'name' => $ruleName,
 			'rule' => $rule
 		));
 
 		return $this;
+	}
+
+	/**
+	 * Return the querystring bits as a string which can be executed
+	 *
+	 *
+	 * @return string
+	 */
+	public function prepare() {
+		return implode(' ', $this->getQueryString());
 	}
 
 	/**
@@ -215,10 +228,14 @@ class Query {
 		);
 	}
 
+	/**
+	 * Add to a registry of join rules used in the query
+	 *
+	 * @param $rule
+	 */
 	private function addToRules($rule) {
 		$this->rules[] = $rule;
 	}
-
 
 	/**
 	 * Add a piece to the existing query string
@@ -231,16 +248,18 @@ class Query {
 	}
 
 	/**
-	 * Return the querystring bits as a string which can be executed
+	 * Get the mapper name belonging to a particular model
 	 *
-	 *
+	 * @param $model
 	 * @return string
 	 */
-	public function prepare() {
-		return implode(' ', $this->getQueryString());
+	private function getMapperNameFromModel($model) {
+		return $model . 'Mapper';
 	}
 
 	/**
+	 * Delegate method
+	 *
 	 * Get a mapper out of the QueryRegistry since they've already spawned
 	 *
 	 * @param $model
@@ -250,7 +269,6 @@ class Query {
 	public function getMapper($model, $alias) {
 		return $this->getQueryRegistry()->getMapper($model, $alias);
 	}
-
 
 	/**
 	 * Find a method name from a property

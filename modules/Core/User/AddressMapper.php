@@ -34,24 +34,24 @@ class AddressMapper extends \App\Mapper {
 
 		$this->addJoin('State', array(
 			'this' => array(
-				'model' => '\Core\User\Address',
+				'mapper' => '\Core\User\AddressMapper',
 				'key' => 'state',
 				'collection' => 'state',
 			),
 			'other' => array(
-				'model' => '\Core\User\State',
+				'mapper' => '\Core\User\StateMapper',
 				'key' => 'id',
 			),
 		));
 
 		$this->addJoin('Country', array(
 			'this' => array(
-				'model' => '\Core\User\Address',
+				'mapper' => '\Core\User\AddressMapper',
 				'key' => 'country',
 				'collection' => 'country',
 			),
 			'other' => array(
-				'model' => '\Core\User\Country',
+				'mapper' => '\Core\User\CountryMapper',
 				'key' => 'id',
 			),
 		));

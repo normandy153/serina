@@ -150,12 +150,12 @@ abstract class Mapper {
 				/* Set the resultant collection of $collection2 items
 				 * into items from $collection1
 				 */
-				$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['model'] . 'Mapper');
+				$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['mapper']);
 
 				/* Used to compare keys for matching items
 				 */
-				$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['model'] . 'Mapper');
-				$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['model'] . 'Mapper');
+				$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['mapper']);
+				$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['mapper']);
 
 				break;
 			}
@@ -221,7 +221,7 @@ abstract class Mapper {
 	 *
 	 * @return string
 	 */
-	protected function getModel() {
+	public function getModel() {
 		return $this->model;
 	}
 

@@ -40,52 +40,53 @@ class UserMapper extends \App\Mapper {
 		 * query, or it'll just snap
 		 *
 		 * The 'collection' key is the database column into
-		 * which the final joined collections are placed
+		 * which the final joined collections are placed and
+		 * applies only to the model/mapper specified in 'this'
 		 */
 		$this->addJoin('Phone', array(
 			'this' => array(
-				'model' => '\Core\User\User',
+				'mapper' => '\Core\User\UserMapper',
 				'key' => 'id',
 				'collection' => 'phone_id',
 			),
 			'other' => array(
-				'model' => '\Core\User\Phone',
+				'mapper' => '\Core\User\PhoneMapper',
 				'key' => 'user_id',
 			),
 		));
 
 		$this->addJoin('Address', array(
 			'this' => array(
-				'model' => '\Core\User\User',
+				'mapper' => '\Core\User\UserMapper',
 				'key' => 'address_id',
 				'collection' => 'address_id',
 			),
 			'other' => array(
-				'model' => '\Core\User\Address',
+				'mapper' => '\Core\User\AddressMapper',
 				'key' => 'id',
 			),
 		));
 
 		$this->addJoin('Gender', array(
 			'this' => array(
-				'model' => '\Core\User\User',
+				'mapper' => '\Core\User\UserMapper',
 				'key' => 'gender_id',
 				'collection' => 'gender_id',
 			),
 			'other' => array(
-				'model' => '\Core\User\Gender',
+				'mapper' => '\Core\User\GenderMapper',
 				'key' => 'id',
 			)
 		));
 
 		$this->addJoin('Email', array(
 			'this' => array(
-				'model' => '\Core\User\User',
+				'mapper' => '\Core\User\UserMapper',
 				'key' => 'id',
 				'collection' => 'email',
 			),
 			'other' => array(
-				'model' => '\Core\User\Email',
+				'mapper' => '\Core\User\EmailMapper',
 				'key' => 'user_id',
 			),
 		));
