@@ -375,7 +375,7 @@ class Query {
 	 *
 	 * @param array $rules
 	 */
-	public function setRules($rules) {
+	private function setRules($rules) {
 		$this->rules = $rules;
 	}
 
