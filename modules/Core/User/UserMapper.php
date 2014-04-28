@@ -114,11 +114,11 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Email', 'e')
 			->leftJoin('u', 'Gender', 'g')
 			->where('u.id = :userId')
-			->andWhere('p.id = :phoneId')
+			->orWhere('p.id = :phoneId')
 			->prepare();
 
 		$statement = $query->execute(array(
-			':userId' => 2,
+			':userId' => 1,
 			':phoneId' => 3
 		));
 

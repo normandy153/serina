@@ -238,6 +238,18 @@ class Query {
 	}
 
 	/**
+	 * Or
+	 *
+	 * @param $clause
+	 * @return $this
+	 */
+	public function orWhere($clause) {
+		$this->augmentQueryString('OR ' . $clause);
+
+		return $this;
+	}
+
+	/**
 	 * Process the querystring bits as a string which can be executed
 	 *
 	 * @return $this
