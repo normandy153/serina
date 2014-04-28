@@ -226,6 +226,18 @@ class Query {
 	}
 
 	/**
+	 * And
+	 *
+	 * @param $clause
+	 * @return $this
+	 */
+	public function andWhere($clause) {
+		$this->augmentQueryString('AND ' . $clause);
+
+		return $this;
+	}
+
+	/**
 	 * Process the querystring bits as a string which can be executed
 	 *
 	 * @return $this
@@ -249,7 +261,7 @@ class Query {
 		 */
 		if (is_array($allParams) && count($allParams)) {
 			foreach($allParams as $key => $value) {
-				$statement->bindParam($key, $value);
+				$statement->bindValue($key, $value);
 			}
 		}
 
