@@ -75,6 +75,13 @@ class User {
 	private $email = '';
 
 	/**
+	 * An instance of Collection
+	 *
+	 * @var null
+	 */
+	private $vehicle = null;
+
+	/**
 	 * A collection of emergency contacts
 	 *
 	 * @var null
@@ -391,5 +398,23 @@ class User {
 	 */
 	public function getUuid() {
 		return $this->uuid;
+	}
+
+	/**
+	 * Set vehicle
+	 *
+	 * @param null $vehicle
+	 */
+	public function setVehicle($vehicle) {
+		$this->vehicle = $vehicle;
+	}
+
+	/**
+	 * Get vehicle
+	 *
+	 * @return null
+	 */
+	public function getVehicle() {
+		return $this->vehicle;
 	}
 } 

@@ -29,6 +29,7 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addProperty('phone', 'phone_id');
 		$this->addProperty('email', 'email');
 		$this->addProperty('gender', 'gender_id');
+		$this->addProperty('vehicle', 'vehicle');
 
 		/* Join the Phone record onto the User record using
 		 * the following columns as a match. 'other' model and
@@ -90,6 +91,18 @@ class UserMapper extends \App\Mapper\Base {
 				'key' => 'user_id',
 			),
 		));
+
+		$this->addJoin('Vehicle', array(
+			'this' => array(
+				'mapper' => '\Core\User\UserMapper',
+				'key' => 'id',
+				'collection' => 'vehicle',
+			),
+			'other' => array(
+				'mapper' => '\Core\User\VehicleMapper',
+				'key' => 'user_id'
+			),
+		));
 	}
 
 	/**
@@ -104,7 +117,8 @@ class UserMapper extends \App\Mapper\Base {
 			'\Core\User\Country c',
 			'\Core\User\Phone p',
 			'\Core\User\Email e',
-			'\Core\User\Gender g'
+			'\Core\User\Gender g',
+			'\Core\User\Vehicle v'
 		)
 			->from('u')
 			->leftJoin('u', 'Address', 'a')
@@ -113,6 +127,7 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Phone', 'p')
 			->leftJoin('u', 'Email', 'e')
 			->leftJoin('u', 'Gender', 'g')
+			->leftJoin('u', 'Vehicle', 'v')
 			->orderBy('u.lastname', 'DESC')
 			->prepare();
 
@@ -132,6 +147,7 @@ class UserMapper extends \App\Mapper\Base {
 		$phoneCollection = new \App\Collection();
 		$emailCollection = new \App\Collection();
 		$genderCollection = new \App\Collection();
+		$vehicleCollection = new \App\Collection();
 
 		foreach($statement as $row) {
 			$user = $query->getMapperForAlias('u')->hydrate('u', $row);
@@ -154,6 +170,9 @@ class UserMapper extends \App\Mapper\Base {
 
 			$gender = $query->getMapperForAlias('g')->hydrate('g', $row);
 			$genderCollection->setItemAt($gender->getId(), $gender);
+
+			$vehicle = $query->getMapperForAlias('v')->hydrate('v', $row);
+			$vehicleCollection->setItemAt($vehicle->getId(), $vehicle);
 		}
 
 		/* Build address/country relation
@@ -179,6 +198,10 @@ class UserMapper extends \App\Mapper\Base {
 		/* Build user/gender relation
 		 */
 		$this->joinCollections($userCollection, $genderCollection, 'Gender', $query);
+
+		/* Build user/vehicle relation
+		 */
+		$this->joinCollections($userCollection, $vehicleCollection, 'Vehicle', $query);
 
 		/* Reindex
 		 */
