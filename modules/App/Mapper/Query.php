@@ -250,6 +250,32 @@ class Query {
 	}
 
 	/**
+	 * Limit
+	 *
+	 * Takes two arguments to produce a start/offset style, often seen
+	 * in paginations
+	 *
+	 * Otherwise it can accept only one argument so you can limit query
+	 * results in the ordinary way
+	 *
+	 * @param $start
+	 * @param bool $offset
+	 * @return $this
+	 */
+	public function limit($start, $offset = false) {
+		if ($start && $offset) {
+			$str = "LIMIT {$start}, {$offset}";
+		}
+		else {
+			$str = "LIMIT {$start}";
+		}
+
+		$this->augmentQueryString($str);
+
+		return $this;
+	}
+
+	/**
 	 * Process the querystring bits as a string which can be executed
 	 *
 	 * @return $this
@@ -273,7 +299,7 @@ class Query {
 		 */
 		if (is_array($allParams) && count($allParams)) {
 			foreach($allParams as $key => $value) {
-				$statement->bindValue($key, $value);
+				$statement->bindValue($key, $value, \PDO::PARAM_INT);
 			}
 		}
 
