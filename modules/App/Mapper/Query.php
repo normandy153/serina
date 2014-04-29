@@ -250,6 +250,26 @@ class Query {
 	}
 
 	/**
+	 * Order
+	 *
+	 * @param $column
+	 * @param string $order
+	 * @return $this
+	 */
+	public function orderBy($column, $order = 'ASC') {
+
+		/* Only permit one of two values
+		 */
+		if ($order != 'ASC') {
+			$order = 'DESC';
+		}
+
+		$this->augmentQueryString("ORDER BY {$column} {$order}");
+
+		return $this;
+	}
+
+	/**
 	 * Limit
 	 *
 	 * Takes two arguments to produce a start/offset style, often seen

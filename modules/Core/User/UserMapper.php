@@ -113,18 +113,12 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Phone', 'p')
 			->leftJoin('u', 'Email', 'e')
 			->leftJoin('u', 'Gender', 'g')
-			->where('u.id = :userId')
-			->orWhere('p.id = :phoneId')
-			->limit(':start', ':offset')
+			->orderBy('u.lastname', 'DESC')
 			->prepare();
 
 		/* Parameters used in the query
 		 */
 		$parameters = array(
-			':userId' => 1,
-			':phoneId' => 3,
-			':start' => 1,
-			':offset' => 1
 		);
 
 		$statement = $query->execute($parameters);
