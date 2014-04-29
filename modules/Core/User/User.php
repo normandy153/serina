@@ -65,13 +65,6 @@ class User {
 	 *
 	 * @var null
 	 */
-	private $mobile = null;
-
-	/**
-	 * An instance of User\Phone
-	 *
-	 * @var null
-	 */
 	private $phone = null;
 
 	/**
@@ -82,11 +75,18 @@ class User {
 	private $email = '';
 
 	/**
+	 * An instance of Collection
+	 *
+	 * @var null
+	 */
+	private $vehicle = null;
+
+	/**
 	 * A collection of emergency contacts
 	 *
 	 * @var null
 	 */
-	private $emergencyContact = null;
+	private $contact = null;
 
 	/**
 	 * Image file id
@@ -257,21 +257,21 @@ class User {
 	}
 
 	/**
-	 * Set emergency contact
+	 * Set contact
 	 *
-	 * @param null $emergencyContact
+	 * @param null $contact
 	 */
-	public function setEmergencyContact($emergencyContact) {
-		$this->emergencyContact = $emergencyContact;
+	public function setContact($contact) {
+		$this->contact = $contact;
 	}
 
 	/**
-	 * Set emergency contact
+	 * Get contact
 	 *
 	 * @return null
 	 */
-	public function getEmergencyContact() {
-		return $this->emergencyContact;
+	public function getContact() {
+		return $this->contact;
 	}
 
 	/**
@@ -347,24 +347,6 @@ class User {
 	}
 
 	/**
-	 * Set mobile
-	 *
-	 * @param null $mobile
-	 */
-	public function setMobile($mobile) {
-		$this->mobile = $mobile;
-	}
-
-	/**
-	 * Get mobile
-	 *
-	 * @return null
-	 */
-	public function getMobile() {
-		return $this->mobile;
-	}
-
-	/**
 	 * Set phone
 	 *
 	 * @param null $phone
@@ -417,4 +399,23 @@ class User {
 	public function getUuid() {
 		return $this->uuid;
 	}
+
+	/**
+	 * Set vehicle
+	 *
+	 * @param null $vehicle
+	 */
+	public function setVehicle($vehicle) {
+		$this->vehicle = $vehicle;
+	}
+
+	/**
+	 * Get vehicle
+	 *
+	 * @return null
+	 */
+	public function getVehicle() {
+		return $this->vehicle;
+	}
+
 } 

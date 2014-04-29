@@ -125,6 +125,10 @@ class PersonFactory extends Base {
 		$accountFactory = new AccountFactory($firstname, $lastname);
 		$account = $accountFactory->spawn();
 
+		$phoneCollection = new \App\Collection();
+		$phoneCollection->add($landline);
+		$phoneCollection->add($mobile);
+
 		$user = new \Core\User();
 		$user->setUuid(crypt(uniqid() . sha1(microtime())));
 		$user->setFirstname($firstname);
@@ -132,8 +136,7 @@ class PersonFactory extends Base {
 		$user->setBirthdate($birthday);
 		$user->setAddress($address);
 		$user->setGender($gender);
-		$user->setPhone($landline);
-		$user->setMobile($mobile);
+		$user->setPhone($phoneCollection);
 		$user->setEmail($emailAddress);
 		$user->setAccount($account);
 		$user->setCreatedAt(date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']));

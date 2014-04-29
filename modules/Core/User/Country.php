@@ -16,7 +16,7 @@ class Country {
 	 *
 	 * @var int
 	 */
-	private $id = -1;
+	private $id = null;
 
 	/**
 	 * Abbreviation
@@ -38,6 +38,9 @@ class Country {
 	public function __construct() {
 
 	}
+
+	/* Getters/Setters
+	 */
 
 	/**
 	 * Set abbreviation

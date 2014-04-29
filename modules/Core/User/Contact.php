@@ -1,15 +1,15 @@
 <?php
 /**
- * Email.php
+ * Contact.php
  *
- * Date: 30/01/2014
- * Time: 12:07 AM
+ * Date: 29/04/2014
+ * Time: 11:19 PM
  */
 
 namespace Core\User;
 
 
-class Email {
+class Contact {
 
 	/**
 	 * Id
@@ -19,18 +19,39 @@ class Email {
 	private $id = null;
 
 	/**
-	 * The user this email belongs to
+	 * The user to whom this contact belongs
 	 *
 	 * @var null
 	 */
 	private $userId = null;
 
 	/**
-	 * Email address
+	 * Firstname
 	 *
 	 * @var string
 	 */
-	private $address = '';
+	private $firstname = '';
+
+	/**
+	 * Lastname
+	 *
+	 * @var string
+	 */
+	private $lastname = '';
+
+	/**
+	 * Phone
+	 *
+	 * @var string
+	 */
+	private $phone = '';
+
+	/**
+	 * Additional notes
+	 *
+	 * @var string
+	 */
+	private $notes = '';
 
 	/**
 	 * The date when the record was first created
@@ -60,34 +81,25 @@ class Email {
 
 	}
 
-	/**
-	 * Determine whether the provided email address is valid
-	 *
-	 * @return bool
-	 */
-	public function isValid() {
-		return true;
-	}
-
 	/* Getters/Setters
 	 */
 
 	/**
-	 * Set address
+	 * Set firstname
 	 *
-	 * @param string $address
+	 * @param string $firstname
 	 */
-	public function setAddress($address) {
-		$this->address = $address;
+	public function setFirstname($firstname) {
+		$this->firstname = $firstname;
 	}
 
 	/**
-	 * Get address
+	 * Get firstname
 	 *
 	 * @return string
 	 */
-	public function getAddress() {
-		return $this->address;
+	public function getFirstname() {
+		return $this->firstname;
 	}
 
 	/**
@@ -107,6 +119,79 @@ class Email {
 	public function getId() {
 		return $this->id;
 	}
+
+	/**
+	 * Set lastname
+	 *
+	 * @param string $lastname
+	 */
+	public function setLastname($lastname) {
+		$this->lastname = $lastname;
+	}
+
+	/**
+	 * Get lastname
+	 *
+	 * @return string
+	 */
+	public function getLastname() {
+		return $this->lastname;
+	}
+
+	/**
+	 * Set notes
+	 *
+	 * @param string $notes
+	 */
+	public function setNotes($notes) {
+		$this->notes = $notes;
+	}
+
+	/**
+	 * Get notes
+	 *
+	 * @return string
+	 */
+	public function getNotes() {
+		return $this->notes;
+	}
+
+	/**
+	 * Set phone
+	 *
+	 * @param string $phone
+	 */
+	public function setPhone($phone) {
+		$this->phone = $phone;
+	}
+
+	/**
+	 * Get phone
+	 *
+	 * @return string
+	 */
+	public function getPhone() {
+		return $this->phone;
+	}
+
+	/**
+	 * Set user id
+	 *
+	 * @param null $userId
+	 */
+	public function setUserId($userId) {
+		$this->userId = $userId;
+	}
+
+	/**
+	 * Get user id
+	 *
+	 * @return null
+	 */
+	public function getUserId() {
+		return $this->userId;
+	}
+
 
 	/**
 	 * Set created at
@@ -160,23 +245,5 @@ class Email {
 	 */
 	public function getUpdatedAt() {
 		return $this->updatedAt;
-	}
-
-	/**
-	 * Set user id
-	 *
-	 * @param null $userId
-	 */
-	public function setUserId($userId) {
-		$this->userId = $userId;
-	}
-
-	/**
-	 * Get user id
-	 *
-	 * @return null
-	 */
-	public function getUserId() {
-		return $this->userId;
 	}
 } 
