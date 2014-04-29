@@ -86,7 +86,7 @@ class User {
 	 *
 	 * @var null
 	 */
-	private $emergencyContact = null;
+	private $contact = null;
 
 	/**
 	 * Image file id
@@ -257,21 +257,21 @@ class User {
 	}
 
 	/**
-	 * Set emergency contact
+	 * Set contact
 	 *
-	 * @param null $emergencyContact
+	 * @param null $contact
 	 */
-	public function setEmergencyContact($emergencyContact) {
-		$this->emergencyContact = $emergencyContact;
+	public function setContact($contact) {
+		$this->contact = $contact;
 	}
 
 	/**
-	 * Set emergency contact
+	 * Get contact
 	 *
 	 * @return null
 	 */
-	public function getEmergencyContact() {
-		return $this->emergencyContact;
+	public function getContact() {
+		return $this->contact;
 	}
 
 	/**
