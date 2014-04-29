@@ -25,10 +25,10 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addProperty('firstname', 'firstname');
 		$this->addProperty('lastname', 'lastname');
 		$this->addProperty('birthdate', 'birthdate');
-		$this->addProperty('address', 'address_id');
-		$this->addProperty('phone', 'phone_id');
+		$this->addProperty('address', 'address');
+		$this->addProperty('phone', 'phone');
 		$this->addProperty('email', 'email');
-		$this->addProperty('gender', 'gender_id');
+		$this->addProperty('gender', 'gender');
 		$this->addProperty('vehicle', 'vehicle');
 
 		/* Join the Phone record onto the User record using
@@ -48,7 +48,7 @@ class UserMapper extends \App\Mapper\Base {
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
 				'key' => 'id',
-				'collection' => 'phone_id',
+				'collection' => 'phone',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\PhoneMapper',
@@ -59,8 +59,8 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addJoin('Address', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'address_id',
-				'collection' => 'address_id',
+				'key' => 'address',
+				'collection' => 'address',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\AddressMapper',
@@ -71,8 +71,8 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addJoin('Gender', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'gender_id',
-				'collection' => 'gender_id',
+				'key' => 'gender',
+				'collection' => 'gender',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\GenderMapper',
