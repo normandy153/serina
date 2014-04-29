@@ -31,6 +31,7 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addProperty('gender', 'gender');
 		$this->addProperty('vehicle', 'vehicle');
 		$this->addProperty('contact', 'contact');
+		$this->addProperty('account', 'account');
 
 		/* Join the Phone record onto the User record using
 		 * the following columns as a match. 'other' model and
@@ -116,6 +117,18 @@ class UserMapper extends \App\Mapper\Base {
 				'key' => 'user_id'
 			),
 		));
+
+		$this->addJoin('Account', array(
+			'this' => array(
+				'mapper' => '\Core\User\UserMapper',
+				'key' => 'id',
+				'collection' => 'account',
+			),
+			'other' => array(
+				'mapper' => '\Core\User\AccountMapper',
+				'key' => 'user_id'
+			),
+		));
 	}
 
 	/**
@@ -132,7 +145,8 @@ class UserMapper extends \App\Mapper\Base {
 			'\Core\User\Email e',
 			'\Core\User\Gender g',
 			'\Core\User\Vehicle v',
-			'\Core\User\Contact co'
+			'\Core\User\Contact co',
+			'\Core\User\Account acc'
 		)
 			->from('u')
 			->leftJoin('u', 'Address', 'a')
@@ -143,6 +157,7 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Gender', 'g')
 			->leftJoin('u', 'Vehicle', 'v')
 			->leftJoin('u', 'Contact', 'co')
+			->leftJoin('u', 'Account', 'acc')
 			->orderBy('u.lastname', 'DESC')
 			->prepare();
 
@@ -164,6 +179,7 @@ class UserMapper extends \App\Mapper\Base {
 		$genderCollection = new \App\Collection();
 		$vehicleCollection = new \App\Collection();
 		$contactCollection = new \App\Collection();
+		$accountCollection = new \App\Collection();
 
 		foreach($statement as $row) {
 			$user = $query->getMapperForAlias('u')->hydrate('u', $row);
@@ -192,6 +208,9 @@ class UserMapper extends \App\Mapper\Base {
 
 			$contact = $query->getMapperForAlias('co')->hydrate('co', $row);
 			$contactCollection->setItemAt($contact->getId(), $contact);
+
+			$account = $query->getMapperForAlias('acc')->hydrate('acc', $row);
+			$accountCollection->setItemAt($account->getId(), $account);
 		}
 
 		/* Build address/country relation
@@ -225,6 +244,10 @@ class UserMapper extends \App\Mapper\Base {
 		/* Build user/vehicle relation
 		 */
 		$this->joinCollections($userCollection, $contactCollection, 'Contact', $query);
+
+		/* Build user/account relation
+		 */
+		$this->joinCollections($userCollection, $accountCollection, 'Account', $query);
 
 		/* Reindex
 		 */

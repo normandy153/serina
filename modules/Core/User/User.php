@@ -417,4 +417,5 @@ class User {
 	public function getVehicle() {
 		return $this->vehicle;
 	}
+
 } 

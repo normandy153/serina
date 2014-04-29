@@ -12,6 +12,20 @@ namespace Core\User;
 class Account {
 
 	/**
+	 * Id
+	 *
+	 * @var null
+	 */
+	private $id = null;
+
+	/**
+	 * The user to whom this accont belongs
+	 *
+	 * @var null
+	 */
+	private $userId = null;
+
+	/**
 	 * Username
 	 *
 	 * @var string
@@ -45,6 +59,35 @@ class Account {
 	 * @var string
 	 */
 	private $expiryDate = '';
+
+	/**
+	 * Whether or not this account is enabled
+	 * $lock = 0 enables it; $lock = 1 disables it
+	 *
+	 * @var int
+	 */
+	private $lock = 0;
+
+	/**
+	 * Created timestamp
+	 *
+	 * @var string
+	 */
+	private $createdAt = '';
+
+	/**
+	 * Updated timestamp
+	 *
+	 * @var string
+	 */
+	private $updatedAt = '';
+
+	/**
+	 * Deleted timestamp
+	 *
+	 * @var string
+	 */
+	private $deletedAt = '';
 
 	/**
 	 * Constructor
@@ -154,5 +197,113 @@ class Account {
 	 */
 	public function getAvatar() {
 		return $this->avatar;
+	}
+
+	/**
+	 * Set id
+	 *
+	 * @param null $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	/**
+	 * Get id
+	 *
+	 * @return null
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * Set user id
+	 *
+	 * @param null $userId
+	 */
+	public function setUserId($userId) {
+		$this->userId = $userId;
+	}
+
+	/**
+	 * Get user id
+	 *
+	 * @return null
+	 */
+	public function getUserId() {
+		return $this->userId;
+	}
+
+	/**
+	 * Set created at
+	 *
+	 * @param string $createdAt
+	 */
+	public function setCreatedAt($createdAt) {
+		$this->createdAt = $createdAt;
+	}
+
+	/**
+	 * Get created at
+	 *
+	 * @return string
+	 */
+	public function getCreatedAt() {
+		return $this->createdAt;
+	}
+
+	/**
+	 * Set deleted at
+	 *
+	 * @param string $deletedAt
+	 */
+	public function setDeletedAt($deletedAt) {
+		$this->deletedAt = $deletedAt;
+	}
+
+	/**
+	 * Get deleted at
+	 *
+	 * @return string
+	 */
+	public function getDeletedAt() {
+		return $this->deletedAt;
+	}
+
+	/**
+	 * Set updated at
+	 *
+	 * @param string $updatedAt
+	 */
+	public function setUpdatedAt($updatedAt) {
+		$this->updatedAt = $updatedAt;
+	}
+
+	/**
+	 * Get updated at
+	 *
+	 * @return string
+	 */
+	public function getUpdatedAt() {
+		return $this->updatedAt;
+	}
+
+	/**
+	 * Set lock
+	 *
+	 * @param int $lock
+	 */
+	public function setLock($lock) {
+		$this->lock = $lock;
+	}
+
+	/**
+	 * Get lock
+	 *
+	 * @return int
+	 */
+	public function getLock() {
+		return $this->lock;
 	}
 } 
