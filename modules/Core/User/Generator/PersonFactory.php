@@ -104,7 +104,10 @@ class PersonFactory extends Base {
 		$firstname = $this->firstnames[$index1];
 		$lastname = $this->lastnames[$index2];
 
-		$emailAddress = 'test' . rand(100,999) . '@test.com';
+		$emailCollection = new \App\Collection();
+		$emailCollection->add('test' . rand(100,999) . '@test.com');
+		$emailCollection->add('test' . rand(100,999) . '@test.com');
+		$emailCollection->add('test' . rand(100,999) . '@test.com');
 
 		$lower = $_SERVER['REQUEST_TIME'] - 60*60*24*365*50;
 		$upper = $_SERVER['REQUEST_TIME'] - 60*60*24*365*18;
@@ -112,33 +115,38 @@ class PersonFactory extends Base {
 		$birthday = date('Y-m-d', rand($lower, $upper));
 
 		$addressFactory = new AddressFactory();
-		$address = $addressFactory->spawn();
+		$addressCollection = new \App\Collection();
+		$addressCollection->add($addressFactory->spawn());
 
 		$genderFactory = new GenderFactory();
-		$gender = $genderFactory->spawn();
+		$genderCollection = new \App\Collection();
+		$genderCollection->add($genderFactory->spawn());
 
 		$phoneFactory = new PhoneFactory();
-
-		$landline = $phoneFactory->spawnLandline();
-		$mobile = $phoneFactory->spawnMobile();
+		$phoneCollection = new \App\Collection();
+		$phoneCollection->add($phoneFactory->spawnLandline());
+		$phoneCollection->add($phoneFactory->spawnLandline());
+		$phoneCollection->add($phoneFactory->spawnMobile());
 
 		$accountFactory = new AccountFactory($firstname, $lastname);
-		$account = $accountFactory->spawn();
+		$accountCollection = new \App\Collection();
+		$accountCollection->add($accountFactory->spawn());
 
-		$phoneCollection = new \App\Collection();
-		$phoneCollection->add($landline);
-		$phoneCollection->add($mobile);
+		$vehicleFactory = new VehicleFactory();
+		$vehicleCollection = new \App\Collection();
+		$vehicleCollection->add($vehicleFactory->spawn());
 
 		$user = new \Core\User();
 		$user->setUuid(crypt(uniqid() . sha1(microtime())));
 		$user->setFirstname($firstname);
 		$user->setLastname($lastname);
 		$user->setBirthdate($birthday);
-		$user->setAddress($address);
-		$user->setGender($gender);
+		$user->setAddress($addressCollection);
+		$user->setGender($genderCollection);
 		$user->setPhone($phoneCollection);
-		$user->setEmail($emailAddress);
-		$user->setAccount($account);
+		$user->setEmail($emailCollection);
+		$user->setAccount($accountCollection);
+		$user->setVehicle($vehicleCollection);
 		$user->setCreatedAt(date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']));
 		$user->setUpdatedAt(date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']));
 

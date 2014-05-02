@@ -26,9 +26,13 @@ class UserFactory extends Base {
 	public function spawn() {
 		$personFactory = new PersonFactory();
 
-		$contact = $personFactory->spawn();
+		$allContacts = new \App\Collection();
+		$allContacts->add($personFactory->spawn());
+		$allContacts->add($personFactory->spawn());
+		$allContacts->add($personFactory->spawn());
+
 		$user = $personFactory->spawn();
-		$user->setEmergencyContact($contact);
+		$user->setContact($allContacts);
 
 		return $user;
 	}
