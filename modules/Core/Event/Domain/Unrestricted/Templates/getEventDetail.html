@@ -48,7 +48,7 @@
 	<ul class='listing-horizontal'>
 		{% for currentLeader in event.getLeaders() %}
 		<li>
-			<img src="/user/avatar/{{ currentLeader.getAccount().getAvatar().getFilepath() }}" class='avatar' width="32" height="32" />
+			<img src="/user/avatar/{{ currentLeader.getAccount().first().getAvatar().getFilepath() }}" class='avatar' width="32" height="32" />
 
 			<div class='description'>
 				{{ currentLeader.getLastname() }}, {{ currentLeader.getFirstname() }}
@@ -69,7 +69,7 @@
 	<ul class='listing-horizontal'>
 		{% for currentAttendee in event.getAttendees() %}
 		<li>
-			<img src="/user/avatar/{{ currentAttendee.getAccount().getAvatar().getFilepath() }}" class='avatar' width="32" height="32" />
+			<img src="/user/avatar/{{ currentAttendee.getAccount().first().getAvatar().getFilepath() }}" class='avatar' width="32" height="32" />
 
 			<div class='description'>
 				{{ currentAttendee.getLastname() }}, {{ currentAttendee.getFirstname() }}
