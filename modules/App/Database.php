@@ -59,6 +59,10 @@ class Database {
 	final public function __construct() {
 		$this->setup();
 		$this->connect();
+
+		/* Throws exception upon error
+		 */
+		$this->debugOn();
 	}
 
 	/**
@@ -73,6 +77,15 @@ class Database {
 	 */
 	private function connect() {
 		$this->setConnection(new \PDO($this->getDsn(), $this->getUsername(), $this->getPassword()));
+	}
+
+	/**
+	 * Debugging for PDO
+	 *
+	 * Throw exceptions whenever a PDO error is encountered
+	 */
+	private function debugOn() {
+		$this->getConnection()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 	}
 
 	/**
