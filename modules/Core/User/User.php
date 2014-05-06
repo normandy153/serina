@@ -16,7 +16,7 @@ class User {
 	 *
 	 * @var int
 	 */
-	private $id = -1;
+	private $id = null;
 
 	/**
 	 * Non-incrementing unique identifier
