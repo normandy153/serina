@@ -11,6 +11,18 @@ namespace Core\User\Domain\Unrestricted;
 
 class Controller extends \App\Controller\Domain\Unrestricted {
 
+	public function getUserSave() {
+
+		$user = new \Core\User();
+		$user->setId(3);
+		$user->setFirstname('Flappy');
+		$user->setLastname('Chappy');
+		$user->setBirthdate('1979-09-09');
+
+		$mapper = new \Core\User\UserMapper();
+		$mapper->save($user);
+	}
+
 	/**
 	 * Stub method
 	 */
