@@ -20,18 +20,18 @@ class UserMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User');
 		$this->setTable('user');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('uuid', 'uuid');
-		$this->addProperty('firstname', 'firstname');
-		$this->addProperty('lastname', 'lastname');
-		$this->addProperty('birthdate', 'birthdate');
-		$this->addProperty('address', 'address');
-		$this->addProperty('phone', 'phone');
-		$this->addProperty('email', 'email');
-		$this->addProperty('gender', 'gender');
-		$this->addProperty('vehicle', 'vehicle');
-		$this->addProperty('contact', 'contact');
-		$this->addProperty('account', 'account');
+		$this->addProperty('id', 'id', \PDO::PARAM_INT);
+		$this->addProperty('uuid', 'uuid', \PDO::PARAM_STR);
+		$this->addProperty('firstname', 'firstname', \PDO::PARAM_STR);
+		$this->addProperty('lastname', 'lastname', \PDO::PARAM_STR);
+		$this->addProperty('birthdate', 'birthdate', \PDO::PARAM_STR);
+		$this->addProperty('address', 'address', \PDO::PARAM_STR);
+		$this->addProperty('phone', 'phone', \PDO::PARAM_STR);
+		$this->addProperty('email', 'email', \PDO::PARAM_STR);
+		$this->addProperty('gender', 'gender', \PDO::PARAM_STR);
+		$this->addProperty('vehicle', 'vehicle', \PDO::PARAM_STR);
+		$this->addProperty('contact', 'contact', \PDO::PARAM_STR);
+		$this->addProperty('account', 'account', \PDO::PARAM_STR);
 
 		/* Join the Phone record onto the User record using
 		 * the following columns as a match. 'other' model and
