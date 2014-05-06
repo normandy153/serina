@@ -187,12 +187,14 @@ abstract class Base {
 	public function save($object) {
 		$columns = array();
 		$placeholders = array();
+		$updates = array();
 
 		foreach($this->getProperties() as $currentProperty) {
 			$method = $this->deriveGetterMethod($currentProperty->getColumn());
 
 			$columns[] = $currentProperty->getColumn();
 			$placeholders[] = ':' . $currentProperty->getColumn();
+			$updates[] = "{$currentProperty->getColumn()} = :{$currentProperty->getColumn()}";
 
 			$params[$currentProperty->getColumn()] = array(
 				'column' => $object->$method(),
@@ -202,11 +204,12 @@ abstract class Base {
 
 		$allColumns = '(`' . implode("`, `", $columns) . '`)';
 		$allPlaceholders = '(' . implode(', ', $placeholders) . ')';
+		$allUpdates = implode(', ', $updates);
 
 		$querystring = "
 			INSERT INTO `{$this->getTable()}` {$allColumns}
 			VALUES {$allPlaceholders}
-
+			ON DUPLICATE KEY UPDATE {$allUpdates}
 		";
 
 		try {
@@ -215,6 +218,7 @@ abstract class Base {
 			$query->execute($params);
 		}
 		catch (\PDOException $e) {
+			new \App\Probe($e->getMessage());
 		}
 
 		exit();
