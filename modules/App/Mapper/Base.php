@@ -65,9 +65,10 @@ abstract class Base {
 	 *
 	 * @param $property
 	 * @param $column
+	 * @param $type
 	 */
-	protected function addProperty($property, $column) {
-		$this->properties[] = new PropertyDefinition($property, $column);
+	protected function addProperty($property, $column, $type) {
+		$this->properties[] = new PropertyDefinition($property, $column, $type);
 	}
 
 	/**
@@ -176,6 +177,58 @@ abstract class Base {
 		else {
 			throw new \Exception('Join rule not found.');
 		}
+	}
+
+	/**
+	 * Save an object to the db
+	 *
+	 * @param $object
+	 */
+	public function save($object) {
+		$columns = array();
+		$placeholders = array();
+
+		foreach($this->getProperties() as $currentProperty) {
+			$method = $this->deriveGetterMethod($currentProperty->getColumn());
+
+			$columns[] = $currentProperty->getColumn();
+			$placeholders[] = ':' . $currentProperty->getColumn();
+
+			$params[$currentProperty->getColumn()] = array(
+				'column' => $object->$method(),
+				'type' => $currentProperty->getType(),
+			);
+		}
+
+		$allColumns = '(`' . implode("`, `", $columns) . '`)';
+		$allPlaceholders = '(' . implode(', ', $placeholders) . ')';
+
+		$querystring = "
+			INSERT INTO `{$this->getTable()}` {$allColumns}
+			VALUES {$allPlaceholders}
+
+		";
+
+		try {
+			$query = new \App\Mapper\Query();
+			$query->prepareRawQuery($querystring);
+			$query->execute($params);
+		}
+		catch (\PDOException $e) {
+		}
+
+		exit();
+	}
+
+	/**
+	 * Find a method name from a property
+	 *
+	 * @param $column
+	 * @throws \Exception
+	 * @return mixed
+	 */
+	public function deriveGetterMethod($column) {
+		return 'get' . ucwords($column);
 	}
 
 	/* Getters/Setters
