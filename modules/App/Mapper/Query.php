@@ -307,6 +307,19 @@ class Query {
 	}
 
 	/**
+	 * Alias to set up a raw query, bypassing the join constructs and
+	 * other orm-style stuff
+	 *
+	 * @param $querystring
+	 * @return $this
+	 */
+	public function prepareRawQuery($querystring) {
+		$this->setQuery($querystring);
+
+		return $this;
+	}
+
+	/**
 	 * Execute the query
 	 *
 	 * @param $allParams
@@ -319,7 +332,7 @@ class Query {
 		 */
 		if (is_array($allParams) && count($allParams)) {
 			foreach($allParams as $key => $value) {
-				$statement->bindValue($key, $value, \PDO::PARAM_INT);
+				$statement->bindValue($key, $value['column'], $value['type']);
 			}
 		}
 
