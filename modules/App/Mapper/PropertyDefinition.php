@@ -26,14 +26,23 @@ class PropertyDefinition {
 	private $column = '';
 
 	/**
+	 * Data type for this column, for PDO
+	 *
+	 * @var string
+	 */
+	private $type = '';
+
+	/**
 	 * Constructor
 	 *
 	 * @param $property
 	 * @param $column
+	 * @param $type
 	 */
-	public function __construct($property, $column) {
+	public function __construct($property, $column, $type) {
 		$this->setProperty($property);
 		$this->setColumn($column);
+		$this->setType($type);
 	}
 
 	/**
@@ -82,5 +91,23 @@ class PropertyDefinition {
 	 */
 	public function getProperty() {
 		return $this->property;
+	}
+
+	/**
+	 * Set type
+	 *
+	 * @param string $type
+	 */
+	public function setType($type) {
+		$this->type = $type;
+	}
+
+	/**
+	 * Get type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return $this->type;
 	}
 } 
