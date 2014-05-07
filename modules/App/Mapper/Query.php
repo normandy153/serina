@@ -342,6 +342,17 @@ class Query {
 	}
 
 	/**
+	 * Delegate method
+	 *
+	 * Get the last id inserted
+	 *
+	 * @return mixed
+	 */
+	public function getLastInsertId() {
+		return $this->getDatabase()->getLastInsertId();
+	}
+
+	/**
 	 * Makes a relationship representation between $thisAlias and $otherAlias
 	 *
 	 * This makes $otherAlias an element of $thisAlias, which allows us to find

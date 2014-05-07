@@ -97,6 +97,15 @@ class Database {
 		return $this->getConnection()->prepare($query);
 	}
 
+	/**
+	 * Get the last id inserted
+	 *
+	 * @return mixed
+	 */
+	public function getLastInsertId() {
+		return $this->getConnection()->lastInsertId();
+	}
+
 	/* Getters/Setters
 	 */
 

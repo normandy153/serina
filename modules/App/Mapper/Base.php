@@ -216,12 +216,12 @@ abstract class Base {
 			$query = new \App\Mapper\Query();
 			$query->prepareRawQuery($querystring);
 			$query->execute($params);
+
+			new \App\Probe($query->getLastInsertId());
 		}
 		catch (\PDOException $e) {
 			new \App\Probe($e->getMessage());
 		}
-
-		exit();
 	}
 
 	/**
