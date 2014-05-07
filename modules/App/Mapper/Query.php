@@ -349,7 +349,11 @@ class Query {
 	 * @return mixed
 	 */
 	public function getLastInsertId() {
-		return $this->getDatabase()->getLastInsertId();
+		if ($this->getDatabase()->getLastInsertId()) {
+			return $this->getDatabase()->getLastInsertId();
+		}
+
+		return null;
 	}
 
 	/**

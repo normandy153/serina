@@ -217,7 +217,17 @@ abstract class Base {
 			$query->prepareRawQuery($querystring);
 			$query->execute($params);
 
-			new \App\Probe($query->getLastInsertId());
+			$lastInsertId = $query->getLastInsertId();
+
+			/* If it updated an existing record, getLastInsertId() will return null
+			 * This allows you to prevent overwriting the primary key of an object
+			 * accidentally, filling it with 0 which is what PDO normally returns
+			 */
+			if ($lastInsertId !== null) {
+				$object->setId($lastInsertId);
+			}
+
+			new \App\Probe($object);
 		}
 		catch (\PDOException $e) {
 			new \App\Probe($e->getMessage());
