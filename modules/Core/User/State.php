@@ -16,7 +16,7 @@ class State {
 	 *
 	 * @var int
 	 */
-	private $id = -1;
+	private $id = null;
 
 	/**
 	 * Abbreviation
