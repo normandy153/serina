@@ -78,7 +78,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		 */
 		$genderMapper = new \Core\User\GenderMapper();
 		$gender = $genderMapper->findById($genderId);
-new \App\Probe($address);
+
 		/* Define User
 		 */
 		$user = new \Core\User();
@@ -91,7 +91,7 @@ new \App\Probe($address);
 		$user->setCreatedAt($now);
 		$user->setUpdatedAt($now);
 		$user->setDeletedAt(null);
-		new \App\Probe($user);
+
 		$mapper = new \Core\User\UserMapper();
 		$mapper->save($user);
 
