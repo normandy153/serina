@@ -20,17 +20,17 @@ class AddressMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User\\Address');
 		$this->setTable('address');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('address1', 'address1');
-		$this->addProperty('address2', 'address2');
-		$this->addProperty('suburb', 'suburb');
-		$this->addProperty('state', 'state');
-		$this->addProperty('postcode', 'postcode');
-		$this->addProperty('country', 'country');
+		$this->addProperty('id', 'id', \PDO::PARAM_INT);
+		$this->addProperty('address1', 'address1', \PDO::PARAM_STR);
+		$this->addProperty('address2', 'address2', \PDO::PARAM_STR);
+		$this->addProperty('suburb', 'suburb', \PDO::PARAM_STR);
+		$this->addProperty('state', 'state', \PDO::PARAM_INT);
+		$this->addProperty('postcode', 'postcode', \PDO::PARAM_STR);
+		$this->addProperty('country', 'country', \PDO::PARAM_INT);
 
-		$this->addProperty('createdAt', 'created_at');
-		$this->addProperty('updatedAt', 'updated_at');
-		$this->addProperty('deletedAt', 'deleted_at');
+		$this->addProperty('createdAt', 'created_at', \PDO::PARAM_STR);
+		$this->addProperty('updatedAt', 'updated_at', \PDO::PARAM_STR);
+		$this->addProperty('deletedAt', 'deleted_at', \PDO::PARAM_STR);
 
 		$this->addJoin('State', array(
 			'this' => array(

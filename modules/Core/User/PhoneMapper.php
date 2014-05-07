@@ -20,13 +20,13 @@ class PhoneMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User\\Phone');
 		$this->setTable('phone');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('userId', 'user_id');
-		$this->addProperty('typeId', 'type_id');
-		$this->addProperty('number', 'number');
+		$this->addProperty('id', 'id', \PDO::PARAM_INT);
+		$this->addProperty('userId', 'user_id', \PDO::PARAM_INT);
+		$this->addProperty('typeId', 'type_id', \PDO::PARAM_INT);
+		$this->addProperty('number', 'number', \PDO::PARAM_STR);
 
-		$this->addProperty('createdAt', 'created_at');
-		$this->addProperty('updatedAt', 'updated_at');
-		$this->addProperty('deletedAt', 'deleted_at');
+		$this->addProperty('createdAt', 'created_at', \PDO::PARAM_STR);
+		$this->addProperty('updatedAt', 'updated_at', \PDO::PARAM_STR);
+		$this->addProperty('deletedAt', 'deleted_at', \PDO::PARAM_STR);
 	}
 } 

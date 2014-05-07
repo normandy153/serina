@@ -20,17 +20,17 @@ class AccountMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User\\Account');
 		$this->setTable('account');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('userId', 'user_id');
-		$this->addProperty('username', 'username');
-		$this->addProperty('password', 'password');
-		$this->addProperty('avatar', 'avatar');
-		$this->addProperty('activationDate', 'activation_date');
-		$this->addProperty('expiryDate', 'expiry_date');
-		$this->addProperty('lock', 'lock');
+		$this->addProperty('id', 'id', \PDO::PARAM_INT);
+		$this->addProperty('userId', 'user_id', \PDO::PARAM_INT);
+		$this->addProperty('username', 'username', \PDO::PARAM_STR);
+		$this->addProperty('password', 'password', \PDO::PARAM_STR);
+		$this->addProperty('avatar', 'avatar', \PDO::PARAM_STR);
+		$this->addProperty('activationDate', 'activation_date', \PDO::PARAM_STR);
+		$this->addProperty('expiryDate', 'expiry_date', \PDO::PARAM_STR);
+		$this->addProperty('lock', 'lock', \PDO::PARAM_INT);
 
-		$this->addProperty('createdAt', 'created_at');
-		$this->addProperty('updatedAt', 'updated_at');
-		$this->addProperty('deletedAt', 'deleted_at');
+		$this->addProperty('createdAt', 'created_at', \PDO::PARAM_STR);
+		$this->addProperty('updatedAt', 'updated_at', \PDO::PARAM_STR);
+		$this->addProperty('deletedAt', 'deleted_at', \PDO::PARAM_STR);
 	}
 } 
