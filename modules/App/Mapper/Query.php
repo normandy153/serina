@@ -325,7 +325,7 @@ class Query {
 	 * @param $allParams
 	 * @return mixed
 	 */
-	public function execute($allParams = false) {
+	public function execute($allParams = null) {
 		$statement = $this->getDatabase()->prepare($this->getQuery());
 
 		/* Bind params
