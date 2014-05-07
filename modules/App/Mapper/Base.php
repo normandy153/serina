@@ -240,7 +240,15 @@ abstract class Base {
 	 * @return mixed
 	 */
 	public function deriveGetterMethod($column) {
-		return 'get' . ucwords($column);
+		$stack = array('get');
+
+		$bits = explode('_', $column);
+
+		foreach($bits as $current) {
+			$stack[] = ucwords($current);
+		}
+
+		return implode('', $stack);
 	}
 
 	/* Shared Retrieval Methods
