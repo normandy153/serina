@@ -243,6 +243,40 @@ abstract class Base {
 		return 'get' . ucwords($column);
 	}
 
+	/* Shared Retrieval Methods
+	 *
+	 * A bunch of commonly-used methods here for extracting data
+	 * from the db. Uses the Query class to hydrate for you
+	 */
+
+	/**
+	 * Find an object by its primary key
+	 *
+	 * @param $id
+	 * @return null
+	 */
+	public function findById($id) {
+		$query = new \App\Mapper\Query();
+
+		$statement = $query
+			->select("{$this->getModel()} m")
+			->from('m')
+			->where('id = :id')
+			->prepare()
+			->execute(array(
+				'id' => array(
+					'column' => $id,
+					'type' => \PDO::PARAM_INT
+				)
+			));
+
+		$row = $statement->fetch();
+
+		$object = $this->hydrate('m', $row);
+
+		return $object;
+	}
+
 	/* Getters/Setters
 	 */
 

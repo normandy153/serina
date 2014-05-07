@@ -11,16 +11,36 @@ namespace Core\User\Domain\Unrestricted;
 
 class Controller extends \App\Controller\Domain\Unrestricted {
 
+	/**
+	 * Create/update a user
+	 */
 	public function getUserSave() {
 
+		$genderMapper = new \Core\User\GenderMapper();
+		$gender = $genderMapper->findById(1);
+
+//		new \App\Probe($gender);
+
+//		$genderMapper = new \Core\User\GenderMapper();
+//		$gender = $genderMapper->findById(1);
+
 		$user = new \Core\User();
+		$user->setUuid(crypt(uniqid() . sha1(microtime())));
+		$user->setFirstname('John');
+		$user->setLastname('Smith');
+		$user->setBirthdate('1990-11-07');
+//		$user->setGender($gender);
+//		$user->setAddress($address);
+//		$user->setPhone($phone);
+//		$user->setMobile($mobile);
+//		$user->setEmail($email);
+//		$user->setEmergencyContact($contact);
+//		$user->setAccount($account);
+		$user->setCreatedAt('2010-06-19 14:45:34');
+		$user->setUpdatedAt('2010-06-19 14:45:34');
 
-		$user->setFirstname('Flappy');
-		$user->setLastname('Chappy');
-		$user->setBirthdate('1979-09-09');
-
-		$mapper = new \Core\User\UserMapper();
-		$mapper->save($user);
+//		$mapper = new \Core\User\UserMapper();
+//		$mapper->save($user);
 	}
 
 	/**
@@ -91,22 +111,6 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$account->setActivationDate('2014-02-03 22:10:01');
 		$account->setExpiryDate('2015-02-03 22:10:01');
 
-		/* Define test User
-		 */
-		$user = new \Core\User();
-		$user->setUuid(crypt(uniqid() . sha1(microtime())));
-		$user->setFirstname('John');
-		$user->setLastname('Smith');
-		$user->setBirthdate('1990-11-07');
-		$user->setGender($gender);
-		$user->setAddress($address);
-		$user->setPhone($phone);
-		$user->setMobile($mobile);
-		$user->setEmail($email);
-		$user->setEmergencyContact($contact);
-		$user->setAccount($account);
-		$user->setCreatedAt('2010-06-19 14:45:34');
-		$user->setUpdatedAt('2010-06-19 14:45:34');
 
 		new \App\Probe($user);
 		exit();
