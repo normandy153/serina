@@ -226,8 +226,6 @@ abstract class Base {
 			if ($lastInsertId !== null) {
 				$object->setId($lastInsertId);
 			}
-
-			new \App\Probe($object);
 		}
 		catch (\PDOException $e) {
 			new \App\Probe($e->getMessage());
