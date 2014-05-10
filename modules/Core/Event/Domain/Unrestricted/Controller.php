@@ -9,17 +9,22 @@
 namespace Core\Event\Domain\Unrestricted;
 
 
-class Controller extends \App\Controller\Domain\Unrestricted {
+use App\Controller\Domain\Unrestricted;
+use App\Probe;
+use Core\Event;
+use Core\User\UserMapper;
+
+class Controller extends Unrestricted {
 
 	/**
 	 * Get a list of events
 	 */
 	public function getEventList() {
-		$mapper = new \Core\User\UserMapper();
+		$mapper = new UserMapper();
 
 		$allUsers = $mapper->findAll();
 
-		new \App\Probe($allUsers);
+		new Probe($allUsers);
 
 		exit();
 	}
@@ -28,7 +33,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 	 * Detail view of a particular event
 	 */
 	public function getEventDetail() {
-		$event = new \Core\Event();
+		$event = new Event();
 
 		$this->output('getEventDetail', array(
 			'event' => $event

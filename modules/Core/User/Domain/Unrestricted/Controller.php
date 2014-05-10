@@ -9,6 +9,8 @@
 namespace Core\User\Domain\Unrestricted;
 
 
+use App\Controller\Domain\Unrestricted;
+use App\Probe;
 use Core\User\Address;
 use Core\User\AddressMapper;
 use Core\User\Contact;
@@ -23,7 +25,7 @@ use Core\User\StateMapper;
 use Core\User\User;
 use Core\User\UserMapper;
 
-class Controller extends \App\Controller\Domain\Unrestricted {
+class Controller extends Unrestricted {
 
 	/**
 	 * Create/update a user
@@ -193,7 +195,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 
 		$allUsers = $mapper->findAll();
 
-		new \App\Probe($allUsers);
+		new Probe($allUsers);
 
 		exit();
 
