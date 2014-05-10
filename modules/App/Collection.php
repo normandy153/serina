@@ -46,6 +46,25 @@ class Collection implements \Iterator, \JsonSerializable {
 	}
 
 	/**
+	 * Find an item in the Collection using the Property/Value pair
+	 *
+	 * @param $property
+	 * @param $value
+	 * @return null
+	 */
+	public function find($property, $value) {
+		$method = 'get' . ucwords($property);
+
+		foreach($this->getStack() as $currentItem) {
+			if ($currentItem->$method() == $value) {
+				return $currentItem;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * json-encode the current stack's items
 	 *
 	 * @return string
