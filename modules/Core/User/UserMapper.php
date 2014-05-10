@@ -17,7 +17,7 @@ class UserMapper extends \App\Mapper\Base {
 	 * @return mixed|void
 	 */
 	protected function properties() {
-		$this->setModel('\\Core\\User');
+		$this->setModel('\\Core\\User\\User');
 		$this->setTable('user');
 
 		$this->addProperty('id', 'id', self::TYPE_INT);

@@ -81,7 +81,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 
 		/* Define User
 		 */
-		$user = new \Core\User();
+		$user = new \Core\User\User();
 		$user->setUuid(crypt(uniqid() . sha1(microtime())));
 		$user->setFirstname($firstname);
 		$user->setLastname($lastname);
@@ -155,6 +155,18 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$contact->setUpdatedAt($now);
 		$contact->setDeletedAt(null);
 		$contactMapper->save($contact);
+
+		exit();
+	}
+
+	/**
+	 * Delete a user
+	 */
+	public function getUserDelete() {
+		$userMapper = new \Core\User\UserMapper();
+
+		$user = $userMapper->findById(57);
+		$userMapper->delete($user);
 
 		exit();
 	}

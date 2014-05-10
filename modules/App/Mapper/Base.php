@@ -45,6 +45,13 @@ abstract class Base {
 	protected $joins = array();
 
 	/**
+	 * Determine whether this mapper uses Timestampable object instances
+	 *
+	 * @var bool
+	 */
+	protected $isTimestampable = false;
+
+	/**
 	 * Constructor
 	 */
 	final public function __construct() {
@@ -86,6 +93,8 @@ abstract class Base {
 		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
 		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
 		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+
+		$this->setIsTimestampable(true);
 	}
 
 	/**
@@ -207,16 +216,18 @@ abstract class Base {
 		$updates = array();
 
 		foreach($this->getProperties() as $currentProperty) {
-			$method = $this->deriveGetterMethod($currentProperty->getColumn());
+			if (!$currentProperty->isCollection()) {
+				$method = $this->deriveGetterMethod($currentProperty->getColumn());
 
-			$columns[] = $currentProperty->getColumn();
-			$placeholders[] = ':' . $currentProperty->getColumn();
-			$updates[] = "{$currentProperty->getColumn()} = :{$currentProperty->getColumn()}";
+				$columns[] = $currentProperty->getColumn();
+				$placeholders[] = ':' . $currentProperty->getColumn();
+				$updates[] = "{$currentProperty->getColumn()} = :{$currentProperty->getColumn()}";
 
-			$params[$currentProperty->getColumn()] = array(
-				'column' => $object->$method(),
-				'type' => $currentProperty->getType(),
-			);
+				$params[$currentProperty->getColumn()] = array(
+					'column' => $object->$method(),
+					'type' => $currentProperty->getType(),
+				);
+			}
 		}
 
 		$allColumns = '(`' . implode("`, `", $columns) . '`)';
@@ -246,6 +257,43 @@ abstract class Base {
 		}
 		catch (\PDOException $e) {
 			new \App\Probe($e->getMessage());
+		}
+	}
+
+	/**
+	 * Delete an object from the db
+	 *
+	 * If it implemented addTimestampable() it will be soft deleted
+	 * otherwise it'll actually be removed altogether
+	 *
+	 * @param $object
+	 */
+	public function delete($object) {
+		if ($this->getIsTimestampable()) {
+			$object->setDeletedAt(date('Y-m-d h:i:s'));
+			$this->save($object);
+		}
+		else {
+			try {
+				$querystring = "
+					DELETE FROM {$this->getTable()}
+					WHERE id = :id
+				";
+
+				$params = array(
+					'id' => array(
+						'column' => $object->getId(),
+						'type' => self::TYPE_INT,
+					)
+				);
+
+				$query = new \App\Mapper\Query();
+				$query->prepareRawQuery($querystring);
+				$query->execute($params);
+			}
+			catch (\PDOException $e) {
+				new \App\Probe($e->getMessage());
+			}
 		}
 	}
 
@@ -291,7 +339,7 @@ abstract class Base {
 			->execute(array(
 				'id' => array(
 					'column' => $id,
-					'type' => \PDO::PARAM_INT
+					'type' => self::TYPE_INT
 				)
 			));
 
@@ -364,4 +412,23 @@ abstract class Base {
 	public function getTable() {
 		return $this->table;
 	}
+
+	/**
+	 * Set isTimestampable
+	 *
+	 * @param boolean $isTimestampable
+	 */
+	private function setIsTimestampable($isTimestampable) {
+		$this->isTimestampable = $isTimestampable;
+	}
+
+	/**
+	 * Get isTimestampable
+	 *
+	 * @return boolean
+	 */
+	private function getIsTimestampable() {
+		return $this->isTimestampable;
+	}
+
 } 

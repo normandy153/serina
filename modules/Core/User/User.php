@@ -6,7 +6,7 @@
  * Time: 11:25 PM
  */
 
-namespace Core;
+namespace Core\User;
 
 
 class User {
