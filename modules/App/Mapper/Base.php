@@ -374,7 +374,7 @@ abstract class Base {
 	/**
 	 * Set properties
 	 *
-	 * @param array $properties
+	 * @param \App\Collection $properties
 	 */
 	protected function setProperties($properties) {
 		$this->properties = $properties;
@@ -386,7 +386,7 @@ abstract class Base {
 	 * Made public so it can be used to dynamically hydrate and
 	 * map objects in the Query
 	 *
-	 * @return array
+	 * @return \App\Collection
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -430,5 +430,4 @@ abstract class Base {
 	private function getIsTimestampable() {
 		return $this->isTimestampable;
 	}
-
 } 
