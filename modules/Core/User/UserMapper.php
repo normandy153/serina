@@ -52,84 +52,84 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addJoin('Phone', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'phone',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\PhoneMapper',
-				'key' => 'userId',
+				'property' => 'userId',
 			),
 		));
 
 		$this->addJoin('Address', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'address',
+				'property' => 'address',
 				'collection' => 'address',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\AddressMapper',
-				'key' => 'id',
+				'property' => 'id',
 			),
 		));
 
 		$this->addJoin('Gender', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'gender',
+				'property' => 'gender',
 				'collection' => 'gender',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\GenderMapper',
-				'key' => 'id',
+				'property' => 'id',
 			)
 		));
 
 		$this->addJoin('Email', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'email',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\EmailMapper',
-				'key' => 'userId',
+				'property' => 'userId',
 			),
 		));
 
 		$this->addJoin('Vehicle', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'vehicle',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\VehicleMapper',
-				'key' => 'userId'
+				'property' => 'userId'
 			),
 		));
 
 		$this->addJoin('Contact', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'contact',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\ContactMapper',
-				'key' => 'userId'
+				'property' => 'userId'
 			),
 		));
 
 		$this->addJoin('Account', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'account',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\AccountMapper',
-				'key' => 'userId'
+				'property' => 'userId'
 			),
 		));
 	}

@@ -136,25 +136,25 @@ abstract class Base {
 
 				/* Find stuff in $collection1 using this key
 				 */
-				$key1 = $useRule['this']['key'];
+				$property1 = $useRule['this']['property'];
 
 				/* Find stuff from $collection2 using this key
 				 */
-				$key2 = $useRule['other']['key'];
+				$property2 = $useRule['other']['property'];
 
 				/* Stuff from $collection2 gets dumped into $key1
  				 */
-				$key3 = $useRule['this']['collection'];
+				$property3 = $useRule['this']['collection'];
 
 				/* Set the resultant collection of $collection2 items
 				 * into items from $collection1
 				 */
-				$setter = $query->deriveSetterMethodFromProperty($key3, $useRule['this']['mapper']);
+				$setter = $query->deriveSetterMethodFromProperty($property3, $useRule['this']['mapper']);
 
 				/* Used to compare keys for matching items
 				 */
-				$getter1 = $query->deriveGetterMethodFromProperty($key1, $useRule['this']['mapper']);
-				$getter2 = $query->deriveGetterMethodFromProperty($key2, $useRule['other']['mapper']);
+				$getter1 = $query->deriveGetterMethodFromProperty($property1, $useRule['this']['mapper']);
+				$getter2 = $query->deriveGetterMethodFromProperty($property2, $useRule['other']['mapper']);
 
 				break;
 			}

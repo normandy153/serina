@@ -192,8 +192,8 @@ class Query {
 		/* Keys are properties, so find out their column names
 		 */
 		foreach($mapper2->getProperties() as $currentProperty) {
-			if ($currentProperty->getProperty() == $rule['other']['key']) {
-				$key = $currentProperty->getColumn();
+			if ($currentProperty->getProperty() == $rule['other']['property']) {
+				$property = $currentProperty->getColumn();
 
 				break;
 			}
@@ -201,7 +201,7 @@ class Query {
 
 		$str = "
 			{$joinType} JOIN {$mapper2->getTable()} {$otherAlias}
-			ON {$thisAlias}.{$rule['this']['key']} = {$otherAlias}.{$key}
+			ON {$thisAlias}.{$rule['this']['property']} = {$otherAlias}.{$property}
 		";
 
 		/* Augment query string
@@ -339,7 +339,7 @@ class Query {
 	 */
 	public function execute($allParams = null) {
 		$statement = $this->getDatabase()->prepare($this->getQuery());
-new \App\Probe($this->getQueryString());
+
 		/* Bind params
 		 */
 		if (is_array($allParams) && count($allParams)) {
