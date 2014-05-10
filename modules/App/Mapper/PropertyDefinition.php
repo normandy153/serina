@@ -54,6 +54,12 @@ class PropertyDefinition {
 		return 'set' . ucwords($this->getProperty());
 	}
 
+	/**
+	 * Determine whether this property is a Collection type
+	 * Collection properties are ignored in mappers/hydrators
+	 * 
+	 * @return bool
+	 */
 	public function isCollection() {
 		if ($this->getType() === Base::TYPE_COLLECTION) {
 			return true;
