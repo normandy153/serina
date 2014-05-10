@@ -66,7 +66,7 @@ class Controller extends Unrestricted {
 		$username = 'TheUsername';
 		$password = 'ThePassword';
 		$activationDate = null;
-		$expiryDate = null;
+		$expiryDate = date('Y')+1 . '-01-31 23:59:59';
 
 		$now = date('Y-m-d h:i:s');
 
