@@ -50,15 +50,6 @@ class Autoloader {
 		$basename = str_replace('\\', '/', $classname);
 		$filename = $basename . '.php';
 
-		$bits = explode('/', $basename);
-
-		if (count($bits)) {
-			$model = array_pop($bits) . '.php';
-		}
-		else {
-			$model = $classname;
-		}
-
 		$directPath =  $prefix . $filename;
 		$customPath = $prefix . 'Custom/' . $filename;
 		$corePath = $prefix . 'Core/' . $filename;
