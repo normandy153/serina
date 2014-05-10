@@ -59,17 +59,13 @@ class Autoloader {
 			$model = $classname;
 		}
 
-		$modelPath = $prefix . $basename . '/' . $model;
 		$directPath =  $prefix . $filename;
 		$customPath = $prefix . 'Custom/' . $filename;
 		$corePath = $prefix . 'Core/' . $filename;
 
 		/* Try three possible locations in order
 		 */
-		if (file_exists($modelPath)) {
-			require_once($modelPath);
-		}
-		else if (file_exists($directPath)) {
+		if (file_exists($directPath)) {
 			require_once($directPath);
 		}
 		else if (file_exists($customPath)) {
