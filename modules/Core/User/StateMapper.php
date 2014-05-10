@@ -20,8 +20,8 @@ class StateMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User\\State');
 		$this->setTable('state');
 
-		$this->addProperty('id', 'id', \PDO::PARAM_INT);
-		$this->addProperty('name', 'name', \PDO::PARAM_STR);
-		$this->addProperty('abbreviation', 'abbreviation', \PDO::PARAM_STR);
+		$this->addProperty('id', 'id', self::TYPE_INT);
+		$this->addProperty('name', 'name', self::TYPE_STR);
+		$this->addProperty('abbreviation', 'abbreviation', self::TYPE_STR);
 	}
 } 
