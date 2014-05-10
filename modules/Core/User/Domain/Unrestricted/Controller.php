@@ -9,6 +9,20 @@
 namespace Core\User\Domain\Unrestricted;
 
 
+use Core\User\Address;
+use Core\User\AddressMapper;
+use Core\User\Contact;
+use Core\User\ContactMapper;
+use Core\User\CountryMapper;
+use Core\User\Email;
+use Core\User\EmailMapper;
+use Core\User\GenderMapper;
+use Core\User\Phone;
+use Core\User\PhoneMapper;
+use Core\User\StateMapper;
+use Core\User\User;
+use Core\User\UserMapper;
+
 class Controller extends \App\Controller\Domain\Unrestricted {
 
 	/**
@@ -49,18 +63,18 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 
 		/* Define State
 		 */
-		$stateMapper = new \Core\User\StateMapper();
+		$stateMapper = new StateMapper();
 		$state = $stateMapper->findById($stateId);
 
 		/* Define Country
 		 */
-		$countryMapper = new \Core\User\CountryMapper();
+		$countryMapper = new CountryMapper();
 		$country = $countryMapper->findById($countryId);
 
 		/* Define Full Address
 		 * Address must exist before we can assign them to users
 		 */
-		$address = new \Core\User\Address();
+		$address = new Address();
 		$address->setAddress1($address1);
 		$address->setAddress2($address2);
 		$address->setSuburb($suburb);
@@ -71,17 +85,17 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$address->setUpdatedAt($now);
 		$address->setDeletedAt(null);
 
-		$addressMapper = new \Core\User\AddressMapper();
+		$addressMapper = new AddressMapper();
 		$addressMapper->save($address);
 
 		/* Define Gender
 		 */
-		$genderMapper = new \Core\User\GenderMapper();
+		$genderMapper = new GenderMapper();
 		$gender = $genderMapper->findById($genderId);
 
 		/* Define User
 		 */
-		$user = new \Core\User\User();
+		$user = new User();
 		$user->setUuid(crypt(uniqid() . sha1(microtime())));
 		$user->setFirstname($firstname);
 		$user->setLastname($lastname);
@@ -92,15 +106,15 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$user->setUpdatedAt($now);
 		$user->setDeletedAt(null);
 
-		$mapper = new \Core\User\UserMapper();
+		$mapper = new UserMapper();
 		$mapper->save($user);
 
 		/* Define Phone
 		 * User needs to exist before we can assign phone numbers to them
 		 */
-		$phoneMapper = new \Core\User\PhoneMapper();
+		$phoneMapper = new PhoneMapper();
 
-		$phone = new \Core\User\Phone();
+		$phone = new Phone();
 		$phone->setUserId($user->getId());
 		$phone->setNumber($landline);
 		$phone->setTypeId(1);
@@ -109,7 +123,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$phone->setDeletedAt(null);
 		$phoneMapper->save($phone);
 
-		$phone = new \Core\User\Phone();
+		$phone = new Phone();
 		$phone->setUserId($user->getId());
 		$phone->setNumber($mobile);
 		$phone->setTypeId(2);
@@ -120,21 +134,21 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 
 		/* Define Email
 		 */
-		$email = new \Core\User\Email();
+		$email = new Email();
 		$email->setUserId($user->getId());
 		$email->setAddress($emailAddress);
 		$email->setCreatedAt($now);
 		$email->setUpdatedAt($now);
 		$email->setDeletedAt(null);
 
-		$emailMapper = new \Core\User\EmailMapper();
+		$emailMapper = new EmailMapper();
 		$emailMapper->save($email);
 
 		/* Define Contact
 		 */
-		$contactMapper = new \Core\User\ContactMapper();
+		$contactMapper = new ContactMapper();
 
-		$contact = new \Core\User\Contact();
+		$contact = new Contact();
 		$contact->setUserId($user->getId());
 		$contact->setFirstname($contact1Firstname);
 		$contact->setLastname($contact1Lastname);
@@ -145,7 +159,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$contact->setDeletedAt(null);
 		$contactMapper->save($contact);
 
-		$contact = new \Core\User\Contact();
+		$contact = new Contact();
 		$contact->setUserId($user->getId());
 		$contact->setFirstname($contact2Firstname);
 		$contact->setLastname($contact2Lastname);
@@ -163,7 +177,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 	 * Delete a user
 	 */
 	public function getUserDelete() {
-		$userMapper = new \Core\User\UserMapper();
+		$userMapper = new UserMapper();
 
 		$user = $userMapper->findById(57);
 		$userMapper->delete($user);
@@ -175,7 +189,7 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 	 * Stub method
 	 */
 	public function getUserDetail() {
-		$mapper = new \Core\User\UserMapper();
+		$mapper = new UserMapper();
 
 		$allUsers = $mapper->findAll();
 
