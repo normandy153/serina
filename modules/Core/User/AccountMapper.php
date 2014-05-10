@@ -27,7 +27,7 @@ class AccountMapper extends \App\Mapper\Base {
 		$this->addProperty('avatar', 'avatar', self::TYPE_STR);
 		$this->addProperty('activationDate', 'activation_date', self::TYPE_STR);
 		$this->addProperty('expiryDate', 'expiry_date', self::TYPE_STR);
-		$this->addProperty('lock', 'lock', self::TYPE_INT);
+		$this->addProperty('locked', 'locked', self::TYPE_INT);
 
 		$this->addTimestampable();
 	}

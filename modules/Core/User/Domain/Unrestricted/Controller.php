@@ -11,6 +11,8 @@ namespace Core\User\Domain\Unrestricted;
 
 use App\Controller\Domain\Unrestricted;
 use App\Probe;
+use Core\User\Account;
+use Core\User\AccountMapper;
 use Core\User\Address;
 use Core\User\AddressMapper;
 use Core\User\Contact;
@@ -60,6 +62,11 @@ class Controller extends Unrestricted {
 		$contact2Lastname = 'Another EC Lastname';
 		$contact2Phone = 'Another EC Phone 2222 3333';
 		$contact2Notes = 'Another contact in case you cannot find the first one';
+
+		$username = 'TheUsername';
+		$password = 'ThePassword';
+		$activationDate = null;
+		$expiryDate = null;
 
 		$now = date('Y-m-d h:i:s');
 
@@ -172,6 +179,22 @@ class Controller extends Unrestricted {
 		$contact->setDeletedAt(null);
 		$contactMapper->save($contact);
 
+		/* Define account
+ 		 */
+		$account = new Account();
+		$account->setUserId($user->getId());
+		$account->setUsername($username);
+		$account->setPassword($account->encode($password));
+		$account->setActivationDate($activationDate);
+		$account->setExpiryDate($expiryDate);
+		$account->setLocked(1);
+		$account->setCreatedAt($now);
+		$account->setUpdatedAt($now);
+		$account->setDeletedAt(null);
+
+		$accountMapper = new AccountMapper();
+		$accountMapper->save($account);
+
 		exit();
 	}
 
@@ -199,13 +222,6 @@ class Controller extends Unrestricted {
 
 		exit();
 
-		/* Define account
-		 */
-//		$account = new \Core\User\Account();
-//		$account->setUsername('smithj');
-//		$account->setPassword($account->encode('smithjpassword'));
-//		$account->setActivationDate('2014-02-03 22:10:01');
-//		$account->setExpiryDate('2015-02-03 22:10:01');
 
 
 	}
