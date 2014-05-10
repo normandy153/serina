@@ -48,6 +48,8 @@ abstract class Base {
 	 * Constructor
 	 */
 	final public function __construct() {
+		$this->setProperties(new \App\Collection());
+
 		$this->properties();
 		$this->setup();
 	}
@@ -74,7 +76,7 @@ abstract class Base {
 	 * @param $type
 	 */
 	protected function addProperty($property, $column, $type) {
-		$this->properties[] = new PropertyDefinition($property, $column, $type);
+		$this->getProperties()->add(new PropertyDefinition($property, $column, $type));
 	}
 
 	/**

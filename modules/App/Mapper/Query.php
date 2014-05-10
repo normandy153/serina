@@ -171,6 +171,7 @@ class Query {
 	 * @param $thisAlias
 	 * @param $joinRule
 	 * @param $otherAlias
+	 * @throws \Exception
 	 * @return $this
 	 */
 	private function join($type, $thisAlias, $joinRule, $otherAlias) {
@@ -191,12 +192,13 @@ class Query {
 
 		/* Keys are properties, so find out their column names
 		 */
-		foreach($mapper2->getProperties() as $currentProperty) {
-			if ($currentProperty->getProperty() == $rule['other']['property']) {
-				$property = $currentProperty->getColumn();
+		$propertyDefinition = $mapper2->getProperties()->find('property', $rule['other']['property']);
 
-				break;
-			}
+		if ($propertyDefinition instanceof \App\Mapper\PropertyDefinition) {
+			$property = $propertyDefinition->getColumn();
+		}
+		else {
+			throw new \Exception("Could not find join property {$rule['other']['property']}");
 		}
 
 		$str = "
