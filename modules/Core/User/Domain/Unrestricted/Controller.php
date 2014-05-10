@@ -98,7 +98,7 @@ class Controller extends Unrestricted {
 		/* Define User
 		 */
 		$user = new User();
-		$user->setUuid(crypt(uniqid() . sha1(microtime())));
+		$user->setUuid($user->generateUuid());
 		$user->setFirstname($firstname);
 		$user->setLastname($lastname);
 		$user->setBirthdate($birthdate);

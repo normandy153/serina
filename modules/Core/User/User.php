@@ -131,6 +131,18 @@ class User {
 	}
 
 	/**
+	 * Generate a universal unique identifier
+	 *
+	 * @return string
+	 */
+	public function generateUuid() {
+		return crypt(uniqid() . sha1(microtime()) . rand(1, 10000));
+	}
+
+	/* Getters/Setters
+	 */
+
+	/**
 	 * Set account
 	 *
 	 * @param null $account
