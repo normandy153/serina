@@ -27,8 +27,6 @@ class ContactMapper extends \App\Mapper\Base {
 		$this->addProperty('phone', 'phone', self::TYPE_STR);
 		$this->addProperty('notes', 'notes', self::TYPE_STR);
 
-		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
-		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
-		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+		$this->addTimestampable();
 	}
 } 

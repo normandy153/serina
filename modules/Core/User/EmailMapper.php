@@ -24,8 +24,6 @@ class EmailMapper extends \App\Mapper\Base {
 		$this->addProperty('userId', 'user_id', self::TYPE_INT);
 		$this->addProperty('address', 'address', self::TYPE_STR);
 
-		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
-		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
-		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+		$this->addTimestampable();
 	}
 }

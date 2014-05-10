@@ -80,6 +80,15 @@ abstract class Base {
 	}
 
 	/**
+	 * Macro for adding timestamp-based properties
+	 */
+	protected function addTimestampable() {
+		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
+		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
+		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+	}
+
+	/**
 	 * Populate the specified object from columns with $alias prefix
 	 *
 	 * @param $alias

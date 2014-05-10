@@ -28,9 +28,7 @@ class AddressMapper extends \App\Mapper\Base {
 		$this->addProperty('postcode', 'postcode', self::TYPE_STR);
 		$this->addProperty('country', 'country', self::TYPE_INT);
 
-		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
-		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
-		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+		$this->addTimestampable();
 
 		$this->addJoin('State', array(
 			'this' => array(

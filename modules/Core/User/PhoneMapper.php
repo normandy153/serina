@@ -25,8 +25,6 @@ class PhoneMapper extends \App\Mapper\Base {
 		$this->addProperty('typeId', 'type_id', self::TYPE_INT);
 		$this->addProperty('number', 'number', self::TYPE_STR);
 
-		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
-		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
-		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+		$this->addTimestampable();
 	}
 } 

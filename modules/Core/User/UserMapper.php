@@ -36,6 +36,8 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addProperty('contact', null, self::TYPE_COLLECTION);
 		$this->addProperty('account', null, self::TYPE_COLLECTION);
 
+		$this->addTimestampable();
+
 		/* Join the Phone record onto the User record using
 		 * the following columns as a match. 'other' model and
 		 * key refer to the table (via corresponding mapper)

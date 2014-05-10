@@ -29,8 +29,6 @@ class AccountMapper extends \App\Mapper\Base {
 		$this->addProperty('expiryDate', 'expiry_date', self::TYPE_STR);
 		$this->addProperty('lock', 'lock', self::TYPE_INT);
 
-		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
-		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
-		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+		$this->addTimestampable();
 	}
 } 
