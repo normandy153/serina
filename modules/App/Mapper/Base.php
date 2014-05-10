@@ -10,6 +10,12 @@ namespace App\Mapper;
 
 abstract class Base {
 
+	/** Column data types
+	 */
+	const TYPE_STR = \PDO::PARAM_STR;
+	const TYPE_INT = \PDO::PARAM_INT;
+	const TYPE_COLLECTION = -1;
+
 	/**
 	 * The model used by this mapper for automatic hydration
 	 *
@@ -143,12 +149,12 @@ abstract class Base {
 				/* Set the resultant collection of $collection2 items
 				 * into items from $collection1
 				 */
-				$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['mapper']);
+				$setter = $query->deriveSetterMethodFromProperty($key3, $useRule['this']['mapper']);
 
 				/* Used to compare keys for matching items
 				 */
-				$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['mapper']);
-				$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['mapper']);
+				$getter1 = $query->deriveGetterMethodFromProperty($key1, $useRule['this']['mapper']);
+				$getter2 = $query->deriveGetterMethodFromProperty($key2, $useRule['other']['mapper']);
 
 				break;
 			}

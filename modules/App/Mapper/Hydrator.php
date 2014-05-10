@@ -29,10 +29,12 @@ class Hydrator {
 	 */
 	public function __construct($instance, $allProperties, $alias, $row) {
 		foreach($allProperties as $currentDefinition) {
-			$method = $currentDefinition->deriveMethod();
-			$column = $this->getAliasedColumn($alias, $currentDefinition->getColumn());
+			if (!$currentDefinition->isCollection()) {
+				$method = $currentDefinition->deriveMethod();
+				$column = $this->getAliasedColumn($alias, $currentDefinition->getColumn());
 
-			$instance->$method($row[$column]);
+				$instance->$method($row[$column]);
+			}
 		}
 
 		$this->setProduct($instance);

@@ -20,18 +20,21 @@ class UserMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User');
 		$this->setTable('user');
 
-		$this->addProperty('id', 'id', \PDO::PARAM_INT);
-		$this->addProperty('uuid', 'uuid', \PDO::PARAM_STR);
-		$this->addProperty('firstname', 'firstname', \PDO::PARAM_STR);
-		$this->addProperty('lastname', 'lastname', \PDO::PARAM_STR);
-		$this->addProperty('birthdate', 'birthdate', \PDO::PARAM_STR);
-		$this->addProperty('address', 'address', \PDO::PARAM_STR);
-		$this->addProperty('phone', 'phone', \PDO::PARAM_STR);
-		$this->addProperty('email', 'email', \PDO::PARAM_STR);
-		$this->addProperty('gender', 'gender', \PDO::PARAM_STR);
-		$this->addProperty('vehicle', 'vehicle', \PDO::PARAM_STR);
-		$this->addProperty('contact', 'contact', \PDO::PARAM_STR);
-		$this->addProperty('account', 'account', \PDO::PARAM_STR);
+		$this->addProperty('id', 'id', self::TYPE_INT);
+		$this->addProperty('uuid', 'uuid', self::TYPE_STR);
+		$this->addProperty('firstname', 'firstname', self::TYPE_STR);
+		$this->addProperty('lastname', 'lastname', self::TYPE_STR);
+		$this->addProperty('birthdate', 'birthdate', self::TYPE_STR);
+		$this->addProperty('gender', 'gender', self::TYPE_INT);
+		$this->addProperty('address', 'address', self::TYPE_INT);
+
+		/* Collections joined into this object
+		 */
+		$this->addProperty('phone', null, self::TYPE_COLLECTION);
+		$this->addProperty('email', null, self::TYPE_COLLECTION);
+		$this->addProperty('vehicle', null, self::TYPE_COLLECTION);
+		$this->addProperty('contact', null, self::TYPE_COLLECTION);
+		$this->addProperty('account', null, self::TYPE_COLLECTION);
 
 		/* Join the Phone record onto the User record using
 		 * the following columns as a match. 'other' model and
@@ -54,7 +57,7 @@ class UserMapper extends \App\Mapper\Base {
 			),
 			'other' => array(
 				'mapper' => '\Core\User\PhoneMapper',
-				'key' => 'user_id',
+				'key' => 'userId',
 			),
 		));
 
@@ -90,7 +93,7 @@ class UserMapper extends \App\Mapper\Base {
 			),
 			'other' => array(
 				'mapper' => '\Core\User\EmailMapper',
-				'key' => 'user_id',
+				'key' => 'userId',
 			),
 		));
 
@@ -102,7 +105,7 @@ class UserMapper extends \App\Mapper\Base {
 			),
 			'other' => array(
 				'mapper' => '\Core\User\VehicleMapper',
-				'key' => 'user_id'
+				'key' => 'userId'
 			),
 		));
 
@@ -114,7 +117,7 @@ class UserMapper extends \App\Mapper\Base {
 			),
 			'other' => array(
 				'mapper' => '\Core\User\ContactMapper',
-				'key' => 'user_id'
+				'key' => 'userId'
 			),
 		));
 
@@ -126,7 +129,7 @@ class UserMapper extends \App\Mapper\Base {
 			),
 			'other' => array(
 				'mapper' => '\Core\User\AccountMapper',
-				'key' => 'user_id'
+				'key' => 'userId'
 			),
 		));
 	}

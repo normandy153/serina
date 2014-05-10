@@ -91,12 +91,14 @@ class Query {
 			$mapper = $this->getQueryRegistry()->getMapper($this->getMapperNameFromModel($model), $alias);
 
 			foreach ($mapper->getProperties() as $currentProperty) {
-				$replace = array(
-					$currentProperty->getColumn(),
-					$alias
-				);
+				if (!$currentProperty->isCollection()) {
+					$replace = array(
+						$currentProperty->getColumn(),
+						$alias
+					);
 
-				$string[] = str_replace($pattern, $replace, $template);
+					$string[] = str_replace($pattern, $replace, $template);
+				}
 			}
 
 			/* Remember instances of everything we found in the select
@@ -187,9 +189,19 @@ class Query {
 		 */
 		$joinType = strtoupper($type);
 
+		/* Keys are properties, so find out their column names
+		 */
+		foreach($mapper2->getProperties() as $currentProperty) {
+			if ($currentProperty->getProperty() == $rule['other']['key']) {
+				$key = $currentProperty->getColumn();
+
+				break;
+			}
+		}
+
 		$str = "
 			{$joinType} JOIN {$mapper2->getTable()} {$otherAlias}
-			ON {$thisAlias}.{$rule['this']['key']} = {$otherAlias}.{$rule['other']['key']}
+			ON {$thisAlias}.{$rule['this']['key']} = {$otherAlias}.{$key}
 		";
 
 		/* Augment query string
@@ -327,11 +339,12 @@ class Query {
 	 */
 	public function execute($allParams = null) {
 		$statement = $this->getDatabase()->prepare($this->getQuery());
-
+new \App\Probe($this->getQueryString());
 		/* Bind params
 		 */
 		if (is_array($allParams) && count($allParams)) {
 			foreach($allParams as $key => $value) {
+
 				$statement->bindValue($key, $value['column'], $value['type']);
 			}
 		}
@@ -416,41 +429,41 @@ class Query {
 	/**
 	 * Find a method name from a property
 	 *
-	 * @param $column
+	 * @param $property
 	 * @param $mapperName
 	 * @throws \Exception
 	 * @return mixed
 	 */
-	public function deriveSetterMethodFromColumn($column, $mapperName) {
+	public function deriveSetterMethodFromProperty($property, $mapperName) {
 		$mapper = new $mapperName();
 
 		foreach($mapper->getProperties() as $current) {
-			if ($current->getColumn() == $column) {
+			if ($current->getProperty() == $property) {
 				return 'set' . ucwords($current->getProperty());
 			}
 		}
 
-		throw new \Exception('Column not found via setter property.');
+		throw new \Exception('Property not found via setter property.');
 	}
 
 	/**
 	 * Find a method name from a property
 	 *
-	 * @param $column
+	 * @param $property
 	 * @param $mapperName
 	 * @throws \Exception
 	 * @return mixed
 	 */
-	public function deriveGetterMethodFromColumn($column, $mapperName) {
+	public function deriveGetterMethodFromProperty($property, $mapperName) {
 		$mapper = new $mapperName();
 
 		foreach($mapper->getProperties() as $current) {
-			if ($current->getColumn() == $column) {
+			if ($current->getProperty() == $property) {
 				return 'get' . ucwords($current->getProperty());
 			}
 		}
 
-		throw new \Exception('Column not found via getter property.');
+		throw new \Exception("Property {$property} not found via getter in {$mapperName}.");
 	}
 
 	/* Getters/Setters
@@ -488,7 +501,7 @@ class Query {
 	 *
 	 * @return array
 	 */
-	private function getQueryString() {
+	public function getQueryString() {
 		return $this->queryString;
 	}
 

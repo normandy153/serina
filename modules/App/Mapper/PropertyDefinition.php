@@ -54,6 +54,12 @@ class PropertyDefinition {
 		return 'set' . ucwords($this->getProperty());
 	}
 
+	public function isCollection() {
+		if ($this->getType() === Base::TYPE_COLLECTION) {
+			return true;
+		}
+	}
+
 	/* Getters/Setters
 	 */
 

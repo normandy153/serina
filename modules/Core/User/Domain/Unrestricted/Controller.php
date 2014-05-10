@@ -155,25 +155,30 @@ class Controller extends \App\Controller\Domain\Unrestricted {
 		$contact->setUpdatedAt($now);
 		$contact->setDeletedAt(null);
 		$contactMapper->save($contact);
+
+		exit();
 	}
 
 	/**
 	 * Stub method
 	 */
 	public function getUserDetail() {
+		$mapper = new \Core\User\UserMapper();
+
+		$allUsers = $mapper->findAll();
+
+		new \App\Probe($allUsers);
+
+		exit();
 
 		/* Define account
 		 */
-		$account = new \Core\User\Account();
-		$account->setUsername('smithj');
-		$account->setPassword($account->encode('smithjpassword'));
-		$account->setActivationDate('2014-02-03 22:10:01');
-		$account->setExpiryDate('2015-02-03 22:10:01');
+//		$account = new \Core\User\Account();
+//		$account->setUsername('smithj');
+//		$account->setPassword($account->encode('smithjpassword'));
+//		$account->setActivationDate('2014-02-03 22:10:01');
+//		$account->setExpiryDate('2015-02-03 22:10:01');
 
-		$user = null;
 
-		$this->output('getUserDetail', array(
-			$user
-		));
 	}
 }
