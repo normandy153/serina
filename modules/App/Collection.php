@@ -132,7 +132,7 @@ class Collection implements \Iterator, \JsonSerializable {
 	 * @param Collection $collection
 	 * @internal param $item
 	 */
-	public function merge(\App\Collection $collection) {
+	public function merge(Collection $collection) {
 		$this->stack[] = array_merge($this->stack, $collection->getStack());
 	}
 

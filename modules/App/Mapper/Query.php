@@ -9,12 +9,14 @@
 namespace App\Mapper;
 
 
+use App\Database;
+
 class Query {
 
 	/**
 	 * An instance of Database
 	 *
-	 * @var Database
+	 * @var \App\Database
 	 */
 	private $database = null;
 
@@ -57,7 +59,7 @@ class Query {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->setDatabase(new \App\Database());
+		$this->setDatabase(new Database());
 		$this->setQueryRegistry(new QueryRegistry());
 	}
 
@@ -194,7 +196,7 @@ class Query {
 		 */
 		$propertyDefinition = $mapper2->getProperties()->find('property', $rule['other']['property']);
 
-		if ($propertyDefinition instanceof \App\Mapper\PropertyDefinition) {
+		if ($propertyDefinition instanceof PropertyDefinition) {
 			$property = $propertyDefinition->getColumn();
 		}
 		else {
