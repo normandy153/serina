@@ -17,21 +17,26 @@ class UserMapper extends \App\Mapper\Base {
 	 * @return mixed|void
 	 */
 	protected function properties() {
-		$this->setModel('\\Core\\User');
+		$this->setModel('\\Core\\User\\User');
 		$this->setTable('user');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('uuid', 'uuid');
-		$this->addProperty('firstname', 'firstname');
-		$this->addProperty('lastname', 'lastname');
-		$this->addProperty('birthdate', 'birthdate');
-		$this->addProperty('address', 'address');
-		$this->addProperty('phone', 'phone');
-		$this->addProperty('email', 'email');
-		$this->addProperty('gender', 'gender');
-		$this->addProperty('vehicle', 'vehicle');
-		$this->addProperty('contact', 'contact');
-		$this->addProperty('account', 'account');
+		$this->addProperty('id', 'id', self::TYPE_INT);
+		$this->addProperty('uuid', 'uuid', self::TYPE_STR);
+		$this->addProperty('firstname', 'firstname', self::TYPE_STR);
+		$this->addProperty('lastname', 'lastname', self::TYPE_STR);
+		$this->addProperty('birthdate', 'birthdate', self::TYPE_STR);
+		$this->addProperty('gender', 'gender', self::TYPE_INT);
+		$this->addProperty('address', 'address', self::TYPE_INT);
+
+		/* Collections joined into this object
+		 */
+		$this->addProperty('phone', null, self::TYPE_COLLECTION);
+		$this->addProperty('email', null, self::TYPE_COLLECTION);
+		$this->addProperty('vehicle', null, self::TYPE_COLLECTION);
+		$this->addProperty('contact', null, self::TYPE_COLLECTION);
+		$this->addProperty('account', null, self::TYPE_COLLECTION);
+
+		$this->addTimestampable();
 
 		/* Join the Phone record onto the User record using
 		 * the following columns as a match. 'other' model and
@@ -49,84 +54,84 @@ class UserMapper extends \App\Mapper\Base {
 		$this->addJoin('Phone', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'phone',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\PhoneMapper',
-				'key' => 'user_id',
+				'property' => 'userId',
 			),
 		));
 
 		$this->addJoin('Address', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'address',
+				'property' => 'address',
 				'collection' => 'address',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\AddressMapper',
-				'key' => 'id',
+				'property' => 'id',
 			),
 		));
 
 		$this->addJoin('Gender', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'gender',
+				'property' => 'gender',
 				'collection' => 'gender',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\GenderMapper',
-				'key' => 'id',
+				'property' => 'id',
 			)
 		));
 
 		$this->addJoin('Email', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'email',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\EmailMapper',
-				'key' => 'user_id',
+				'property' => 'userId',
 			),
 		));
 
 		$this->addJoin('Vehicle', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'vehicle',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\VehicleMapper',
-				'key' => 'user_id'
+				'property' => 'userId'
 			),
 		));
 
 		$this->addJoin('Contact', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'contact',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\ContactMapper',
-				'key' => 'user_id'
+				'property' => 'userId'
 			),
 		));
 
 		$this->addJoin('Account', array(
 			'this' => array(
 				'mapper' => '\Core\User\UserMapper',
-				'key' => 'id',
+				'property' => 'id',
 				'collection' => 'account',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\AccountMapper',
-				'key' => 'user_id'
+				'property' => 'userId'
 			),
 		));
 	}

@@ -16,7 +16,7 @@ class Gender {
 	 *
 	 * @var int
 	 */
-	private $id = -1;
+	private $id = null;
 
 	/**
 	 * Single-letter representation

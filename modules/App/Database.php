@@ -59,6 +59,10 @@ class Database {
 	final public function __construct() {
 		$this->setup();
 		$this->connect();
+
+		/* Throws exception upon error
+		 */
+		$this->debugOn();
 	}
 
 	/**
@@ -76,12 +80,30 @@ class Database {
 	}
 
 	/**
+	 * Debugging for PDO
+	 *
+	 * Throw exceptions whenever a PDO error is encountered
+	 */
+	private function debugOn() {
+		$this->getConnection()->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+	}
+
+	/**
 	 * Delegation method
 	 *
 	 * @param $query
 	 */
 	public function prepare($query) {
 		return $this->getConnection()->prepare($query);
+	}
+
+	/**
+	 * Get the last id inserted
+	 *
+	 * @return mixed
+	 */
+	public function getLastInsertId() {
+		return $this->getConnection()->lastInsertId();
 	}
 
 	/* Getters/Setters

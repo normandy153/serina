@@ -16,7 +16,7 @@ class Address {
 	 *
 	 * @var int
 	 */
-	private $id = -1;
+	private $id = null;
 
 	/**
 	 * Address 1

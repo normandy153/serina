@@ -10,6 +10,12 @@ namespace App\Mapper;
 
 abstract class Base {
 
+	/** Column data types
+	 */
+	const TYPE_STR = \PDO::PARAM_STR;
+	const TYPE_INT = \PDO::PARAM_INT;
+	const TYPE_COLLECTION = -1;
+
 	/**
 	 * The model used by this mapper for automatic hydration
 	 *
@@ -39,9 +45,18 @@ abstract class Base {
 	protected $joins = array();
 
 	/**
+	 * Determine whether this mapper uses Timestampable object instances
+	 *
+	 * @var bool
+	 */
+	protected $isTimestampable = false;
+
+	/**
 	 * Constructor
 	 */
 	final public function __construct() {
+		$this->setProperties(new \App\Collection());
+
 		$this->properties();
 		$this->setup();
 	}
@@ -65,9 +80,21 @@ abstract class Base {
 	 *
 	 * @param $property
 	 * @param $column
+	 * @param $type
 	 */
-	protected function addProperty($property, $column) {
-		$this->properties[] = new PropertyDefinition($property, $column);
+	protected function addProperty($property, $column, $type) {
+		$this->getProperties()->add(new PropertyDefinition($property, $column, $type));
+	}
+
+	/**
+	 * Macro for adding timestamp-based properties
+	 */
+	protected function addTimestampable() {
+		$this->addProperty('createdAt', 'created_at', self::TYPE_STR);
+		$this->addProperty('updatedAt', 'updated_at', self::TYPE_STR);
+		$this->addProperty('deletedAt', 'deleted_at', self::TYPE_STR);
+
+		$this->setIsTimestampable(true);
 	}
 
 	/**
@@ -129,25 +156,25 @@ abstract class Base {
 
 				/* Find stuff in $collection1 using this key
 				 */
-				$key1 = $useRule['this']['key'];
+				$property1 = $useRule['this']['property'];
 
 				/* Find stuff from $collection2 using this key
 				 */
-				$key2 = $useRule['other']['key'];
+				$property2 = $useRule['other']['property'];
 
 				/* Stuff from $collection2 gets dumped into $key1
  				 */
-				$key3 = $useRule['this']['collection'];
+				$property3 = $useRule['this']['collection'];
 
 				/* Set the resultant collection of $collection2 items
 				 * into items from $collection1
 				 */
-				$setter = $query->deriveSetterMethodFromColumn($key3, $useRule['this']['mapper']);
+				$setter = $query->deriveSetterMethodFromProperty($property3, $useRule['this']['mapper']);
 
 				/* Used to compare keys for matching items
 				 */
-				$getter1 = $query->deriveGetterMethodFromColumn($key1, $useRule['this']['mapper']);
-				$getter2 = $query->deriveGetterMethodFromColumn($key2, $useRule['other']['mapper']);
+				$getter1 = $query->deriveGetterMethodFromProperty($property1, $useRule['this']['mapper']);
+				$getter2 = $query->deriveGetterMethodFromProperty($property2, $useRule['other']['mapper']);
 
 				break;
 			}
@@ -178,6 +205,151 @@ abstract class Base {
 		}
 	}
 
+	/**
+	 * Save an object to the db
+	 *
+	 * @param $object
+	 */
+	public function save($object) {
+		$columns = array();
+		$placeholders = array();
+		$updates = array();
+
+		foreach($this->getProperties() as $currentProperty) {
+			if (!$currentProperty->isCollection()) {
+				$method = $this->deriveGetterMethod($currentProperty->getColumn());
+
+				$columns[] = $currentProperty->getColumn();
+				$placeholders[] = ':' . $currentProperty->getColumn();
+				$updates[] = "{$currentProperty->getColumn()} = :{$currentProperty->getColumn()}";
+
+				$params[$currentProperty->getColumn()] = array(
+					'column' => $object->$method(),
+					'type' => $currentProperty->getType(),
+				);
+			}
+		}
+
+		$allColumns = '(`' . implode("`, `", $columns) . '`)';
+		$allPlaceholders = '(' . implode(', ', $placeholders) . ')';
+		$allUpdates = implode(', ', $updates);
+
+		$querystring = "
+			INSERT INTO `{$this->getTable()}` {$allColumns}
+			VALUES {$allPlaceholders}
+			ON DUPLICATE KEY UPDATE {$allUpdates}
+		";
+
+		try {
+			$query = new \App\Mapper\Query();
+			$query->prepareRawQuery($querystring);
+			$query->execute($params);
+
+			$lastInsertId = $query->getLastInsertId();
+
+			/* If it updated an existing record, getLastInsertId() will return null
+			 * This allows you to prevent overwriting the primary key of an object
+			 * accidentally, filling it with 0 which is what PDO normally returns
+			 */
+			if ($lastInsertId !== null) {
+				$object->setId($lastInsertId);
+			}
+		}
+		catch (\PDOException $e) {
+			new \App\Probe($e->getMessage());
+		}
+	}
+
+	/**
+	 * Delete an object from the db
+	 *
+	 * If it implemented addTimestampable() it will be soft deleted
+	 * otherwise it'll actually be removed altogether
+	 *
+	 * @param $object
+	 */
+	public function delete($object) {
+		if ($this->getIsTimestampable()) {
+			$object->setDeletedAt(date('Y-m-d h:i:s'));
+			$this->save($object);
+		}
+		else {
+			try {
+				$querystring = "
+					DELETE FROM {$this->getTable()}
+					WHERE id = :id
+				";
+
+				$params = array(
+					'id' => array(
+						'column' => $object->getId(),
+						'type' => self::TYPE_INT,
+					)
+				);
+
+				$query = new \App\Mapper\Query();
+				$query->prepareRawQuery($querystring);
+				$query->execute($params);
+			}
+			catch (\PDOException $e) {
+				new \App\Probe($e->getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Find a method name from a property
+	 *
+	 * @param $column
+	 * @throws \Exception
+	 * @return mixed
+	 */
+	public function deriveGetterMethod($column) {
+		$stack = array('get');
+
+		$bits = explode('_', $column);
+
+		foreach($bits as $current) {
+			$stack[] = ucwords($current);
+		}
+
+		return implode('', $stack);
+	}
+
+	/* Shared Retrieval Methods
+	 *
+	 * A bunch of commonly-used methods here for extracting data
+	 * from the db. Uses the Query class to hydrate for you
+	 */
+
+	/**
+	 * Find an object by its primary key
+	 *
+	 * @param $id
+	 * @return null
+	 */
+	public function findById($id) {
+		$query = new \App\Mapper\Query();
+
+		$statement = $query
+			->select("{$this->getModel()} m")
+			->from('m')
+			->where('id = :id')
+			->prepare()
+			->execute(array(
+				'id' => array(
+					'column' => $id,
+					'type' => self::TYPE_INT
+				)
+			));
+
+		$row = $statement->fetch();
+
+		$object = $this->hydrate('m', $row);
+
+		return $object;
+	}
+
 	/* Getters/Setters
 	 */
 
@@ -202,7 +374,7 @@ abstract class Base {
 	/**
 	 * Set properties
 	 *
-	 * @param array $properties
+	 * @param \App\Collection $properties
 	 */
 	protected function setProperties($properties) {
 		$this->properties = $properties;
@@ -214,7 +386,7 @@ abstract class Base {
 	 * Made public so it can be used to dynamically hydrate and
 	 * map objects in the Query
 	 *
-	 * @return array
+	 * @return \App\Collection
 	 */
 	public function getProperties() {
 		return $this->properties;
@@ -239,5 +411,23 @@ abstract class Base {
 	 */
 	public function getTable() {
 		return $this->table;
+	}
+
+	/**
+	 * Set isTimestampable
+	 *
+	 * @param boolean $isTimestampable
+	 */
+	private function setIsTimestampable($isTimestampable) {
+		$this->isTimestampable = $isTimestampable;
+	}
+
+	/**
+	 * Get isTimestampable
+	 *
+	 * @return boolean
+	 */
+	private function getIsTimestampable() {
+		return $this->isTimestampable;
 	}
 } 

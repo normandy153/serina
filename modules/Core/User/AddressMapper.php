@@ -20,39 +20,37 @@ class AddressMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User\\Address');
 		$this->setTable('address');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('address1', 'address1');
-		$this->addProperty('address2', 'address2');
-		$this->addProperty('suburb', 'suburb');
-		$this->addProperty('state', 'state');
-		$this->addProperty('postcode', 'postcode');
-		$this->addProperty('country', 'country');
+		$this->addProperty('id', 'id', self::TYPE_INT);
+		$this->addProperty('address1', 'address1', self::TYPE_STR);
+		$this->addProperty('address2', 'address2', self::TYPE_STR);
+		$this->addProperty('suburb', 'suburb', self::TYPE_STR);
+		$this->addProperty('state', 'state', self::TYPE_INT);
+		$this->addProperty('postcode', 'postcode', self::TYPE_STR);
+		$this->addProperty('country', 'country', self::TYPE_INT);
 
-		$this->addProperty('createdAt', 'created_at');
-		$this->addProperty('updatedAt', 'updated_at');
-		$this->addProperty('deletedAt', 'deleted_at');
+		$this->addTimestampable();
 
 		$this->addJoin('State', array(
 			'this' => array(
 				'mapper' => '\Core\User\AddressMapper',
-				'key' => 'state',
+				'property' => 'state',
 				'collection' => 'state',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\StateMapper',
-				'key' => 'id',
+				'property' => 'id',
 			),
 		));
 
 		$this->addJoin('Country', array(
 			'this' => array(
 				'mapper' => '\Core\User\AddressMapper',
-				'key' => 'country',
+				'property' => 'country',
 				'collection' => 'country',
 			),
 			'other' => array(
 				'mapper' => '\Core\User\CountryMapper',
-				'key' => 'id',
+				'property' => 'id',
 			),
 		));
 	}

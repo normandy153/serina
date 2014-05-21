@@ -26,14 +26,23 @@ class PropertyDefinition {
 	private $column = '';
 
 	/**
+	 * Data type for this column, for PDO
+	 *
+	 * @var string
+	 */
+	private $type = '';
+
+	/**
 	 * Constructor
 	 *
 	 * @param $property
 	 * @param $column
+	 * @param $type
 	 */
-	public function __construct($property, $column) {
+	public function __construct($property, $column, $type) {
 		$this->setProperty($property);
 		$this->setColumn($column);
+		$this->setType($type);
 	}
 
 	/**
@@ -43,6 +52,18 @@ class PropertyDefinition {
 	 */
 	public function deriveMethod() {
 		return 'set' . ucwords($this->getProperty());
+	}
+
+	/**
+	 * Determine whether this property is a Collection type
+	 * Collection properties are ignored in mappers/hydrators
+	 * 
+	 * @return bool
+	 */
+	public function isCollection() {
+		if ($this->getType() === Base::TYPE_COLLECTION) {
+			return true;
+		}
 	}
 
 	/* Getters/Setters
@@ -82,5 +103,23 @@ class PropertyDefinition {
 	 */
 	public function getProperty() {
 		return $this->property;
+	}
+
+	/**
+	 * Set type
+	 *
+	 * @param string $type
+	 */
+	public function setType($type) {
+		$this->type = $type;
+	}
+
+	/**
+	 * Get type
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return $this->type;
 	}
 } 

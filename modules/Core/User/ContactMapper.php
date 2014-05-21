@@ -20,15 +20,13 @@ class ContactMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User\\Contact');
 		$this->setTable('contact');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('userId', 'user_id');
-		$this->addProperty('firstname', 'firstname');
-		$this->addProperty('lastname', 'lastname');
-		$this->addProperty('phone', 'phone');
-		$this->addProperty('notes', 'notes');
+		$this->addProperty('id', 'id', self::TYPE_INT);
+		$this->addProperty('userId', 'user_id', self::TYPE_INT);
+		$this->addProperty('firstname', 'firstname', self::TYPE_STR);
+		$this->addProperty('lastname', 'lastname', self::TYPE_STR);
+		$this->addProperty('phone', 'phone', self::TYPE_STR);
+		$this->addProperty('notes', 'notes', self::TYPE_STR);
 
-		$this->addProperty('createdAt', 'created_at');
-		$this->addProperty('updatedAt', 'updated_at');
-		$this->addProperty('deletedAt', 'deleted_at');
+		$this->addTimestampable();
 	}
 } 

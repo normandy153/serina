@@ -102,7 +102,7 @@ class QueryRegistry {
 			return new $mapperName();
 		}
 
-		throw new \Exception("Mapper class: $mapperName does not exist.");
+		throw new \Exception("Mapper class: {$mapperName} does not exist.");
 	}
 
 	/* Getters/Setters

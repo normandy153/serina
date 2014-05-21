@@ -66,7 +66,7 @@ class Account {
 	 *
 	 * @var int
 	 */
-	private $lock = 0;
+	private $locked = 0;
 
 	/**
 	 * Created timestamp
@@ -290,20 +290,20 @@ class Account {
 	}
 
 	/**
-	 * Set lock
+	 * Set locked
 	 *
-	 * @param int $lock
+	 * @param int $locked
 	 */
-	public function setLock($lock) {
-		$this->lock = $lock;
+	public function setLocked($locked) {
+		$this->locked = $locked;
 	}
 
 	/**
-	 * Get lock
+	 * Get locked
 	 *
 	 * @return int
 	 */
-	public function getLock() {
-		return $this->lock;
+	public function getLocked() {
+		return $this->locked;
 	}
 } 

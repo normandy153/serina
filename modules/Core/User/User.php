@@ -6,7 +6,7 @@
  * Time: 11:25 PM
  */
 
-namespace Core;
+namespace Core\User;
 
 
 class User {
@@ -16,7 +16,7 @@ class User {
 	 *
 	 * @var int
 	 */
-	private $id = -1;
+	private $id = null;
 
 	/**
 	 * Non-incrementing unique identifier
@@ -129,6 +129,18 @@ class User {
 	public function __construct() {
 
 	}
+
+	/**
+	 * Generate a universal unique identifier
+	 *
+	 * @return string
+	 */
+	public function generateUuid() {
+		return crypt(uniqid() . sha1(microtime()) . rand(1, 10000));
+	}
+
+	/* Getters/Setters
+	 */
 
 	/**
 	 * Set account

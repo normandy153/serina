@@ -136,7 +136,7 @@ class PersonFactory extends Base {
 		$vehicleCollection = new \App\Collection();
 		$vehicleCollection->add($vehicleFactory->spawn());
 
-		$user = new \Core\User();
+		$user = new \Core\User\User();
 		$user->setUuid(crypt(uniqid() . sha1(microtime())));
 		$user->setFirstname($firstname);
 		$user->setLastname($lastname);

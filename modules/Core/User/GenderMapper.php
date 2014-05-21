@@ -20,8 +20,8 @@ class GenderMapper extends \App\Mapper\Base {
 		$this->setModel('\\Core\\User\\Gender');
 		$this->setTable('gender');
 
-		$this->addProperty('id', 'id');
-		$this->addProperty('name', 'name');
-		$this->addProperty('abbreviation', 'abbreviation');
+		$this->addProperty('id', 'id', self::TYPE_INT);
+		$this->addProperty('name', 'name', self::TYPE_STR);
+		$this->addProperty('abbreviation', 'abbreviation', self::TYPE_STR);
 	}
 } 
