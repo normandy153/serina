@@ -1,0 +1,45 @@
+{% extends 'Unrestricted.html' %}
+
+{% block head %}
+<title>Create User</title>
+{% endblock %}
+
+{% block content %}
+<form>
+	<fieldset>
+		<legend>Details</legend>
+		<label>
+			Firstname
+			<input name="firstname" type="text" value="" />
+		</label>
+		<label>
+			Lastname
+			<input name="lastname" type="text" value="" />
+		</label>
+		<label>
+			Date of Birth
+			<select name="dob[day]">
+				{% for currentDay in dob.allDays %}
+				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
+				{% endfor %}
+			</select>
+			/
+			<select name="dob[month]">
+				{% for currentMonth in dob.allMonths %}
+				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
+				{% endfor %}
+			</select>
+			/
+			<select name="dob[year]">
+				{% for currentYear in dob.allYears %}
+					{% if currentYear.selected %}
+						<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
+					{% else %}
+						<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</label>
+	</fieldset>
+</form>
+{% endblock %}

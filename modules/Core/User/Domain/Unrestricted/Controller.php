@@ -10,6 +10,7 @@ namespace Core\User\Domain\Unrestricted;
 
 
 use App\Controller\Domain\Unrestricted;
+use App\Date\Dropdown;
 use App\Probe;
 use Core\User\Account;
 use Core\User\AccountMapper;
@@ -28,6 +29,18 @@ use Core\User\User;
 use Core\User\UserMapper;
 
 class Controller extends Unrestricted {
+
+	/**
+	 * Prepare a form to create a new user
+	 * This also serves as a membership form
+	 */
+	public function getUserCreate() {
+		$dobValues = new Dropdown();
+
+		$this->output('getUserCreate', array(
+			'dob' => $dobValues->generate()
+		));
+	}
 
 	/**
 	 * Create/update a user
