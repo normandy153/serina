@@ -350,6 +350,31 @@ abstract class Base {
 		return $object;
 	}
 
+	/**
+	 * Find all the records
+	 *
+	 * @return \App\Collection
+	 */
+	public function findAll() {
+		$query = new \App\Mapper\Query();
+
+		$statement = $query
+			->select("{$this->getModel()} m")
+			->from('m')
+			->prepare()
+			->execute(array());
+
+		$collection = new \App\Collection();
+
+		while ($row = $statement->fetch()) {
+			$object = $this->hydrate('m', $row);
+
+			$collection->add($object);
+		};
+
+		return $collection;
+	}
+
 	/* Getters/Setters
 	 */
 

@@ -37,8 +37,12 @@ class Controller extends Unrestricted {
 	public function getUserCreate() {
 		$dobValues = new Dropdown();
 
+		$genderMapper = new \Core\User\GenderMapper();
+		$allGenders = $genderMapper->findAll();
+
 		$this->output('getUserCreate', array(
-			'dob' => $dobValues->generate()
+			'dob' => $dobValues->generate(),
+			'allGenders' => $allGenders
 		));
 	}
 
