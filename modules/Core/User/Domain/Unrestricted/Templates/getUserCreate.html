@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form>
+<form action="/user/create" method="post">
 	<fieldset>
 		<legend>Details</legend>
 		<label>
@@ -146,5 +146,7 @@
 			<textarea name="contact[notes][]"></textarea>
 		</label>
 	</fieldset>
+
+	<input type="submit" value="Submit" />
 </form>
 {% endblock %}
