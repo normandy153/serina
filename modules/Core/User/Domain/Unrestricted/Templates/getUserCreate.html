@@ -44,7 +44,7 @@
 			Gender
 			<select name="gender">
 				{% for currentGender in allGenders %}
-				<option value="{{ currentGender.getId() }}">{{ currentGender.getAbbreviation() }}</option>
+				<option value="{{ currentGender.value }}">{{ currentGender.label }}</option>
 				{% endfor %}
 			</select>
 		</label>
