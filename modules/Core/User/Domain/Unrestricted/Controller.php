@@ -37,12 +37,56 @@ class Controller extends Unrestricted {
 	public function getUserCreate() {
 		$dobValues = new Dropdown();
 
+		/* Generate a list of Genders
+		 */
 		$genderMapper = new \Core\User\GenderMapper();
 		$allGenders = $genderMapper->findAll();
 
+		$genders = array();
+
+		foreach($allGenders as $currentGender) {
+			$genders[] = array(
+				'label' => $currentGender->getAbbreviation(),
+				'value' => $currentGender->getId(),
+				'selected' => false,
+			);
+		}
+
+		/* Generate a list of States
+		 */
+		$stateMapper = new \Core\User\StateMapper();
+		$allStates = $stateMapper->findAll();
+
+		$states = array();
+
+		foreach($allStates as $currentState) {
+			$states[] = array(
+				'label' => $currentState->getName(),
+				'value' => $currentState->getId(),
+				'selected' => false,
+			);
+		}
+
+		/* Generate a list of Countries
+		 */
+		$countryMapper = new \Core\User\CountryMapper();
+		$allCountries = $countryMapper->findAll();
+
+		$countries = array();
+
+		foreach($allCountries as $currentCountry) {
+			$countries[] = array(
+				'label' => $currentCountry->getName(),
+				'value' => $currentCountry->getId(),
+				'selected' => false,
+			);
+		}
+
 		$this->output('getUserCreate', array(
 			'dob' => $dobValues->generate(),
-			'allGenders' => $allGenders
+			'allGenders' => $genders,
+			'allStates' => $states,
+			'allCountries' => $countries,
 		));
 	}
 

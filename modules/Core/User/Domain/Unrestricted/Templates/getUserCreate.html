@@ -32,11 +32,11 @@
 			/
 			<select name="dob[year]">
 				{% for currentYear in dob.allYears %}
-					{% if currentYear.selected %}
-						<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
-					{% else %}
-						<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
-					{% endif %}
+				{% if currentYear.selected %}
+				<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
+				{% else %}
+				<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
+				{% endif %}
 				{% endfor %}
 			</select>
 		</label>
@@ -47,6 +47,49 @@
 				<option value="{{ currentGender.getId() }}">{{ currentGender.getAbbreviation() }}</option>
 				{% endfor %}
 			</select>
+		</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Address</legend>
+		<label>
+			Address 1
+			<input name="address[address1]" type="text" value="" />
+		</label>
+		<label>
+			Address 1
+			<input name="address[address2]" type="text" value="" />
+		</label>
+		<label>
+			Suburb
+			<input name="address[suburb]" type="text" value="" />
+		</label>
+		<label>
+			State
+			<select name="address[state]">
+				{% for currentState in allStates %}
+				{% if currentState.selected %}
+				<option value="{{ currentState.value }}" selected="selected">{{ currentState.label }}</option>
+				{% else %}
+				<option value="{{ currentState.value }}">{{ currentState.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</label>
+		<label>
+			Country
+			<select name="address[country]">
+				{% for currentCountry in allCountries %}
+				{% if currentCountry.selected %}
+				<option value="{{ currentCountry.value }}" selected="selected">{{ currentCountry.label }}</option>
+				{% else %}
+				<option value="{{ currentCountry.value }}">{{ currentCountry.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		<label>
+			Postcode
+			<input name="address[postcode]" type="text" value="" />
 		</label>
 	</fieldset>
 </form>
