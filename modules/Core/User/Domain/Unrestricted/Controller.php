@@ -82,11 +82,27 @@ class Controller extends Unrestricted {
 			);
 		}
 
+		/* Generate a list of Phone Types
+		 */
+		$phoneTypeMapper = new \Core\User\PhoneTypeMapper();
+		$allPhoneTypes = $phoneTypeMapper->findAll();
+
+		$phoneTypes = array();
+
+		foreach($allPhoneTypes as $currentPhoneType) {
+			$phoneTypes[] = array(
+				'label' => $currentPhoneType->getName(),
+				'value' => $currentPhoneType->getId(),
+				'selected' => false,
+			);
+		}
+
 		$this->output('getUserCreate', array(
 			'dob' => $dobValues->generate(),
 			'allGenders' => $genders,
 			'allStates' => $states,
 			'allCountries' => $countries,
+			'allPhoneTypes' => $phoneTypes,
 		));
 	}
 

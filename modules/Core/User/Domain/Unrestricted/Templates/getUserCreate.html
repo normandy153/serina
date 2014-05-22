@@ -93,5 +93,26 @@
 			<input name="address[postcode]" type="text" value="" />
 		</label>
 	</fieldset>
+
+	<fieldset>
+		<legend>Phone and Email</legend>
+		<label class="cloneable">
+			Phone
+			<select name="phoneType[]">
+				{% for currentPhoneType in allPhoneTypes %}
+				{% if currentPhoneType.selected %}
+				<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
+				{% else %}
+				<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+			<input name="phone[]" type="text" value="" />
+		</label>
+		<label>
+			Email
+			<input name="email" type="text" value="" />
+		</label>
+	</fieldset>
 </form>
 {% endblock %}
