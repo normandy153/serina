@@ -41,69 +41,29 @@ class Controller extends Unrestricted {
 		/* Generate a list of Genders
 		 */
 		$genderMapper = new GenderMapper();
-		$allGenders = $genderMapper->findAll();
-
-		$genders = array();
-
-		foreach($allGenders as $currentGender) {
-			$genders[] = array(
-				'label' => $currentGender->getAbbreviation(),
-				'value' => $currentGender->getId(),
-				'selected' => false,
-			);
-		}
+		$allGenders = $genderMapper->findDropdownValues();
 
 		/* Generate a list of States
 		 */
 		$stateMapper = new StateMapper();
-		$allStates = $stateMapper->findAll();
-
-		$states = array();
-
-		foreach($allStates as $currentState) {
-			$states[] = array(
-				'label' => $currentState->getName(),
-				'value' => $currentState->getId(),
-				'selected' => false,
-			);
-		}
+		$allStates = $stateMapper->findDropdownValues();
 
 		/* Generate a list of Countries
 		 */
 		$countryMapper = new CountryMapper();
-		$allCountries = $countryMapper->findAll();
-
-		$countries = array();
-
-		foreach($allCountries as $currentCountry) {
-			$countries[] = array(
-				'label' => $currentCountry->getName(),
-				'value' => $currentCountry->getId(),
-				'selected' => false,
-			);
-		}
+		$allCountries = $countryMapper->findDropdownValues();
 
 		/* Generate a list of Phone Types
 		 */
 		$phoneTypeMapper = new PhoneTypeMapper();
-		$allPhoneTypes = $phoneTypeMapper->findAll();
-
-		$phoneTypes = array();
-
-		foreach($allPhoneTypes as $currentPhoneType) {
-			$phoneTypes[] = array(
-				'label' => $currentPhoneType->getName(),
-				'value' => $currentPhoneType->getId(),
-				'selected' => false,
-			);
-		}
+		$allPhoneTypes = $phoneTypeMapper->findDropdownValues();
 
 		$this->output('getUserCreate', array(
 			'dob' => $dobValues->generate(),
-			'allGenders' => $genders,
-			'allStates' => $states,
-			'allCountries' => $countries,
-			'allPhoneTypes' => $phoneTypes,
+			'allGenders' => $allGenders,
+			'allStates' => $allStates,
+			'allCountries' => $allCountries,
+			'allPhoneTypes' => $allPhoneTypes,
 		));
 	}
 

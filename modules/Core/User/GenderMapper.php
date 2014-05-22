@@ -24,4 +24,30 @@ class GenderMapper extends \App\Mapper\Base {
 		$this->addProperty('name', 'name', self::TYPE_STR);
 		$this->addProperty('abbreviation', 'abbreviation', self::TYPE_STR);
 	}
+
+	/**
+	 * Get a list of options for a dropdown or checkbox array
+	 *
+	 * @param null $preselected
+	 * @return array
+	 */
+	public function findDropdownValues($preselected = null) {
+		$items = array();
+
+		foreach($this->findAll() as $current) {
+			$selected = false;
+
+			if ($current->getId() == $preselected) {
+				$selected = true;
+			}
+
+			$items[] = array(
+				'label' => $current->getAbbreviation(),
+				'value' => $current->getId(),
+				'selected' => $selected,
+			);
+		}
+
+		return $items;
+	}
 } 
