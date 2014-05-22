@@ -78,3 +78,9 @@ label {
 	clear: both;
 	display: block;
 }
+
+/* Miscellaneous
+ */
+.hidden {
+	display: none;
+}

@@ -95,22 +95,24 @@
 	</fieldset>
 
 	<fieldset>
-		<legend>Phone and Email</legend>
-		<div data-cloneable="true">
-			<label>
-				Phone
-				<select name="phoneType[]">
-					{% for currentPhoneType in allPhoneTypes %}
-					{% if currentPhoneType.selected %}
-					<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
-					{% else %}
-					<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
-					{% endif %}
-					{% endfor %}
-				</select>
-				<input name="phone[]" type="text" value="" />
-			</label>
-		</div>
+		<legend>Phones</legend>
+		<label>
+			Phone
+			<select name="phoneType[]">
+				{% for currentPhoneType in allPhoneTypes %}
+				{% if currentPhoneType.selected %}
+				<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
+				{% else %}
+				<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+			<input name="phone[]" type="text" value="" />
+		</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Email</legend>
 		<label>
 			Email
 			<input name="email" type="text" value="" />
@@ -119,20 +121,35 @@
 
 	<fieldset>
 		<legend>Vehicles</legend>
-		<div data-cloneable="true">
-			<label>
-				Registration
-				<input name="vehicle[registration]" type="text" value="" />
-			</label>
-			<label>
-				Capacity
-				<input name="vehicle[capacity]" type="text" value="" />
-			</label>
-		</div>
+		<label>
+			Registration
+			<input name="vehicle[registration][]" type="text" value="" />
+		</label>
+		<label>
+			Capacity
+			<input name="vehicle[capacity][]" type="text" value="" />
+		</label>
 	</fieldset>
 
 	<fieldset>
 		<legend>Contact</legend>
+		<span data-cloner="true">Add</span>
+
+		<div data-cloneable="true" class="hidden">
+			<label>
+				Name
+				<input name="contact[name][]" type="text" value="" />
+			</label>
+			<label>
+				Phone
+				<input name="contact[phone][]" type="text" value="" />
+			</label>
+			<label>
+				Notes
+				<textarea name="contact[notes][]"></textarea>
+			</label>
+		</div>
+
 		<label>
 			Name
 			<input name="contact[name][]" type="text" value="" />
@@ -149,4 +166,11 @@
 
 	<input type="submit" value="Submit" />
 </form>
+<script type="text/javascript">
+	$('[data-cloner="true"]').click(function() {
+		var fieldset = $(this).closest('fieldset');
+		var element = fieldset.find('[data-cloneable="true"]');
+		fieldset.append(element.html());
+	})
+</script>
 {% endblock %}
