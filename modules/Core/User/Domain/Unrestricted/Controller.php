@@ -24,6 +24,7 @@ use Core\User\EmailMapper;
 use Core\User\GenderMapper;
 use Core\User\Phone;
 use Core\User\PhoneMapper;
+use Core\User\PhoneTypeMapper;
 use Core\User\StateMapper;
 use Core\User\User;
 use Core\User\UserMapper;
@@ -39,7 +40,7 @@ class Controller extends Unrestricted {
 
 		/* Generate a list of Genders
 		 */
-		$genderMapper = new \Core\User\GenderMapper();
+		$genderMapper = new GenderMapper();
 		$allGenders = $genderMapper->findAll();
 
 		$genders = array();
@@ -54,7 +55,7 @@ class Controller extends Unrestricted {
 
 		/* Generate a list of States
 		 */
-		$stateMapper = new \Core\User\StateMapper();
+		$stateMapper = new StateMapper();
 		$allStates = $stateMapper->findAll();
 
 		$states = array();
@@ -69,7 +70,7 @@ class Controller extends Unrestricted {
 
 		/* Generate a list of Countries
 		 */
-		$countryMapper = new \Core\User\CountryMapper();
+		$countryMapper = new CountryMapper();
 		$allCountries = $countryMapper->findAll();
 
 		$countries = array();
@@ -84,7 +85,7 @@ class Controller extends Unrestricted {
 
 		/* Generate a list of Phone Types
 		 */
-		$phoneTypeMapper = new \Core\User\PhoneTypeMapper();
+		$phoneTypeMapper = new PhoneTypeMapper();
 		$allPhoneTypes = $phoneTypeMapper->findAll();
 
 		$phoneTypes = array();
@@ -104,6 +105,11 @@ class Controller extends Unrestricted {
 			'allCountries' => $countries,
 			'allPhoneTypes' => $phoneTypes,
 		));
+	}
+
+	public function postUserCreate() {
+		new Probe($_POST);
+		exit();
 	}
 
 	/**
