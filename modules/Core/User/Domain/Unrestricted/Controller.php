@@ -9,6 +9,7 @@
 namespace Core\User\Domain\Unrestricted;
 
 
+use App\Collection;
 use App\Controller\Domain\Unrestricted;
 use App\Date\Dropdown;
 use App\Date\Recombinator;
@@ -247,11 +248,24 @@ class Controller extends Unrestricted {
 		$countryMapper = new CountryMapper();
 		$allCountries = $countryMapper->findDropdownValues($user->getAddress()->first()->getCountry()->first()->getId());
 
+		/* Prepare Phone
+		 */
+		$phoneTypeMapper = new PhoneTypeMapper();
+		$allPhones = new Collection();
+
+		foreach ($user->getPhone() as $currentPhone) {
+			$allPhones->add(array(
+				'list' => $phoneTypeMapper->findDropdownValues($currentPhone->getTypeId()->first()->getId()),
+				'object' => $currentPhone
+			));
+		}
+
 		$this->output('getUserModify', array(
 			'user' => $user,
 			'allGenders' => $allGenders,
 			'allStates' => $allStates,
 			'allCountries' => $allCountries,
+			'allPhones' => $allPhones,
 			'dob' => $dob->generate(),
 		));
 	}
