@@ -237,9 +237,21 @@ class Controller extends Unrestricted {
 		$dob->setPreselectedMonth($fragments[1]);
 		$dob->setPreselectedYear($fragments[0]);
 
+		/* Prepare State
+		 */
+		$stateMapper = new StateMapper();
+		$allStates = $stateMapper->findDropdownValues($user->getAddress()->first()->getState()->first()->getId());
+
+		/* Prepare Country
+		 */
+		$countryMapper = new CountryMapper();
+		$allCountries = $countryMapper->findDropdownValues($user->getAddress()->first()->getCountry()->first()->getId());
+
 		$this->output('getUserModify', array(
 			'user' => $user,
 			'allGenders' => $allGenders,
+			'allStates' => $allStates,
+			'allCountries' => $allCountries,
 			'dob' => $dob->generate(),
 		));
 	}
