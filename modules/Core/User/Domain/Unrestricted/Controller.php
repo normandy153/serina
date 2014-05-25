@@ -10,6 +10,8 @@ namespace Core\User\Domain\Unrestricted;
 
 
 use App\Controller\Domain\Unrestricted;
+use App\Date\Dropdown;
+use App\Date\Recombinator;
 use App\Probe;
 use Core\User\Account;
 use Core\User\AccountMapper;
@@ -23,72 +25,76 @@ use Core\User\EmailMapper;
 use Core\User\GenderMapper;
 use Core\User\Phone;
 use Core\User\PhoneMapper;
+use Core\User\PhoneTypeMapper;
 use Core\User\StateMapper;
 use Core\User\User;
 use Core\User\UserMapper;
+use Core\User\Vehicle;
+use Core\User\VehicleMapper;
 
 class Controller extends Unrestricted {
 
 	/**
-	 * Create/update a user
+	 * Prepare a form to create a new user
+	 * This also serves as a membership form
 	 */
-	public function getUserSave() {
+	public function getUserCreate() {
+		$dobValues = new Dropdown();
 
-		/* These typically come from $_POST
+		/* Generate a list of Genders
 		 */
-		$firstname = 'Dappy';
-		$lastname = 'Bean Baggy';
-		$birthdate = date('Y-m-d');
-		$genderId = 1;
+		$genderMapper = new GenderMapper();
+		$allGenders = $genderMapper->findDropdownValues();
 
-		$address1 = 'Unit 1';
-		$address2 = '10 Test St';
-		$suburb = 'Test Suburbia';
-		$stateId = 3;
-		$postcode = '1234';
-		$countryId = 1;
+		/* Generate a list of States
+		 */
+		$stateMapper = new StateMapper();
+		$allStates = $stateMapper->findDropdownValues();
 
-		$landline = '01 9876 5432';
-		$mobile = '0456 789 123';
+		/* Generate a list of Countries
+		 */
+		$countryMapper = new CountryMapper();
+		$allCountries = $countryMapper->findDropdownValues();
 
-		$emailAddress = 'testuser@test.com.mort.org';
+		/* Generate a list of Phone Types
+		 */
+		$phoneTypeMapper = new PhoneTypeMapper();
+		$allPhoneTypes = $phoneTypeMapper->findDropdownValues();
 
-		$contact1Firstname = 'EC Firstname';
-		$contact1Lastname = 'EC Lastname';
-		$contact1Phone = 'EC Phone 9999 5555';
-		$contact1Notes = 'This is my main contact in case I get mangled';
+		$this->output('getUserCreate', array(
+			'dob' => $dobValues->generate(),
+			'allGenders' => $allGenders,
+			'allStates' => $allStates,
+			'allCountries' => $allCountries,
+			'allPhoneTypes' => $allPhoneTypes,
+		));
+	}
 
-		$contact2Firstname = 'Another EC Firstname';
-		$contact2Lastname = 'Another EC Lastname';
-		$contact2Phone = 'Another EC Phone 2222 3333';
-		$contact2Notes = 'Another contact in case you cannot find the first one';
-
-		$username = 'TheUsername';
-		$password = 'ThePassword';
-		$activationDate = null;
-		$expiryDate = date('Y')+1 . '-01-31 23:59:59';
-
+	/**
+	 * Create a new user
+	 */
+	public function postUserCreate() {
 		$now = date('Y-m-d h:i:s');
 
 		/* Define State
 		 */
 		$stateMapper = new StateMapper();
-		$state = $stateMapper->findById($stateId);
+		$state = $stateMapper->findById($_POST['address']['state']);
 
 		/* Define Country
 		 */
 		$countryMapper = new CountryMapper();
-		$country = $countryMapper->findById($countryId);
+		$country = $countryMapper->findById($_POST['address']['country']);
 
 		/* Define Full Address
 		 * Address must exist before we can assign them to users
 		 */
 		$address = new Address();
-		$address->setAddress1($address1);
-		$address->setAddress2($address2);
-		$address->setSuburb($suburb);
+		$address->setAddress1($_POST['address']['address1']);
+		$address->setAddress2($_POST['address']['address2']);
+		$address->setSuburb($_POST['address']['suburb']);
 		$address->setState($state->getId());
-		$address->setPostcode($postcode);
+		$address->setPostcode($_POST['address']['postcode']);
 		$address->setCountry($country->getId());
 		$address->setCreatedAt($now);
 		$address->setUpdatedAt($now);
@@ -97,18 +103,22 @@ class Controller extends Unrestricted {
 		$addressMapper = new AddressMapper();
 		$addressMapper->save($address);
 
+		/* User Details
+		 */
+		$recombinator = new Recombinator($_POST['dob']);
+
 		/* Define Gender
 		 */
 		$genderMapper = new GenderMapper();
-		$gender = $genderMapper->findById($genderId);
+		$gender = $genderMapper->findById($_POST['gender']);
 
 		/* Define User
 		 */
 		$user = new User();
 		$user->setUuid($user->generateUuid());
-		$user->setFirstname($firstname);
-		$user->setLastname($lastname);
-		$user->setBirthdate($birthdate);
+		$user->setFirstname($_POST['firstname']);
+		$user->setLastname($_POST['lastname']);
+		$user->setBirthdate($recombinator->getReverseDatestamp());
 		$user->setAddress($address->getId());
 		$user->setGender($gender->getId());
 		$user->setCreatedAt($now);
@@ -123,29 +133,22 @@ class Controller extends Unrestricted {
 		 */
 		$phoneMapper = new PhoneMapper();
 
-		$phone = new Phone();
-		$phone->setUserId($user->getId());
-		$phone->setNumber($landline);
-		$phone->setTypeId(1);
-		$phone->setCreatedAt($now);
-		$phone->setUpdatedAt($now);
-		$phone->setDeletedAt(null);
-		$phoneMapper->save($phone);
-
-		$phone = new Phone();
-		$phone->setUserId($user->getId());
-		$phone->setNumber($mobile);
-		$phone->setTypeId(2);
-		$phone->setCreatedAt($now);
-		$phone->setUpdatedAt($now);
-		$phone->setDeletedAt(null);
-		$phoneMapper->save($phone);
+		for ($i = 0; $i < count($_POST['phone']['number']); $i++) {
+			$phone = new Phone();
+			$phone->setUserId($user->getId());
+			$phone->setNumber($_POST['phone']['number'][$i]);
+			$phone->setTypeId($_POST['phone']['type'][$i]);
+			$phone->setCreatedAt($now);
+			$phone->setUpdatedAt($now);
+			$phone->setDeletedAt(null);
+			$phoneMapper->save($phone);
+		}
 
 		/* Define Email
 		 */
 		$email = new Email();
 		$email->setUserId($user->getId());
-		$email->setAddress($emailAddress);
+		$email->setAddress($_POST['email']);
 		$email->setCreatedAt($now);
 		$email->setUpdatedAt($now);
 		$email->setDeletedAt(null);
@@ -157,37 +160,53 @@ class Controller extends Unrestricted {
 		 */
 		$contactMapper = new ContactMapper();
 
-		$contact = new Contact();
-		$contact->setUserId($user->getId());
-		$contact->setFirstname($contact1Firstname);
-		$contact->setLastname($contact1Lastname);
-		$contact->setPhone($contact1Phone);
-		$contact->setNotes($contact1Notes);
-		$contact->setCreatedAt($now);
-		$contact->setUpdatedAt($now);
-		$contact->setDeletedAt(null);
-		$contactMapper->save($contact);
+		for ($i = 0; $i < count($_POST['contact']['firstname']); $i++) {
+			$contact = new Contact();
+			$contact->setUserId($user->getId());
+			$contact->setFirstname($_POST['contact']['firstname'][$i]);
+			$contact->setLastname($_POST['contact']['lastname'][$i]);
+			$contact->setPhone($_POST['contact']['phone'][$i]);
+			$contact->setNotes($_POST['contact']['notes'][$i]);
+			$contact->setCreatedAt($now);
+			$contact->setUpdatedAt($now);
+			$contact->setDeletedAt(null);
+			$contactMapper->save($contact);
+		}
 
-		$contact = new Contact();
-		$contact->setUserId($user->getId());
-		$contact->setFirstname($contact2Firstname);
-		$contact->setLastname($contact2Lastname);
-		$contact->setPhone($contact2Phone);
-		$contact->setNotes($contact2Notes);
-		$contact->setCreatedAt($now);
-		$contact->setUpdatedAt($now);
-		$contact->setDeletedAt(null);
-		$contactMapper->save($contact);
+		/* Define Vehicles
+		 */
+		$vehicleMapper = new VehicleMapper();
+
+		for ($i = 0; $i < count($_POST['vehicle']['registration']); $i++) {
+			$vehicle = new Vehicle();
+			$vehicle->setUserId($user->getId());
+			$vehicle->setRegistration($_POST['vehicle']['registration'][$i]);
+			$vehicle->setCapacity($_POST['vehicle']['capacity'][$i]);
+			$vehicle->setDescription($_POST['vehicle']['description'][$i]);
+			$vehicle->setCreatedAt($now);
+			$vehicle->setUpdatedAt($now);
+			$vehicle->setDeletedAt(null);
+			$vehicleMapper->save($vehicle);
+		}
 
 		/* Define account
+		 * New accounts are always locked
  		 */
+//		$username = $_POST['username'];
+		$username = 'testusername';
+//		$password = $_POST['password'];
+		$password = 'testpassword';
+		$activationDate = null;
+		$expiryDate = date('Y')+1 . '-01-31 23:59:59';
+		$locked = 1;
+
 		$account = new Account();
 		$account->setUserId($user->getId());
 		$account->setUsername($username);
 		$account->setPassword($account->encode($password));
 		$account->setActivationDate($activationDate);
 		$account->setExpiryDate($expiryDate);
-		$account->setLocked(1);
+		$account->setLocked($locked);
 		$account->setCreatedAt($now);
 		$account->setUpdatedAt($now);
 		$account->setDeletedAt(null);
@@ -221,8 +240,5 @@ class Controller extends Unrestricted {
 		new Probe($allUsers);
 
 		exit();
-
-
-
 	}
 }

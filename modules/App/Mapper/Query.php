@@ -194,10 +194,19 @@ class Query {
 
 		/* Keys are properties, so find out their column names
 		 */
-		$propertyDefinition = $mapper2->getProperties()->find('property', $rule['other']['property']);
+		$thisPropertyDefinition = $registry[$thisAlias]['mapper']->getProperties()->find('property', $rule['this']['property']);
 
-		if ($propertyDefinition instanceof PropertyDefinition) {
-			$property = $propertyDefinition->getColumn();
+		if ($thisPropertyDefinition instanceof PropertyDefinition) {
+			$thisColumn = $thisPropertyDefinition->getColumn();
+		}
+		else {
+			throw new \Exception("Could not find join property {$rule['this']['property']}");
+		}
+
+		$otherPropertyDefinition = $mapper2->getProperties()->find('property', $rule['other']['property']);
+
+		if ($otherPropertyDefinition instanceof PropertyDefinition) {
+			$otherColumn = $otherPropertyDefinition->getColumn();
 		}
 		else {
 			throw new \Exception("Could not find join property {$rule['other']['property']}");
@@ -205,7 +214,7 @@ class Query {
 
 		$str = "
 			{$joinType} JOIN {$mapper2->getTable()} {$otherAlias}
-			ON {$thisAlias}.{$rule['this']['property']} = {$otherAlias}.{$property}
+			ON {$thisAlias}.{$thisColumn} = {$otherAlias}.{$otherColumn}
 		";
 
 		/* Augment query string
@@ -348,7 +357,6 @@ class Query {
 		 */
 		if (is_array($allParams) && count($allParams)) {
 			foreach($allParams as $key => $value) {
-
 				$statement->bindValue($key, $value['column'], $value['type']);
 			}
 		}

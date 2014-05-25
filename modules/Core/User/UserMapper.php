@@ -147,6 +147,7 @@ class UserMapper extends \App\Mapper\Base {
 			'\Core\User\State s',
 			'\Core\User\Country c',
 			'\Core\User\Phone p',
+			'\Core\User\PhoneType pt',
 			'\Core\User\Email e',
 			'\Core\User\Gender g',
 			'\Core\User\Vehicle v',
@@ -158,6 +159,7 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('a', 'State', 's')
 			->leftJoin('a', 'Country', 'c')
 			->leftJoin('u', 'Phone', 'p')
+			->leftJoin('p', 'PhoneType', 'pt')
 			->leftJoin('u', 'Email', 'e')
 			->leftJoin('u', 'Gender', 'g')
 			->leftJoin('u', 'Vehicle', 'v')
@@ -180,6 +182,7 @@ class UserMapper extends \App\Mapper\Base {
 		$stateCollection = new \App\Collection();
 		$countryCollection = new \App\Collection();
 		$phoneCollection = new \App\Collection();
+		$phoneTypeCollection = new \App\Collection();
 		$emailCollection = new \App\Collection();
 		$genderCollection = new \App\Collection();
 		$vehicleCollection = new \App\Collection();
@@ -201,6 +204,9 @@ class UserMapper extends \App\Mapper\Base {
 			
 			$phone = $query->getMapperForAlias('p')->hydrate('p', $row);
 			$phoneCollection->setItemAt($phone->getId(), $phone);
+
+			$phoneType = $query->getMapperForAlias('pt')->hydrate('pt', $row);
+			$phoneTypeCollection->setItemAt($phoneType->getId(), $phoneType);
 
 			$email = $query->getMapperForAlias('e')->hydrate('e', $row);
 			$emailCollection->setItemAt($email->getId(), $email);
@@ -229,6 +235,10 @@ class UserMapper extends \App\Mapper\Base {
 		/* Build user/address relation
 		 */
 		$this->joinCollections($userCollection, $addressCollection, 'Address', $query);
+
+		/* Build phone/type relation
+		 */
+		$this->joinCollections($phoneCollection, $phoneTypeCollection, 'PhoneType', $query);
 
 		/* Build user/phone relation
 		 */

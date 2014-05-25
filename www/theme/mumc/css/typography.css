@@ -63,6 +63,9 @@ p {
 	text-align: center;
 }
 
-label {
+legend {
 	font-weight: bold;
+}
+
+label {
 }

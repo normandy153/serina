@@ -1,0 +1,189 @@
+{% extends 'Unrestricted.html' %}
+
+{% block head %}
+<title>Create User</title>
+<script type="text/javascript" src="/user/js/cloners.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('form').addCloners();
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<form action="/user/create" method="post">
+	<fieldset>
+		<legend>Details</legend>
+		<label>
+			Firstname
+			<input name="firstname" type="text" value="" />
+		</label>
+		<label>
+			Lastname
+			<input name="lastname" type="text" value="" />
+		</label>
+		<label>
+			Date of Birth
+			<select name="dob[day]">
+				{% for currentDay in dob.allDays %}
+				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
+				{% endfor %}
+			</select>
+			/
+			<select name="dob[month]">
+				{% for currentMonth in dob.allMonths %}
+				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
+				{% endfor %}
+			</select>
+			/
+			<select name="dob[year]">
+				{% for currentYear in dob.allYears %}
+				{% if currentYear.selected %}
+				<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
+				{% else %}
+				<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</label>
+		<label>
+			Gender
+			<select name="gender">
+				{% for currentGender in allGenders %}
+				<option value="{{ currentGender.value }}">{{ currentGender.label }}</option>
+				{% endfor %}
+			</select>
+		</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Address</legend>
+		<label>
+			Address 1
+			<input name="address[address1]" type="text" value="" />
+		</label>
+		<label>
+			Address 2
+			<input name="address[address2]" type="text" value="" />
+		</label>
+		<label>
+			Suburb
+			<input name="address[suburb]" type="text" value="" />
+		</label>
+		<label>
+			State
+			<select name="address[state]">
+				{% for currentState in allStates %}
+				{% if currentState.selected %}
+				<option value="{{ currentState.value }}" selected="selected">{{ currentState.label }}</option>
+				{% else %}
+				<option value="{{ currentState.value }}">{{ currentState.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</label>
+		<label>
+			Country
+			<select name="address[country]">
+				{% for currentCountry in allCountries %}
+				{% if currentCountry.selected %}
+				<option value="{{ currentCountry.value }}" selected="selected">{{ currentCountry.label }}</option>
+				{% else %}
+				<option value="{{ currentCountry.value }}">{{ currentCountry.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</label>
+		<label>
+			Postcode
+			<input name="address[postcode]" type="text" value="" />
+		</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Phones</legend>
+		<label>
+			Phone
+			<select name="phone[type][]">
+				{% for currentPhoneType in allPhoneTypes %}
+				{% if currentPhoneType.selected %}
+				<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
+				{% else %}
+				<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+			<input name="phone[number][]" type="text" value="" />
+		</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Email</legend>
+		<label>
+			Email
+			<input name="email" type="text" value="" />
+		</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Vehicles</legend>
+		<label>
+			Registration
+			<input name="vehicle[registration][]" type="text" value="" />
+		</label>
+		<label>
+			Capacity
+			<input name="vehicle[capacity][]" type="text" value="" />
+		</label>
+		<label>
+			Description
+			<textarea name="vehicle[description][]"></textarea>
+		</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Contact</legend>
+		<span data-cloner="true">Add</span>
+
+		<div data-cloneable="true" class="hidden">
+			<label>
+				Firstname
+				<input name="contact[firstname][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Lastname
+				<input name="contact[lastname][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Phone
+				<input name="contact[phone][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Notes
+				<textarea name="contact[notes][]" disabled></textarea>
+			</label>
+		</div>
+
+		<div>
+			<label>
+				Firstname
+				<input name="contact[firstname][]" type="text" value="" />
+			</label>
+			<label>
+				Lastname
+				<input name="contact[lastname][]" type="text" value="" />
+			</label>
+			<label>
+				Phone
+				<input name="contact[phone][]" type="text" value="" />
+			</label>
+			<label>
+				Notes
+				<textarea name="contact[notes][]"></textarea>
+			</label>
+		</div>
+	</fieldset>
+
+	<input type="submit" value="Submit" />
+</form>
+{% endblock %}

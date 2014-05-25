@@ -1,15 +1,15 @@
 <?php
 /**
- * CountryMapper.php
+ * PhoneTypeMapper.php
  *
- * Date: 8/04/2014
- * Time: 10:46 PM
+ * Date: 22/05/2014
+ * Time: 11:07 PM
  */
 
 namespace Core\User;
 
 
-class CountryMapper extends \App\Mapper\Base {
+class PhoneTypeMapper extends \App\Mapper\Base {
 
 	/**
 	 * Define properties
@@ -17,12 +17,11 @@ class CountryMapper extends \App\Mapper\Base {
 	 * @return mixed|void
 	 */
 	protected function properties() {
-		$this->setModel('\\Core\\User\\Country');
-		$this->setTable('country');
+		$this->setModel('\\Core\\User\\PhoneType');
+		$this->setTable('phonetype');
 
 		$this->addProperty('id', 'id', self::TYPE_INT);
 		$this->addProperty('name', 'name', self::TYPE_STR);
-		$this->addProperty('abbreviation', 'abbreviation', self::TYPE_STR);
 	}
 
 	/**
