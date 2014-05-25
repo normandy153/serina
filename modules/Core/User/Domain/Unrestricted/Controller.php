@@ -217,6 +217,17 @@ class Controller extends Unrestricted {
 		exit();
 	}
 
+	public function getUserUpdate() {
+		$args = $this->getArgs();
+
+		$userMapper = new UserMapper();
+		$user = $userMapper->findDetailedById($args[1]);
+
+		$this->output('getUserModify', array(
+			'user' => $user,
+		));
+	}
+
 	/**
 	 * Delete a user
 	 */
