@@ -29,6 +29,8 @@ use Core\User\PhoneTypeMapper;
 use Core\User\StateMapper;
 use Core\User\User;
 use Core\User\UserMapper;
+use Core\User\Vehicle;
+use Core\User\VehicleMapper;
 
 class Controller extends Unrestricted {
 
@@ -171,11 +173,29 @@ class Controller extends Unrestricted {
 			$contactMapper->save($contact);
 		}
 
+		/* Define Vehicles
+		 */
+		$vehicleMapper = new VehicleMapper();
+
+		for ($i = 0; $i < count($_POST['vehicle']['registration']); $i++) {
+			$vehicle = new Vehicle();
+			$vehicle->setUserId($user->getId());
+			$vehicle->setRegistration($_POST['vehicle']['registration'][$i]);
+			$vehicle->setCapacity($_POST['vehicle']['capacity'][$i]);
+			$vehicle->setDescription($_POST['vehicle']['description'][$i]);
+			$vehicle->setCreatedAt($now);
+			$vehicle->setUpdatedAt($now);
+			$vehicle->setDeletedAt(null);
+			$vehicleMapper->save($vehicle);
+		}
+
 		/* Define account
 		 * New accounts are always locked
  		 */
-		$username = $_POST['username'];
-		$password = $_POST['password'];
+//		$username = $_POST['username'];
+		$username = 'testusername';
+//		$password = $_POST['password'];
+		$password = 'testpassword';
 		$activationDate = null;
 		$expiryDate = date('Y')+1 . '-01-31 23:59:59';
 		$locked = 1;
@@ -193,6 +213,8 @@ class Controller extends Unrestricted {
 
 		$accountMapper = new AccountMapper();
 		$accountMapper->save($account);
+
+		exit();
 	}
 
 	/**
@@ -218,8 +240,5 @@ class Controller extends Unrestricted {
 		new Probe($allUsers);
 
 		exit();
-
-
-
 	}
 }
