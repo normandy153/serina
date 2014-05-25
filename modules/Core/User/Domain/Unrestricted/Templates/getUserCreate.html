@@ -2,6 +2,12 @@
 
 {% block head %}
 <title>Create User</title>
+<script type="text/javascript" src="/user/js/cloners.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('form').addCloners();
+	});
+</script>
 {% endblock %}
 
 {% block content %}
@@ -166,18 +172,4 @@
 
 	<input type="submit" value="Submit" />
 </form>
-<script type="text/javascript">
-	$('[data-cloner="true"]').click(function() {
-		var fieldset = $(this).closest('fieldset');
-		var element = fieldset.find('[data-cloneable="true"]').clone();
-
-		/* Enable input elements
-		 */
-		element.find('input, select, textarea').prop('disabled', false);
-
-		/* Inject into DOM
-		 */
-		fieldset.append(element);
-	})
-</script>
 {% endblock %}
