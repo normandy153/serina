@@ -26,5 +26,17 @@ class PhoneMapper extends \App\Mapper\Base {
 		$this->addProperty('number', 'number', self::TYPE_STR);
 
 		$this->addTimestampable();
+
+		$this->addJoin('PhoneType', array(
+			'this' => array(
+				'mapper' => '\Core\User\PhoneMapper',
+				'property' => 'typeId',
+				'collection' => 'typeId',
+			),
+			'other' => array(
+				'mapper' => '\Core\User\PhoneTypeMapper',
+				'property' => 'id',
+			),
+		));
 	}
 } 
