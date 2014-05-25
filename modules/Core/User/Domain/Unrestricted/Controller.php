@@ -223,8 +223,18 @@ class Controller extends Unrestricted {
 		$userMapper = new UserMapper();
 		$user = $userMapper->findDetailedById($args[1]);
 
+		/* Prepare date of birth
+		 */
+		$fragments = explode('-', $user->getBirthdate());
+
+		$dob = new Dropdown();
+		$dob->setPreselectedDay($fragments[2]);
+		$dob->setPreselectedMonth($fragments[1]);
+		$dob->setPreselectedYear($fragments[0]);
+
 		$this->output('getUserModify', array(
 			'user' => $user,
+			'dob' => $dob->generate(),
 		));
 	}
 

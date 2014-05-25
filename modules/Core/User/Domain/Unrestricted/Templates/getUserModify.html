@@ -27,12 +27,20 @@
 			Date of Birth
 			<select name="dob[day]">
 				{% for currentDay in dob.allDays %}
+				{% if currentDay.selected %}
+				<option value="{{ currentDay.value }}" selected="selected">{{ currentDay.label }}</option>
+				{% else %}
 				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
+				{% endif %}
 				{% endfor %}
 			</select>
 			/
 			<select name="dob[month]">
 				{% for currentMonth in dob.allMonths %}
+				{% if currentMonth.selected %}
+				<option value="{{ currentMonth.value }}" selected="selected">{{ currentMonth.label }}</option>
+				{% else %}
+				{% endif %}
 				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
 				{% endfor %}
 			</select>
