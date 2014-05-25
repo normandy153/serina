@@ -167,7 +167,7 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Account', 'acc')
 			->orderBy('u.lastname', 'DESC')
 			->prepare();
-new \App\Probe($query->getQueryString());
+
 		/* Parameters used in the query
 		 */
 		$parameters = array(
