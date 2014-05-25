@@ -131,11 +131,11 @@ class Controller extends Unrestricted {
 		 */
 		$phoneMapper = new PhoneMapper();
 
-		for ($i = 0; $i < count($_POST['phone']); $i++) {
+		for ($i = 0; $i < count($_POST['phone']['number']); $i++) {
 			$phone = new Phone();
 			$phone->setUserId($user->getId());
-			$phone->setNumber($_POST['phone'][$i]);
-			$phone->setTypeId($_POST['phoneType'][$i]);
+			$phone->setNumber($_POST['phone']['number'][$i]);
+			$phone->setTypeId($_POST['phone']['type'][$i]);
 			$phone->setCreatedAt($now);
 			$phone->setUpdatedAt($now);
 			$phone->setDeletedAt(null);
@@ -158,7 +158,7 @@ class Controller extends Unrestricted {
 		 */
 		$contactMapper = new ContactMapper();
 
-		for ($i = 0; $i < count($_POST['contact']['name']); $i++) {
+		for ($i = 0; $i < count($_POST['contact']['firstname']); $i++) {
 			$contact = new Contact();
 			$contact->setUserId($user->getId());
 			$contact->setFirstname($_POST['contact']['firstname'][$i]);
