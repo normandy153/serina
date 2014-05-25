@@ -74,11 +74,7 @@
 			State
 			<select name="address[state]">
 				{% for currentState in allStates %}
-				{% if currentState.selected %}
-				<option value="{{ currentState.value }}" selected="selected">{{ currentState.label }}</option>
-				{% else %}
 				<option value="{{ currentState.value }}">{{ currentState.label }}</option>
-				{% endif %}
 				{% endfor %}
 			</select>
 		</label>
@@ -86,11 +82,7 @@
 			Country
 			<select name="address[country]">
 				{% for currentCountry in allCountries %}
-				{% if currentCountry.selected %}
-				<option value="{{ currentCountry.value }}" selected="selected">{{ currentCountry.label }}</option>
-				{% else %}
 				<option value="{{ currentCountry.value }}">{{ currentCountry.label }}</option>
-				{% endif %}
 				{% endfor %}
 			</select>
 		</label>
@@ -106,11 +98,7 @@
 			Phone
 			<select name="phone[type][]">
 				{% for currentPhoneType in allPhoneTypes %}
-				{% if currentPhoneType.selected %}
-				<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
-				{% else %}
 				<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
-				{% endif %}
 				{% endfor %}
 			</select>
 			<input name="phone[number][]" type="text" value="" />
