@@ -138,15 +138,15 @@
 		<div data-cloneable="true" class="hidden">
 			<label>
 				Name
-				<input name="contact[name][]" type="text" value="" />
+				<input name="contact[name][]" type="text" disabled value="" />
 			</label>
 			<label>
 				Phone
-				<input name="contact[phone][]" type="text" value="" />
+				<input name="contact[phone][]" type="text" disabled value="" />
 			</label>
 			<label>
 				Notes
-				<textarea name="contact[notes][]"></textarea>
+				<textarea name="contact[notes][]" disabled></textarea>
 			</label>
 		</div>
 
@@ -169,8 +169,15 @@
 <script type="text/javascript">
 	$('[data-cloner="true"]').click(function() {
 		var fieldset = $(this).closest('fieldset');
-		var element = fieldset.find('[data-cloneable="true"]');
-		fieldset.append(element.html());
+		var element = fieldset.find('[data-cloneable="true"]').clone();
+
+		/* Enable input elements
+		 */
+		element.find('input, select, textarea').prop('disabled', false);
+
+		/* Inject into DOM
+		 */
+		fieldset.append(element);
 	})
 </script>
 {% endblock %}
