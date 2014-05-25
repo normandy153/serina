@@ -223,6 +223,11 @@ class Controller extends Unrestricted {
 		$userMapper = new UserMapper();
 		$user = $userMapper->findDetailedById($args[1]);
 
+		/* Prepare Gender
+		 */
+		$genderMapper = new GenderMapper();
+		$allGenders = $genderMapper->findDropdownValues($user->getGender()->first()->getId());
+
 		/* Prepare date of birth
 		 */
 		$fragments = explode('-', $user->getBirthdate());
@@ -234,6 +239,7 @@ class Controller extends Unrestricted {
 
 		$this->output('getUserModify', array(
 			'user' => $user,
+			'allGenders' => $allGenders,
 			'dob' => $dob->generate(),
 		));
 	}

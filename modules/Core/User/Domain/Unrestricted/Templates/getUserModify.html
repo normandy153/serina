@@ -59,7 +59,11 @@
 			Gender
 			<select name="gender">
 				{% for currentGender in allGenders %}
+				{% if currentGender.selected %}
+				<option value="{{ currentGender.value }}" selected="selected">{{ currentGender.label }}</option>
+				{% else %}
 				<option value="{{ currentGender.value }}">{{ currentGender.label }}</option>
+				{% endif %}
 				{% endfor %}
 			</select>
 		</label>
