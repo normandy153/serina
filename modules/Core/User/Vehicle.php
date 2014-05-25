@@ -33,7 +33,7 @@ class Vehicle {
 	private $registration = '';
 
 	/**
-	 * The maximum number of passengers this vehicle
+	 * The maximum number of people this vehicle
 	 * can transport. For a typical sedan, this value
 	 * should be 5. For overnight trips, it can be
 	 * assumed as 4. It is however up to the user to
@@ -41,7 +41,7 @@ class Vehicle {
 	 *
 	 * @var string
 	 */
-	private $passengers = '';
+	private $capacity = '';
 
 	/**
 	 * A short and sweet description of the vehicle
@@ -77,24 +77,6 @@ class Vehicle {
 	 */
 	public function getId() {
 		return $this->id;
-	}
-
-	/**
-	 * Set passengers
-	 *
-	 * @param string $passengers
-	 */
-	public function setPassengers($passengers) {
-		$this->passengers = $passengers;
-	}
-
-	/**
-	 * Get passengers
-	 *
-	 * @return string
-	 */
-	public function getPassengers() {
-		return $this->passengers;
 	}
 
 	/**
@@ -203,5 +185,23 @@ class Vehicle {
 	 */
 	public function getUpdatedAt() {
 		return $this->updatedAt;
+	}
+
+	/**
+	 * Set capacity
+	 *
+	 * @param string $capacity
+	 */
+	public function setCapacity($capacity) {
+		$this->capacity = $capacity;
+	}
+
+	/**
+	 * Get capacity
+	 *
+	 * @return string
+	 */
+	public function getCapacity() {
+		return $this->capacity;
 	}
 }

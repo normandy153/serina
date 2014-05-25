@@ -23,7 +23,7 @@ class VehicleMapper extends \App\Mapper\Base {
 		$this->addProperty('id', 'id', self::TYPE_INT);
 		$this->addProperty('userId', 'user_id', self::TYPE_INT);
 		$this->addProperty('registration', 'registration', self::TYPE_STR);
-		$this->addProperty('passengers', 'passengers', self::TYPE_INT);
+		$this->addProperty('capacity', 'capacity', self::TYPE_INT);
 		$this->addProperty('description', 'description', self::TYPE_STR);
 
 		$this->addTimestampable();
