@@ -63,7 +63,7 @@
 			<input name="address[address1]" type="text" value="" />
 		</label>
 		<label>
-			Address 1
+			Address 2
 			<input name="address[address2]" type="text" value="" />
 		</label>
 		<label>
@@ -104,7 +104,7 @@
 		<legend>Phones</legend>
 		<label>
 			Phone
-			<select name="phoneType[]">
+			<select name="phone[type][]">
 				{% for currentPhoneType in allPhoneTypes %}
 				{% if currentPhoneType.selected %}
 				<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
@@ -113,7 +113,7 @@
 				{% endif %}
 				{% endfor %}
 			</select>
-			<input name="phone[]" type="text" value="" />
+			<input name="phone[number][]" type="text" value="" />
 		</label>
 	</fieldset>
 
@@ -143,8 +143,12 @@
 
 		<div data-cloneable="true" class="hidden">
 			<label>
-				Name
-				<input name="contact[name][]" type="text" disabled value="" />
+				Firstname
+				<input name="contact[firstname][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Lastname
+				<input name="contact[lastname][]" type="text" disabled value="" />
 			</label>
 			<label>
 				Phone
@@ -156,18 +160,24 @@
 			</label>
 		</div>
 
-		<label>
-			Name
-			<input name="contact[name][]" type="text" value="" />
-		</label>
-		<label>
-			Phone
-			<input name="contact[phone][]" type="text" value="" />
-		</label>
-		<label>
-			Notes
-			<textarea name="contact[notes][]"></textarea>
-		</label>
+		<div>
+			<label>
+				Firstname
+				<input name="contact[firstname][]" type="text" value="" />
+			</label>
+			<label>
+				Lastname
+				<input name="contact[lastname][]" type="text" value="" />
+			</label>
+			<label>
+				Phone
+				<input name="contact[phone][]" type="text" value="" />
+			</label>
+			<label>
+				Notes
+				<textarea name="contact[notes][]"></textarea>
+			</label>
+		</div>
 	</fieldset>
 
 	<input type="submit" value="Submit" />
