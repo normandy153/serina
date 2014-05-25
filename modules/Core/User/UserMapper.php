@@ -139,7 +139,7 @@ class UserMapper extends \App\Mapper\Base {
 	/**
 	 * Find all the users with all their extra data
 	 */
-	public function findAll() {
+	public function findDetailedById($id) {
 		$query = new Query();
 		$query->select(
 			'\Core\User\User u',
@@ -165,12 +165,17 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Vehicle', 'v')
 			->leftJoin('u', 'Contact', 'co')
 			->leftJoin('u', 'Account', 'acc')
+			->where('u.id = :id')
 			->orderBy('u.lastname', 'DESC')
 			->prepare();
 
 		/* Parameters used in the query
 		 */
 		$parameters = array(
+			'id' => array(
+				'column' => $id,
+				'type' => self::TYPE_INT,
+			)
 		);
 
 		$statement = $query->execute($parameters);
@@ -268,6 +273,6 @@ class UserMapper extends \App\Mapper\Base {
 		 */
 		$userCollection->reindex();
 
-		return $userCollection;
+		return $userCollection->first();
 	}
 } 
