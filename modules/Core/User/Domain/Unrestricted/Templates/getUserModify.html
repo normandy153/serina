@@ -13,6 +13,7 @@
 {% block content %}
 <form action="/user/update" method="post">
 	<input name="userId" type="hidden" value="{{ user.getId() }}" />
+
 	<fieldset>
 		<legend>Details</legend>
 		<label>
@@ -71,6 +72,8 @@
 
 	<fieldset>
 		<legend>Address</legend>
+		<input name="addressId" type="hidden" value="{{ user.getAddress().first().getId() }}" />
+
 		<label>
 			Address 1
 			<input name="address[address1]" type="text" value="{{ user.getAddress().first().getAddress1() }}" />
@@ -128,6 +131,7 @@
 				{% endif %}
 				{% endfor %}
 			</select>
+			<input name="phone[id][]" type="hidden" value="{{ currentPhone.object.getId() }}" />
 			<input name="phone[number][]" type="text" value="{{ currentPhone.object.getNumber() }}" />
 		</label>
 		{% endfor %}
@@ -138,6 +142,7 @@
 		{% for currentEmail in user.getEmail() %}
 		<label>
 			Email
+			<input name="emailId" type="hidden" value="{{ currentEmail.getId() }}" />
 			<input name="email" type="text" value="{{ currentEmail.getAddress() }}" />
 		</label>
 		{% endfor %}
@@ -147,6 +152,7 @@
 		<legend>Vehicles</legend>
 		{% for currentVehicle in user.getVehicle() %}
 		<div>
+			<input name="vehicle[id][]" type="hidden" value="{{ currentVehicle.getId() }}" />
 			<label>
 				Registration
 				<input name="vehicle[registration][]" type="text" value="{{ currentVehicle.getRegistration() }}" />
@@ -188,6 +194,7 @@
 
 		{% for currentContact in user.getContact() %}
 		<div>
+			<input name="contact[id][]" type="hidden" value="{{ currentContact.getId() }}" />
 			<label>
 				Firstname
 				<input name="contact[firstname][]" type="text" value="{{ currentContact.getFirstname() }}" />
