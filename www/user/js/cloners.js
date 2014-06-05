@@ -27,6 +27,7 @@
         /* Send in the clones
          */
         activateCloners();
+        activateDecloners();
 
         /**
          * Init
@@ -64,6 +65,16 @@
                  */
                 fieldset.append(element);
             })
+        }
+
+        /**
+         * Remove a clone
+         */
+        function activateDecloners() {
+            $(config.element).find('[data-cloner-remover="true"]').click(function(event) {
+                event.preventDefault();
+                $(this).closest('div').remove();
+            });
         }
     }
 })(jQuery);

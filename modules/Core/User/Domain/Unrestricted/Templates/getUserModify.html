@@ -130,24 +130,28 @@
 				</select>
 				<input name="phone[id][]" type="hidden" disabled value="" />
 				<input name="phone[number][]" type="text" disabled value="" />
+				<a data-cloner-remover="true">Remove</a>
 			</label>
 		</div>
 
 		{% for currentPhone in allPhones %}
-		<label>
-			Phone
-			<select name="phone[type][]">
-				{% for currentPhoneType in currentPhone.list %}
-				{% if currentPhoneType.selected %}
-				<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
-				{% else %}
-				<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
-				{% endif %}
-				{% endfor %}
-			</select>
-			<input name="phone[id][]" type="hidden" value="{{ currentPhone.object.getId() }}" />
-			<input name="phone[number][]" type="text" value="{{ currentPhone.object.getNumber() }}" />
-		</label>
+		<div>
+			<label>
+				Phone
+				<select name="phone[type][]">
+					{% for currentPhoneType in currentPhone.list %}
+					{% if currentPhoneType.selected %}
+					<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
+					{% else %}
+					<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+				<input name="phone[id][]" type="hidden" value="{{ currentPhone.object.getId() }}" />
+				<input name="phone[number][]" type="text" value="{{ currentPhone.object.getNumber() }}" />
+				<a data-cloner-remover="true">Remove</a>
+			</label>
+		</div>
 		{% endfor %}
 	</fieldset>
 
@@ -180,6 +184,9 @@
 				Description
 				<textarea name="vehicle[description][]" disabled></textarea>
 			</label>
+			<label>
+				<a data-cloner-remover="true">Remove</a>
+			</label>
 		</div>
 
 		{% for currentVehicle in user.getVehicle() %}
@@ -196,6 +203,9 @@
 			<label>
 				Description
 				<textarea name="vehicle[description][]">{{ currentVehicle.getDescription() }}</textarea>
+			</label>
+			<label>
+				<a data-cloner-remover="true">Remove</a>
 			</label>
 		</div>
 		{% endfor %}
@@ -223,6 +233,9 @@
 				Notes
 				<textarea name="contact[notes][]" disabled></textarea>
 			</label>
+			<label>
+				<a data-cloner-remover="true">Remove</a>
+			</label>
 		</div>
 
 		{% for currentContact in user.getContact() %}
@@ -243,6 +256,9 @@
 			<label>
 				Notes
 				<textarea name="contact[notes][]">{{ currentContact.getNotes() }}</textarea>
+			</label>
+			<label>
+				<a href='#' data-cloner-remover="true">Remove</a>
 			</label>
 		</div>
 		{% endfor %}
