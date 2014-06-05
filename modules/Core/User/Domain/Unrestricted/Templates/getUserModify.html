@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="/user/update" method="post">
+<form action="/user/update/{{ user.getId() }}" method="post">
 	<input name="userId" type="hidden" value="{{ user.getId() }}" />
 
 	<fieldset>
@@ -150,6 +150,24 @@
 
 	<fieldset>
 		<legend>Vehicles</legend>
+		<span data-cloner="true">Add</span>
+
+		<div data-cloneable="true" class="hidden">
+			<input name="vehicle[id][]" type="hidden" disabled value="" />
+			<label>
+				Registration
+				<input name="vehicle[registration][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Capacity
+				<input name="vehicle[capacity][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Description
+				<textarea name="vehicle[description][]" disabled></textarea>
+			</label>
+		</div>
+
 		{% for currentVehicle in user.getVehicle() %}
 		<div>
 			<input name="vehicle[id][]" type="hidden" value="{{ currentVehicle.getId() }}" />

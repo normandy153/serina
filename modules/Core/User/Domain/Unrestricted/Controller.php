@@ -218,6 +218,9 @@ class Controller extends Unrestricted {
 		exit();
 	}
 
+	/**
+	 * Prepare a form to update an existing user
+	 */
 	public function getUserUpdate() {
 		$args = $this->getArgs();
 
@@ -268,6 +271,10 @@ class Controller extends Unrestricted {
 			'allPhones' => $allPhones,
 			'dob' => $dob->generate(),
 		));
+	}
+
+	public function postUserUpdate() {
+		new Probe($_POST);
 	}
 
 	/**
