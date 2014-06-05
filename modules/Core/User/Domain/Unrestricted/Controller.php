@@ -263,12 +263,17 @@ class Controller extends Unrestricted {
 			));
 		}
 
+		/* Prepare Phone Types
+		 */
+		$allPhoneTypes = $phoneTypeMapper->findAll();
+
 		$this->output('getUserModify', array(
 			'user' => $user,
 			'allGenders' => $allGenders,
 			'allStates' => $allStates,
 			'allCountries' => $allCountries,
 			'allPhones' => $allPhones,
+			'allPhoneTypes' => $allPhoneTypes,
 			'dob' => $dob->generate(),
 		));
 	}
