@@ -166,6 +166,7 @@ class UserMapper extends \App\Mapper\Base {
 			->leftJoin('u', 'Contact', 'co')
 			->leftJoin('u', 'Account', 'acc')
 			->where('u.id = :id')
+			->andWhere('p.deleted_at IS NULL')
 			->orderBy('u.lastname', 'DESC')
 			->prepare();
 
