@@ -279,7 +279,142 @@ class Controller extends Unrestricted {
 	}
 
 	public function postUserUpdate() {
-		new Probe($_POST);
+		$now = date('Y-m-d h:i:s');
+
+		/* Define State
+		 */
+		$stateMapper = new StateMapper();
+		$state = $stateMapper->findById($_POST['address']['state']);
+
+		/* Define Country
+		 */
+		$countryMapper = new CountryMapper();
+		$country = $countryMapper->findById($_POST['address']['country']);
+
+		/* Define Full Address
+		 * Address must exist before we can assign them to users
+		 */
+		$addressMapper = new AddressMapper();
+		$address = $addressMapper->findById($_POST['addressId']);
+
+		$address->setAddress1($_POST['address']['address1']);
+		$address->setAddress2($_POST['address']['address2']);
+		$address->setSuburb($_POST['address']['suburb']);
+		$address->setState($state->getId());
+		$address->setPostcode($_POST['address']['postcode']);
+		$address->setCountry($country->getId());
+		$address->setUpdatedAt($now);
+		$address->setDeletedAt(null);
+
+		$addressMapper->save($address);
+
+		/* User Details
+		 */
+		$recombinator = new Recombinator($_POST['dob']);
+
+		/* Define Gender
+		 */
+		$genderMapper = new GenderMapper();
+		$gender = $genderMapper->findById($_POST['gender']);
+
+		/* Define User
+		 */
+		$userMapper = new UserMapper();
+		$user = $userMapper->findById($_POST['userId']);
+
+		$user->setFirstname($_POST['firstname']);
+		$user->setLastname($_POST['lastname']);
+		$user->setBirthdate($recombinator->getReverseDatestamp());
+		$user->setAddress($address->getId());
+		$user->setGender($gender->getId());
+		$user->setUpdatedAt($now);
+		$user->setDeletedAt(null);
+
+		$userMapper->save($user);
+
+		/* Define Phone
+		 * User needs to exist before we can assign phone numbers to them
+		 */
+		$phoneMapper = new PhoneMapper();
+
+		for ($i = 0; $i < count($_POST['phone']['number']); $i++) {
+			if (is_numeric($_POST['phone']['id'][$i])) {
+				$phone = $phoneMapper->findById($_POST['phone']['id'][$i]);
+			}
+			else {
+				$phone = new Phone();
+				$phone->setCreatedAt($now);
+			}
+
+			$phone->setUserId($user->getId());
+			$phone->setNumber($_POST['phone']['number'][$i]);
+			$phone->setTypeId($_POST['phone']['type'][$i]);
+			$phone->setUpdatedAt($now);
+			$phone->setDeletedAt(null);
+
+			$phoneMapper->save($phone);
+		}
+
+		/* Define Email
+		 */
+		$emailMapper = new EmailMapper();
+		$email = $emailMapper->findById($_POST['emailId']);
+
+		$email->setUserId($user->getId());
+		$email->setAddress($_POST['email']);
+		$email->setUpdatedAt($now);
+		$email->setDeletedAt(null);
+
+		$emailMapper->save($email);
+
+		/* Define Contact
+		 */
+		$contactMapper = new ContactMapper();
+
+		for ($i = 0; $i < count($_POST['contact']['firstname']); $i++) {
+			if (is_numeric($_POST['contact']['id'][$i])) {
+				$contact = $contactMapper->findById($_POST['contact']['id'][$i]);
+			}
+			else {
+				$contact = new Contact();
+				$contact->setCreatedAt($now);
+			}
+
+			$contact->setUserId($user->getId());
+			$contact->setFirstname($_POST['contact']['firstname'][$i]);
+			$contact->setLastname($_POST['contact']['lastname'][$i]);
+			$contact->setPhone($_POST['contact']['phone'][$i]);
+			$contact->setNotes($_POST['contact']['notes'][$i]);
+			$contact->setUpdatedAt($now);
+			$contact->setDeletedAt(null);
+
+			$contactMapper->save($contact);
+		}
+
+		/* Define Vehicles
+		 */
+		$vehicleMapper = new VehicleMapper();
+
+		for ($i = 0; $i < count($_POST['vehicle']['registration']); $i++) {
+			if (is_numeric($_POST['vehicle']['id'][$i])) {
+				$vehicle = $vehicleMapper->findById($_POST['vehicle']['id'][$i]);
+			}
+			else {
+				$vehicle = new Vehicle();
+				$vehicle->setCreatedAt($now);
+			}
+
+			$vehicle->setUserId($user->getId());
+			$vehicle->setRegistration($_POST['vehicle']['registration'][$i]);
+			$vehicle->setCapacity($_POST['vehicle']['capacity'][$i]);
+			$vehicle->setDescription($_POST['vehicle']['description'][$i]);
+			$vehicle->setUpdatedAt($now);
+			$vehicle->setDeletedAt(null);
+
+			$vehicleMapper->save($vehicle);
+		}
+
+		exit();
 	}
 
 	/**
