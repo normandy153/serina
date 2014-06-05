@@ -337,6 +337,14 @@ class Controller extends Unrestricted {
 		 */
 		$phoneMapper = new PhoneMapper();
 
+		/* Remove existing phone numbers before re-adding them
+		 */
+		$allPhones = $phoneMapper->findByColumn('user_id', $user->getId());
+
+		foreach($allPhones as $currentPhone) {
+			$phoneMapper->delete($currentPhone);
+		}
+
 		for ($i = 0; $i < count($_POST['phone']['number']); $i++) {
 			if (is_numeric($_POST['phone']['id'][$i])) {
 				$phone = $phoneMapper->findById($_POST['phone']['id'][$i]);
