@@ -375,6 +375,42 @@ abstract class Base {
 		return $collection;
 	}
 
+	/**
+	 * Find all the records that have a $column with contents $value
+	 * Returns a Collection of all matching records
+	 *
+	 * http://stackoverflow.com/questions/16885091/dynamically-change-column-name-in-pdo-statement
+	 *
+	 * @param $column
+	 * @param $value
+	 * @return \App\Collection
+	 */
+	public function findByColumn($column, $value) {
+		$query = new \App\Mapper\Query();
+
+		$statement = $query
+			->select("{$this->getModel()} m")
+			->from('m')
+			->where("{$column} = :value")
+			->prepare()
+			->execute(array(
+				'value' => array(
+					'column' => $value,
+					'type' => self::TYPE_STR
+				)
+			));
+
+		$collection = new \App\Collection;
+
+		while ($row = $statement->fetch()) {
+			$object = $this->hydrate('m', $row);
+
+			$collection->add($object);
+		};
+
+		return $collection;
+	}
+
 	/* Getters/Setters
 	 */
 
