@@ -278,6 +278,9 @@ class Controller extends Unrestricted {
 		));
 	}
 
+	/**
+	 * Update a user's details
+	 */
 	public function postUserUpdate() {
 		$now = date('Y-m-d h:i:s');
 
