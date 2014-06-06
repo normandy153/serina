@@ -134,18 +134,44 @@
 
 	<fieldset>
 		<legend>Vehicles</legend>
-		<label>
-			Registration
-			<input name="vehicle[registration][]" type="text" value="" />
-		</label>
-		<label>
-			Capacity
-			<input name="vehicle[capacity][]" type="text" value="" />
-		</label>
-		<label>
-			Description
-			<textarea name="vehicle[description][]"></textarea>
-		</label>
+		<a><span data-cloner="true">Add</span></a>
+
+		<div data-cloneable="true" class="hidden">
+			<input name="vehicle[id][]" type="hidden" disabled value="" />
+			<label>
+				Registration
+				<input name="vehicle[registration][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Capacity
+				<input name="vehicle[capacity][]" type="text" disabled value="" />
+			</label>
+			<label>
+				Description
+				<textarea name="vehicle[description][]" disabled></textarea>
+			</label>
+			<label>
+				<a data-cloner-remover="true">Remove</a>
+			</label>
+		</div>
+
+		<div>
+			<label>
+				Registration
+				<input name="vehicle[registration][]" type="text" value="" />
+			</label>
+			<label>
+				Capacity
+				<input name="vehicle[capacity][]" type="text" value="" />
+			</label>
+			<label>
+				Description
+				<textarea name="vehicle[description][]"></textarea>
+			</label>
+			<label>
+				<a data-cloner-remover="true">Remove</a>
+			</label>
+		</div>
 	</fieldset>
 
 	<fieldset>
