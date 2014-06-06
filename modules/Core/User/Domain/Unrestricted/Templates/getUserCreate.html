@@ -176,9 +176,10 @@
 
 	<fieldset>
 		<legend>Contact</legend>
-		<span data-cloner="true">Add</span>
+		<a><span data-cloner="true">Add</span></a>
 
 		<div data-cloneable="true" class="hidden">
+			<input name="contact[id][]" type="hidden" disabled value="" />
 			<label>
 				Firstname
 				<input name="contact[firstname][]" type="text" disabled value="" />
@@ -195,9 +196,13 @@
 				Notes
 				<textarea name="contact[notes][]" disabled></textarea>
 			</label>
+			<label>
+				<a data-cloner-remover="true">Remove</a>
+			</label>
 		</div>
 
 		<div>
+			<input name="contact[id][]" type="hidden" value="" />
 			<label>
 				Firstname
 				<input name="contact[firstname][]" type="text" value="" />
@@ -213,6 +218,9 @@
 			<label>
 				Notes
 				<textarea name="contact[notes][]"></textarea>
+			</label>
+			<label>
+				<a data-cloner-remover="true">Remove</a>
 			</label>
 		</div>
 	</fieldset>
