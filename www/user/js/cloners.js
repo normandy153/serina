@@ -71,10 +71,9 @@
          * Remove a clone
          */
         function activateDecloners() {
-            $(config.element).find('[data-cloner-remover="true"]').click(function(event) {
-                event.preventDefault();
+            $(document).on('click', '[data-cloner-remover="true"]', function() {
                 $(this).closest('div').remove();
-            });
+            })
         }
     }
 })(jQuery);
