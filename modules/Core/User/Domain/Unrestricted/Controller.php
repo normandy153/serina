@@ -60,7 +60,7 @@ class Controller extends Unrestricted {
 		/* Generate a list of Phone Types
 		 */
 		$phoneTypeMapper = new PhoneTypeMapper();
-		$allPhoneTypes = $phoneTypeMapper->findDropdownValues();
+		$allPhoneTypes = $phoneTypeMapper->findAll();
 
 		$this->output('getUserCreate', array(
 			'dob' => $dobValues->generate(),
