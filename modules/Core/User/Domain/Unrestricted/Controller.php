@@ -411,6 +411,14 @@ class Controller extends Unrestricted {
 		 */
 		$vehicleMapper = new VehicleMapper();
 
+		/* Remove existing vehicless before re-adding them
+ 		 */
+		$allVehicles = $vehicleMapper->findByColumn('user_id', $user->getId());
+
+		foreach($allVehicles as $currentVehicle) {
+			$vehicleMapper->delete($currentVehicle);
+		}
+
 		for ($i = 0; $i < count($_POST['vehicle']['registration']); $i++) {
 			if (is_numeric($_POST['vehicle']['id'][$i])) {
 				$vehicle = $vehicleMapper->findById($_POST['vehicle']['id'][$i]);

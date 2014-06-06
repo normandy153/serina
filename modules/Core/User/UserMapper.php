@@ -168,6 +168,7 @@ class UserMapper extends \App\Mapper\Base {
 			->where('u.id = :id')
 			->andWhere('p.deleted_at IS NULL')
 			->andWhere('co.deleted_at IS NULL')
+			->andWhere('v.deleted_at IS NULL')
 			->orderBy('u.lastname', 'DESC')
 			->prepare();
 
