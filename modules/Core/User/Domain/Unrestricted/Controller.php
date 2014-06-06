@@ -379,6 +379,14 @@ class Controller extends Unrestricted {
 		 */
 		$contactMapper = new ContactMapper();
 
+		/* Remove existing contacts before re-adding them
+ 		 */
+		$allContacts = $contactMapper->findByColumn('user_id', $user->getId());
+
+		foreach($allContacts as $currentContact) {
+			$contactMapper->delete($currentContact);
+		}
+
 		for ($i = 0; $i < count($_POST['contact']['firstname']); $i++) {
 			if (is_numeric($_POST['contact']['id'][$i])) {
 				$contact = $contactMapper->findById($_POST['contact']['id'][$i]);
