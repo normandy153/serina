@@ -119,9 +119,9 @@
 
 	<fieldset>
 		<legend>Phones</legend>
-		<a><span data-cloner="true">Add</span></a>
+		<a data-cloner="true">Add</a>
 
-		<div data-cloneable="true" class="hidden">
+		<section data-cloneable="true" class="hidden">
 			<label>
 				Phone
 				<select name="phone[type][]" disabled>
@@ -133,27 +133,29 @@
 				<input name="phone[number][]" type="text" disabled value="" />
 				<a data-cloner-remover="true">Remove</a>
 			</label>
-		</div>
+		</section>
 
-		{% for currentPhone in allPhones %}
-		<div>
-			<label>
-				Phone
-				<select name="phone[type][]">
-					{% for currentPhoneType in currentPhone.list %}
-					{% if currentPhoneType.selected %}
-					<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
-					{% else %}
-					<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
-					{% endif %}
-					{% endfor %}
-				</select>
-				<input name="phone[id][]" type="hidden" value="{{ currentPhone.object.getId() }}" />
-				<input name="phone[number][]" type="text" value="{{ currentPhone.object.getNumber() }}" />
-				<a data-cloner-remover="true">Remove</a>
-			</label>
+		<div data-cloneable-socket="true" class="grid3">
+			{% for currentPhone in allPhones %}
+			<section>
+				<label>
+					Phone
+					<select name="phone[type][]">
+						{% for currentPhoneType in currentPhone.list %}
+						{% if currentPhoneType.selected %}
+						<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
+						{% else %}
+						<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
+						{% endif %}
+						{% endfor %}
+					</select>
+					<input name="phone[id][]" type="hidden" value="{{ currentPhone.object.getId() }}" />
+					<input name="phone[number][]" type="text" value="{{ currentPhone.object.getNumber() }}" />
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
+			{% endfor %}
 		</div>
-		{% endfor %}
 	</fieldset>
 
 	<fieldset>
@@ -169,9 +171,9 @@
 
 	<fieldset>
 		<legend>Vehicles</legend>
-		<a><span data-cloner="true">Add</span></a>
+		<a data-cloner="true">Add</a>
 
-		<div data-cloneable="true" class="hidden">
+		<section data-cloneable="true" class="hidden">
 			<input name="vehicle[id][]" type="hidden" disabled value="" />
 			<label>
 				Registration
@@ -188,28 +190,30 @@
 			<label>
 				<a data-cloner-remover="true">Remove</a>
 			</label>
-		</div>
+		</section>
 
-		{% for currentVehicle in user.getVehicle() %}
-		<div>
-			<input name="vehicle[id][]" type="hidden" value="{{ currentVehicle.getId() }}" />
-			<label>
-				Registration
-				<input name="vehicle[registration][]" type="text" value="{{ currentVehicle.getRegistration() }}" />
-			</label>
-			<label>
-				Capacity
-				<input name="vehicle[capacity][]" type="text" value="{{ currentVehicle.getCapacity() }}" />
-			</label>
-			<label>
-				Description
-				<textarea name="vehicle[description][]">{{ currentVehicle.getDescription() }}</textarea>
-			</label>
-			<label>
-				<a data-cloner-remover="true">Remove</a>
-			</label>
+		<div data-cloneable-socket="true" class="grid3">
+			{% for currentVehicle in user.getVehicle() %}
+			<section>
+				<input name="vehicle[id][]" type="hidden" value="{{ currentVehicle.getId() }}" />
+				<label>
+					Registration
+					<input name="vehicle[registration][]" type="text" value="{{ currentVehicle.getRegistration() }}" />
+				</label>
+				<label>
+					Capacity
+					<input name="vehicle[capacity][]" type="text" value="{{ currentVehicle.getCapacity() }}" />
+				</label>
+				<label>
+					Description
+					<textarea name="vehicle[description][]">{{ currentVehicle.getDescription() }}</textarea>
+				</label>
+				<label>
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
+			{% endfor %}
 		</div>
-		{% endfor %}
 	</fieldset>
 
 	<fieldset>
