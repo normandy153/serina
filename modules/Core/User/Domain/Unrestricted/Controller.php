@@ -445,6 +445,19 @@ class Controller extends Unrestricted {
 	}
 
 	/**
+	 * Get a list of users
+	 */
+	public function getUserList() {
+		$userMapper = new UserMapper();
+
+		$allUsers = $userMapper->findAll();
+
+		$this->output('getUserList', array(
+			'allUsers' => $allUsers,
+		));
+	}
+
+	/**
 	 * Delete a user
 	 */
 	public function getUserDelete() {
