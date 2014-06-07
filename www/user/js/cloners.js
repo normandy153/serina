@@ -63,7 +63,7 @@
 
                 /* Inject into DOM
                  */
-                fieldset.append(element);
+                fieldset.find('[data-cloneable-socket="true"]').append(element);
             })
         }
 
@@ -72,7 +72,7 @@
          */
         function activateDecloners() {
             $(document).on('click', '[data-cloner-remover="true"]', function() {
-                $(this).closest('div').remove();
+                $(this).closest('section').remove();
             })
         }
     }

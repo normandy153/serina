@@ -2,6 +2,7 @@
 
 {% block head %}
 <title>Update User</title>
+<link href='/theme/mumc/css/user.css' rel="stylesheet" media="all" />
 <script type="text/javascript" src="/user/js/cloners.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -213,9 +214,9 @@
 
 	<fieldset>
 		<legend>Contact</legend>
-		<a><span data-cloner="true">Add</span></a>
+		<a class='cloner' data-cloner="true">Add</a>
 
-		<div data-cloneable="true" class="hidden">
+		<section data-cloneable="true" class="hidden">
 			<input name="contact[id][]" type="hidden" disabled value="" />
 			<label>
 				Firstname
@@ -236,32 +237,34 @@
 			<label>
 				<a data-cloner-remover="true">Remove</a>
 			</label>
-		</div>
+		</section>
 
-		{% for currentContact in user.getContact() %}
-		<div>
-			<input name="contact[id][]" type="hidden" value="{{ currentContact.getId() }}" />
-			<label>
-				Firstname
-				<input name="contact[firstname][]" type="text" value="{{ currentContact.getFirstname() }}" />
-			</label>
-			<label>
-				Lastname
-				<input name="contact[lastname][]" type="text" value="{{ currentContact.getLastname() }}" />
-			</label>
-			<label>
-				Phone
-				<input name="contact[phone][]" type="text" value="{{ currentContact.getPhone() }}" />
-			</label>
-			<label>
-				Notes
-				<textarea name="contact[notes][]">{{ currentContact.getNotes() }}</textarea>
-			</label>
-			<label>
-				<a data-cloner-remover="true">Remove</a>
-			</label>
+		<div data-cloneable-socket="true" class="grid3">
+			{% for currentContact in user.getContact() %}
+			<section>
+				<input name="contact[id][]" type="hidden" value="{{ currentContact.getId() }}" />
+				<label>
+					Firstname
+					<input name="contact[firstname][]" type="text" value="{{ currentContact.getFirstname() }}" />
+				</label>
+				<label>
+					Lastname
+					<input name="contact[lastname][]" type="text" value="{{ currentContact.getLastname() }}" />
+				</label>
+				<label>
+					Phone
+					<input name="contact[phone][]" type="text" value="{{ currentContact.getPhone() }}" />
+				</label>
+				<label>
+					Notes
+					<textarea name="contact[notes][]">{{ currentContact.getNotes() }}</textarea>
+				</label>
+				<label>
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
+			{% endfor %}
 		</div>
-		{% endfor %}
 	</fieldset>
 
 	<input type="submit" value="Update" />
