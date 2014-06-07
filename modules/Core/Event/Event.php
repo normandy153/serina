@@ -5,7 +5,7 @@
  * Date: 15/01/2014
  * Time: 12:14 AM
  */
-namespace Core;
+namespace Core\Event;
 
 class Event {
 

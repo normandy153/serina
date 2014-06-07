@@ -33,7 +33,7 @@ class Controller extends Unrestricted {
 	 * Detail view of a particular event
 	 */
 	public function getEventDetail() {
-		$event = new Event();
+		$event = new \Core\Event\Event();
 
 		$this->output('getEventDetail', array(
 			'event' => $event
