@@ -94,9 +94,9 @@
 
 	<fieldset>
 		<legend>Phones</legend>
-		<a><span data-cloner="true">Add</span></a>
+		<a data-cloner="true">Add</a>
 
-		<div data-cloneable="true" class="hidden">
+		<section data-cloneable="true" class="hidden">
 			<label>
 				Phone
 				<select name="phone[type][]" disabled>
@@ -108,19 +108,21 @@
 				<input name="phone[number][]" type="text" disabled value="" />
 				<a data-cloner-remover="true">Remove</a>
 			</label>
-		</div>
+		</section>
 
-		<div>
-			<label>
-				Phone
-				<select name="phone[type][]">
-					{% for currentPhoneType in allPhoneTypes %}
-					<option value="{{ currentPhoneType.getId() }}">{{ currentPhoneType.getName() }}</option>
-					{% endfor %}
-				</select>
-				<input name="phone[number][]" type="text" value="" />
-				<a data-cloner-remover="true">Remove</a>
-			</label>
+		<div data-cloneable-socket="true" class="grid3">
+			<section>
+				<label>
+					Phone
+					<select name="phone[type][]">
+						{% for currentPhoneType in allPhoneTypes %}
+						<option value="{{ currentPhoneType.getId() }}">{{ currentPhoneType.getName() }}</option>
+						{% endfor %}
+					</select>
+					<input name="phone[number][]" type="text" value="" />
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
 		</div>
 	</fieldset>
 
@@ -134,9 +136,9 @@
 
 	<fieldset>
 		<legend>Vehicles</legend>
-		<a><span data-cloner="true">Add</span></a>
+		<a data-cloner="true">Add</a>
 
-		<div data-cloneable="true" class="hidden">
+		<section data-cloneable="true" class="hidden">
 			<input name="vehicle[id][]" type="hidden" disabled value="" />
 			<label>
 				Registration
@@ -153,32 +155,34 @@
 			<label>
 				<a data-cloner-remover="true">Remove</a>
 			</label>
-		</div>
+		</section>
 
-		<div>
-			<label>
-				Registration
-				<input name="vehicle[registration][]" type="text" value="" />
-			</label>
-			<label>
-				Capacity
-				<input name="vehicle[capacity][]" type="text" value="" />
-			</label>
-			<label>
-				Description
-				<textarea name="vehicle[description][]"></textarea>
-			</label>
-			<label>
-				<a data-cloner-remover="true">Remove</a>
-			</label>
+		<div data-cloneable-socket="true" class="grid3">
+			<section>
+				<label>
+					Registration
+					<input name="vehicle[registration][]" type="text" value="" />
+				</label>
+				<label>
+					Capacity
+					<input name="vehicle[capacity][]" type="text" value="" />
+				</label>
+				<label>
+					Description
+					<textarea name="vehicle[description][]"></textarea>
+				</label>
+				<label>
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
 		</div>
 	</fieldset>
 
 	<fieldset>
 		<legend>Contact</legend>
-		<a><span data-cloner="true">Add</span></a>
+		<a data-cloner="true">Add</a>
 
-		<div data-cloneable="true" class="hidden">
+		<section data-cloneable="true" class="hidden">
 			<input name="contact[id][]" type="hidden" disabled value="" />
 			<label>
 				Firstname
@@ -199,29 +203,31 @@
 			<label>
 				<a data-cloner-remover="true">Remove</a>
 			</label>
-		</div>
+		</section>
 
-		<div>
-			<input name="contact[id][]" type="hidden" value="" />
-			<label>
-				Firstname
-				<input name="contact[firstname][]" type="text" value="" />
-			</label>
-			<label>
-				Lastname
-				<input name="contact[lastname][]" type="text" value="" />
-			</label>
-			<label>
-				Phone
-				<input name="contact[phone][]" type="text" value="" />
-			</label>
-			<label>
-				Notes
-				<textarea name="contact[notes][]"></textarea>
-			</label>
-			<label>
-				<a data-cloner-remover="true">Remove</a>
-			</label>
+		<div data-cloneable-socket="true" class="grid3">
+			<section>
+				<input name="contact[id][]" type="hidden" value="" />
+				<label>
+					Firstname
+					<input name="contact[firstname][]" type="text" value="" />
+				</label>
+				<label>
+					Lastname
+					<input name="contact[lastname][]" type="text" value="" />
+				</label>
+				<label>
+					Phone
+					<input name="contact[phone][]" type="text" value="" />
+				</label>
+				<label>
+					Notes
+					<textarea name="contact[notes][]"></textarea>
+				</label>
+				<label>
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
 		</div>
 	</fieldset>
 
