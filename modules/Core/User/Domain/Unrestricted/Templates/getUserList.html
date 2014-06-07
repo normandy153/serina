@@ -1,0 +1,22 @@
+{% extends 'Unrestricted.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<table>
+	<colgroup>
+		<col width="120" />
+		<col width="120" />
+	</colgroup>
+	{% for currentUser in allUsers %}
+	<tr>
+		<td><a href="/user/detail/{{ currentUser.getId() }}">{{ currentUser.getLastname() }}</a></td>
+		<td><a href="/user/detail/{{ currentUser.getId() }}">{{ currentUser.getFirstname() }}</a></td>
+		<td><a href="/user/update/{{ currentUser.getId() }}">Edit</a></td>
+	</tr>
+	{% endfor %}
+</table>
+
+<a href="/user/create">Create a User</a>
+{% endblock %}
