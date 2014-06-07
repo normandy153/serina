@@ -1,0 +1,53 @@
+{% extends 'Unrestricted.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<a href="/user/list">Back to List</a>
+		
+<h1>{{ user.getFirstname() }} {{ user.getLastname() }}</h1>
+
+{{ user.getGender().first().getName() }}<br />
+
+{% for currentPhone in user.getPhone() %}
+	{{ currentPhone.getTypeId().first().getName() }}: {{ currentPhone.getNumber() }}<br />
+{% endfor %}
+
+<h2>Address</h2>
+<address>
+	{{ user.getAddress().first().getAddress1() }}<br />
+
+	{% if user.getAddress().first().getAddress2()|length %}
+	{{user.getAddress().first().getAddress2() }}<br />
+	{% endif %}
+
+	{{ user.getAddress().first().getSuburb()|upper }}
+	{{ user.getAddress().first().getState().first().getAbbreviation() }}
+	{{ user.getAddress().first().getPostcode() }}<br />
+
+	{{ user.getAddress().first().getCountry().first().getName() }}
+</address>
+
+<h2>Known Vehicles</h2>
+<ul>
+{% for currentVehicle in user.getVehicle() %}
+	<li>
+		{{ currentVehicle.getRegistration() }} ({{ currentVehicle.getCapacity() }})<br />
+		{{ currentVehicle.getDescription() }}
+	</li>
+{% endfor %}
+</ul>
+<h2>Contacts</h2>
+<ul>
+	{% for currentContact in user.getContact() %}
+	<li>
+		{{ currentContact.getFirstname() }} {{ currentContact.getLastname() }}<br />
+		{{ currentContact.getPhone() }}<br />
+		<p>
+			{{ currentContact.getNotes() }}
+		</p>
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}

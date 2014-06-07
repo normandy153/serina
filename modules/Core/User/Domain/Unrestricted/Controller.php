@@ -458,27 +458,17 @@ class Controller extends Unrestricted {
 	}
 
 	/**
-	 * Delete a user
-	 */
-	public function getUserDelete() {
-		$userMapper = new UserMapper();
-
-		$user = $userMapper->findById(57);
-		$userMapper->delete($user);
-
-		exit();
-	}
-
-	/**
-	 * Stub method
+	 * Get details of a particular user
 	 */
 	public function getUserDetail() {
+		$args = $this->getArgs();
+
 		$mapper = new UserMapper();
 
-		$allUsers = $mapper->findAll();
+		$user = $mapper->findDetailedById($args[1]);
 
-		new Probe($allUsers);
-
-		exit();
+		$this->output('getUserDetail', array(
+			'user' => $user
+		));
 	}
 }
