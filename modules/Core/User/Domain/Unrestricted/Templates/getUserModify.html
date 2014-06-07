@@ -1,7 +1,8 @@
 {% extends 'Unrestricted.html' %}
 
 {% block head %}
-<title>Create User</title>
+<title>Update User</title>
+<link href='/theme/mumc/css/user.css' rel="stylesheet" media="all" />
 <script type="text/javascript" src="/user/js/cloners.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -11,27 +12,37 @@
 {% endblock %}
 
 {% block content %}
-<form action="/user/create" method="post">
+<form action="/user/update/{{ user.getId() }}" method="post">
+	<input name="userId" type="hidden" value="{{ user.getId() }}" />
+
 	<fieldset>
 		<legend>Details</legend>
 		<label>
 			Firstname
-			<input name="firstname" type="text" value="" />
+			<input name="firstname" type="text" value="{{ user.getFirstname() }}" />
 		</label>
 		<label>
 			Lastname
-			<input name="lastname" type="text" value="" />
+			<input name="lastname" type="text" value="{{ user.getLastname() }}" />
 		</label>
 		<label>
 			Date of Birth
 			<select name="dob[day]">
 				{% for currentDay in dob.allDays %}
+				{% if currentDay.selected %}
+				<option value="{{ currentDay.value }}" selected="selected">{{ currentDay.label }}</option>
+				{% else %}
 				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
+				{% endif %}
 				{% endfor %}
 			</select>
 			/
 			<select name="dob[month]">
 				{% for currentMonth in dob.allMonths %}
+				{% if currentMonth.selected %}
+				<option value="{{ currentMonth.value }}" selected="selected">{{ currentMonth.label }}</option>
+				{% else %}
+				{% endif %}
 				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
 				{% endfor %}
 			</select>
@@ -50,7 +61,11 @@
 			Gender
 			<select name="gender">
 				{% for currentGender in allGenders %}
+				{% if currentGender.selected %}
+				<option value="{{ currentGender.value }}" selected="selected">{{ currentGender.label }}</option>
+				{% else %}
 				<option value="{{ currentGender.value }}">{{ currentGender.label }}</option>
+				{% endif %}
 				{% endfor %}
 			</select>
 		</label>
@@ -58,23 +73,29 @@
 
 	<fieldset>
 		<legend>Address</legend>
+		<input name="addressId" type="hidden" value="{{ user.getAddress().first().getId() }}" />
+
 		<label>
 			Address 1
-			<input name="address[address1]" type="text" value="" />
+			<input name="address[address1]" type="text" value="{{ user.getAddress().first().getAddress1() }}" />
 		</label>
 		<label>
 			Address 2
-			<input name="address[address2]" type="text" value="" />
+			<input name="address[address2]" type="text" value="{{ user.getAddress().first().getAddress2() }}" />
 		</label>
 		<label>
 			Suburb
-			<input name="address[suburb]" type="text" value="" />
+			<input name="address[suburb]" type="text" value="{{ user.getAddress().first().getSuburb() }}" />
 		</label>
 		<label>
 			State
 			<select name="address[state]">
 				{% for currentState in allStates %}
+				{% if currentState.selected %}
+				<option value="{{ currentState.value }}" selected="selected">{{ currentState.label }}</option>
+				{% else %}
 				<option value="{{ currentState.value }}">{{ currentState.label }}</option>
+				{% endif %}
 				{% endfor %}
 			</select>
 		</label>
@@ -82,13 +103,17 @@
 			Country
 			<select name="address[country]">
 				{% for currentCountry in allCountries %}
+				{% if currentCountry.selected %}
+				<option value="{{ currentCountry.value }}" selected="selected">{{ currentCountry.label }}</option>
+				{% else %}
 				<option value="{{ currentCountry.value }}">{{ currentCountry.label }}</option>
+				{% endif %}
 				{% endfor %}
 			</select>
 		</label>
 		<label>
 			Postcode
-			<input name="address[postcode]" type="text" value="" />
+			<input name="address[postcode]" type="text" value="{{ user.getAddress().first().getPostcode() }}" />
 		</label>
 	</fieldset>
 
@@ -111,27 +136,37 @@
 		</section>
 
 		<div data-cloneable-socket="true" class="grid3">
+			{% for currentPhone in allPhones %}
 			<section>
 				<label>
 					Phone
 					<select name="phone[type][]">
-						{% for currentPhoneType in allPhoneTypes %}
-						<option value="{{ currentPhoneType.getId() }}">{{ currentPhoneType.getName() }}</option>
+						{% for currentPhoneType in currentPhone.list %}
+						{% if currentPhoneType.selected %}
+						<option value="{{ currentPhoneType.value }}" selected="selected">{{ currentPhoneType.label }}</option>
+						{% else %}
+						<option value="{{ currentPhoneType.value }}">{{ currentPhoneType.label }}</option>
+						{% endif %}
 						{% endfor %}
 					</select>
-					<input name="phone[number][]" type="text" value="" />
+					<input name="phone[id][]" type="hidden" value="{{ currentPhone.object.getId() }}" />
+					<input name="phone[number][]" type="text" value="{{ currentPhone.object.getNumber() }}" />
 					<a data-cloner-remover="true">Remove</a>
 				</label>
 			</section>
+			{% endfor %}
 		</div>
 	</fieldset>
 
 	<fieldset>
 		<legend>Email</legend>
+		{% for currentEmail in user.getEmail() %}
 		<label>
 			Email
-			<input name="email" type="text" value="" />
+			<input name="emailId" type="hidden" value="{{ currentEmail.getId() }}" />
+			<input name="email" type="text" value="{{ currentEmail.getAddress() }}" />
 		</label>
+		{% endfor %}
 	</fieldset>
 
 	<fieldset>
@@ -158,29 +193,32 @@
 		</section>
 
 		<div data-cloneable-socket="true" class="grid3">
+			{% for currentVehicle in user.getVehicle() %}
 			<section>
+				<input name="vehicle[id][]" type="hidden" value="{{ currentVehicle.getId() }}" />
 				<label>
 					Registration
-					<input name="vehicle[registration][]" type="text" value="" />
+					<input name="vehicle[registration][]" type="text" value="{{ currentVehicle.getRegistration() }}" />
 				</label>
 				<label>
 					Capacity
-					<input name="vehicle[capacity][]" type="text" value="" />
+					<input name="vehicle[capacity][]" type="text" value="{{ currentVehicle.getCapacity() }}" />
 				</label>
 				<label>
 					Description
-					<textarea name="vehicle[description][]"></textarea>
+					<textarea name="vehicle[description][]">{{ currentVehicle.getDescription() }}</textarea>
 				</label>
 				<label>
 					<a data-cloner-remover="true">Remove</a>
 				</label>
 			</section>
+			{% endfor %}
 		</div>
 	</fieldset>
 
 	<fieldset>
 		<legend>Contact</legend>
-		<a data-cloner="true">Add</a>
+		<a class='cloner' data-cloner="true">Add</a>
 
 		<section data-cloneable="true" class="hidden">
 			<input name="contact[id][]" type="hidden" disabled value="" />
@@ -206,31 +244,33 @@
 		</section>
 
 		<div data-cloneable-socket="true" class="grid3">
+			{% for currentContact in user.getContact() %}
 			<section>
-				<input name="contact[id][]" type="hidden" value="" />
+				<input name="contact[id][]" type="hidden" value="{{ currentContact.getId() }}" />
 				<label>
 					Firstname
-					<input name="contact[firstname][]" type="text" value="" />
+					<input name="contact[firstname][]" type="text" value="{{ currentContact.getFirstname() }}" />
 				</label>
 				<label>
 					Lastname
-					<input name="contact[lastname][]" type="text" value="" />
+					<input name="contact[lastname][]" type="text" value="{{ currentContact.getLastname() }}" />
 				</label>
 				<label>
 					Phone
-					<input name="contact[phone][]" type="text" value="" />
+					<input name="contact[phone][]" type="text" value="{{ currentContact.getPhone() }}" />
 				</label>
 				<label>
 					Notes
-					<textarea name="contact[notes][]"></textarea>
+					<textarea name="contact[notes][]">{{ currentContact.getNotes() }}</textarea>
 				</label>
 				<label>
 					<a data-cloner-remover="true">Remove</a>
 				</label>
 			</section>
+			{% endfor %}
 		</div>
 	</fieldset>
 
-	<input type="submit" value="Submit" />
+	<input type="submit" value="Update" />
 </form>
 {% endblock %}

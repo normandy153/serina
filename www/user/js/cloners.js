@@ -27,6 +27,7 @@
         /* Send in the clones
          */
         activateCloners();
+        activateDecloners();
 
         /**
          * Init
@@ -62,7 +63,16 @@
 
                 /* Inject into DOM
                  */
-                fieldset.append(element);
+                fieldset.find('[data-cloneable-socket="true"]').append(element);
+            })
+        }
+
+        /**
+         * Remove a clone
+         */
+        function activateDecloners() {
+            $(document).on('click', '[data-cloner-remover="true"]', function() {
+                $(this).closest('section').remove();
             })
         }
     }

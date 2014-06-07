@@ -9,6 +9,7 @@
 namespace Core\User\Domain\Unrestricted;
 
 
+use App\Collection;
 use App\Controller\Domain\Unrestricted;
 use App\Date\Dropdown;
 use App\Date\Recombinator;
@@ -59,7 +60,7 @@ class Controller extends Unrestricted {
 		/* Generate a list of Phone Types
 		 */
 		$phoneTypeMapper = new PhoneTypeMapper();
-		$allPhoneTypes = $phoneTypeMapper->findDropdownValues();
+		$allPhoneTypes = $phoneTypeMapper->findAll();
 
 		$this->output('getUserCreate', array(
 			'dob' => $dobValues->generate(),
@@ -213,6 +214,232 @@ class Controller extends Unrestricted {
 
 		$accountMapper = new AccountMapper();
 		$accountMapper->save($account);
+
+		exit();
+	}
+
+	/**
+	 * Prepare a form to update an existing user
+	 */
+	public function getUserUpdate() {
+		$args = $this->getArgs();
+
+		$userMapper = new UserMapper();
+		$user = $userMapper->findDetailedById($args[1]);
+
+		/* Prepare Gender
+		 */
+		$genderMapper = new GenderMapper();
+		$allGenders = $genderMapper->findDropdownValues($user->getGender()->first()->getId());
+
+		/* Prepare date of birth
+		 */
+		$fragments = explode('-', $user->getBirthdate());
+
+		$dob = new Dropdown();
+		$dob->setPreselectedDay($fragments[2]);
+		$dob->setPreselectedMonth($fragments[1]);
+		$dob->setPreselectedYear($fragments[0]);
+
+		/* Prepare State
+		 */
+		$stateMapper = new StateMapper();
+		$allStates = $stateMapper->findDropdownValues($user->getAddress()->first()->getState()->first()->getId());
+
+		/* Prepare Country
+		 */
+		$countryMapper = new CountryMapper();
+		$allCountries = $countryMapper->findDropdownValues($user->getAddress()->first()->getCountry()->first()->getId());
+
+		/* Prepare Phone
+		 */
+		$phoneTypeMapper = new PhoneTypeMapper();
+		$allPhones = new Collection();
+
+		foreach ($user->getPhone() as $currentPhone) {
+			$allPhones->add(array(
+				'list' => $phoneTypeMapper->findDropdownValues($currentPhone->getTypeId()->first()->getId()),
+				'object' => $currentPhone
+			));
+		}
+
+		/* Prepare Phone Types
+		 */
+		$allPhoneTypes = $phoneTypeMapper->findAll();
+
+		$this->output('getUserModify', array(
+			'user' => $user,
+			'allGenders' => $allGenders,
+			'allStates' => $allStates,
+			'allCountries' => $allCountries,
+			'allPhones' => $allPhones,
+			'allPhoneTypes' => $allPhoneTypes,
+			'dob' => $dob->generate(),
+		));
+	}
+
+	/**
+	 * Update a user's details
+	 */
+	public function postUserUpdate() {
+		$now = date('Y-m-d h:i:s');
+
+		/* Define State
+		 */
+		$stateMapper = new StateMapper();
+		$state = $stateMapper->findById($_POST['address']['state']);
+
+		/* Define Country
+		 */
+		$countryMapper = new CountryMapper();
+		$country = $countryMapper->findById($_POST['address']['country']);
+
+		/* Define Full Address
+		 * Address must exist before we can assign them to users
+		 */
+		$addressMapper = new AddressMapper();
+		$address = $addressMapper->findById($_POST['addressId']);
+
+		$address->setAddress1($_POST['address']['address1']);
+		$address->setAddress2($_POST['address']['address2']);
+		$address->setSuburb($_POST['address']['suburb']);
+		$address->setState($state->getId());
+		$address->setPostcode($_POST['address']['postcode']);
+		$address->setCountry($country->getId());
+		$address->setUpdatedAt($now);
+		$address->setDeletedAt(null);
+
+		$addressMapper->save($address);
+
+		/* User Details
+		 */
+		$recombinator = new Recombinator($_POST['dob']);
+
+		/* Define Gender
+		 */
+		$genderMapper = new GenderMapper();
+		$gender = $genderMapper->findById($_POST['gender']);
+
+		/* Define User
+		 */
+		$userMapper = new UserMapper();
+		$user = $userMapper->findById($_POST['userId']);
+
+		$user->setFirstname($_POST['firstname']);
+		$user->setLastname($_POST['lastname']);
+		$user->setBirthdate($recombinator->getReverseDatestamp());
+		$user->setAddress($address->getId());
+		$user->setGender($gender->getId());
+		$user->setUpdatedAt($now);
+		$user->setDeletedAt(null);
+
+		$userMapper->save($user);
+
+		/* Define Phone
+		 * User needs to exist before we can assign phone numbers to them
+		 */
+		$phoneMapper = new PhoneMapper();
+
+		/* Remove existing phone numbers before re-adding them
+		 */
+		$allPhones = $phoneMapper->findByColumn('user_id', $user->getId());
+
+		foreach($allPhones as $currentPhone) {
+			$phoneMapper->delete($currentPhone);
+		}
+
+		for ($i = 0; $i < count($_POST['phone']['number']); $i++) {
+			if (is_numeric($_POST['phone']['id'][$i])) {
+				$phone = $phoneMapper->findById($_POST['phone']['id'][$i]);
+			}
+			else {
+				$phone = new Phone();
+				$phone->setCreatedAt($now);
+			}
+
+			$phone->setUserId($user->getId());
+			$phone->setNumber($_POST['phone']['number'][$i]);
+			$phone->setTypeId($_POST['phone']['type'][$i]);
+			$phone->setUpdatedAt($now);
+			$phone->setDeletedAt(null);
+
+			$phoneMapper->save($phone);
+		}
+
+		/* Define Email
+		 */
+		$emailMapper = new EmailMapper();
+		$email = $emailMapper->findById($_POST['emailId']);
+
+		$email->setUserId($user->getId());
+		$email->setAddress($_POST['email']);
+		$email->setUpdatedAt($now);
+		$email->setDeletedAt(null);
+
+		$emailMapper->save($email);
+
+		/* Define Contact
+		 */
+		$contactMapper = new ContactMapper();
+
+		/* Remove existing contacts before re-adding them
+ 		 */
+		$allContacts = $contactMapper->findByColumn('user_id', $user->getId());
+
+		foreach($allContacts as $currentContact) {
+			$contactMapper->delete($currentContact);
+		}
+
+		for ($i = 0; $i < count($_POST['contact']['firstname']); $i++) {
+			if (is_numeric($_POST['contact']['id'][$i])) {
+				$contact = $contactMapper->findById($_POST['contact']['id'][$i]);
+			}
+			else {
+				$contact = new Contact();
+				$contact->setCreatedAt($now);
+			}
+
+			$contact->setUserId($user->getId());
+			$contact->setFirstname($_POST['contact']['firstname'][$i]);
+			$contact->setLastname($_POST['contact']['lastname'][$i]);
+			$contact->setPhone($_POST['contact']['phone'][$i]);
+			$contact->setNotes($_POST['contact']['notes'][$i]);
+			$contact->setUpdatedAt($now);
+			$contact->setDeletedAt(null);
+
+			$contactMapper->save($contact);
+		}
+
+		/* Define Vehicles
+		 */
+		$vehicleMapper = new VehicleMapper();
+
+		/* Remove existing vehicless before re-adding them
+ 		 */
+		$allVehicles = $vehicleMapper->findByColumn('user_id', $user->getId());
+
+		foreach($allVehicles as $currentVehicle) {
+			$vehicleMapper->delete($currentVehicle);
+		}
+
+		for ($i = 0; $i < count($_POST['vehicle']['registration']); $i++) {
+			if (is_numeric($_POST['vehicle']['id'][$i])) {
+				$vehicle = $vehicleMapper->findById($_POST['vehicle']['id'][$i]);
+			}
+			else {
+				$vehicle = new Vehicle();
+				$vehicle->setCreatedAt($now);
+			}
+
+			$vehicle->setUserId($user->getId());
+			$vehicle->setRegistration($_POST['vehicle']['registration'][$i]);
+			$vehicle->setCapacity($_POST['vehicle']['capacity'][$i]);
+			$vehicle->setDescription($_POST['vehicle']['description'][$i]);
+			$vehicle->setUpdatedAt($now);
+			$vehicle->setDeletedAt(null);
+
+			$vehicleMapper->save($vehicle);
+		}
 
 		exit();
 	}
