@@ -24,6 +24,7 @@ class EventMapper extends \App\Mapper\Base {
 		$this->addProperty('name', 'name', self::TYPE_STR);
 		$this->addProperty('brief', 'brief', self::TYPE_STR);
 		$this->addProperty('description', 'description', self::TYPE_STR);
+		$this->addProperty('meetingAt', 'meeting_at', self::TYPE_STR);
 		$this->addProperty('startAt', 'start_at', self::TYPE_STR);
 		$this->addProperty('endAt', 'end_at', self::TYPE_STR);
 		$this->addProperty('hidden', 'hidden', self::TYPE_INT);

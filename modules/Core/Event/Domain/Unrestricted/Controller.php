@@ -8,10 +8,7 @@
 
 namespace Core\Event\Domain\Unrestricted;
 
-
 use App\Controller\Domain\Unrestricted;
-use App\Date\Dropdown;
-use App\Date\Recombinator;
 use App\Probe;
 use Core\Event\Event;
 use Core\Event\EventMapper;
@@ -30,6 +27,22 @@ class Controller extends Unrestricted {
 	 */
 	public function postEventCreate() {
 		$now = date('Y-m-d h:i:s');
+
+		/* Meeting Date/Time
+		 */
+		$dateElements = array(
+			sprintf("%02d", $_POST['meetingAt']['year']),
+			sprintf("%02d", $_POST['meetingAt']['month']),
+			sprintf("%02d", $_POST['meetingAt']['day']),
+		);
+
+		$timeElements = array(
+			sprintf("%02d", $_POST['meetingAt']['meridiem'] == 'pm' ? $_POST['meetingAt']['hour']+12 : $_POST['meetingAt']['hour']),
+			sprintf("%02d", $_POST['meetingAt']['minute']),
+			'00',
+		);
+
+		$meetingAt = implode('-', $dateElements) . ' ' . implode(':', $timeElements);
 
 		/* Start Date/Time
 		 */
@@ -69,6 +82,7 @@ class Controller extends Unrestricted {
 		$event->setName($_POST['name']);
 		$event->setBrief($_POST['brief']);
 		$event->setDescription($_POST['description']);
+		$event->setMeetingAt($meetingAt);
 		$event->setStartAt($startAt);
 		$event->setEndAt($endAt);
 		$event->setHidden(1);

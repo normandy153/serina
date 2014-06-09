@@ -38,6 +38,13 @@ class Event {
 	private $description = '';
 
 	/**
+	 * Meeting date
+	 *
+	 * @var string
+	 */
+	private $meetingAt = '';
+
+	/**
 	 * Start date
 	 *
 	 * @var string
@@ -151,6 +158,24 @@ class Event {
 	 */
 	public function getStartAt() {
 		return $this->startAt;
+	}
+
+	/**
+	 * Set meeting at
+	 *
+	 * @param string $meetingAt
+	 */
+	public function setMeetingAt($meetingAt) {
+		$this->meetingAt = $meetingAt;
+	}
+
+	/**
+	 * Get meeting at
+	 *
+	 * @return string
+	 */
+	public function getMeetingAt() {
+		return $this->meetingAt;
 	}
 
 	/**

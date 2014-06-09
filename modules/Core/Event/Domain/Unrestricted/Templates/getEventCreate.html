@@ -28,6 +28,10 @@
 			<textarea name="description"></textarea>
 		</label>
 		<label>
+			Meeting
+			{{ macros.selectFullDateTime_Event('meetingAt', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
+		</label>
+		<label>
 			Starts
 			{{ macros.selectFullDateTime_Event('startAt', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
 		</label>
