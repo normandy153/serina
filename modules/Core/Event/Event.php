@@ -73,34 +73,6 @@ class Event {
 	private $hidden = false;
 
 	/**
-	 * A collection of Node instances which used addresses
-	 *
-	 * @var Waypoint\PolyfillCollection
-	 */
-	private $waypoints = null;
-
-	/**
-	 * A collection of Marker instances which used lat/long
-	 *
-	 * @var \App\Collection
-	 */
-	private $markers = null;
-
-	/**
-	 * A collection of User instances
-	 *
-	 * @var null
-	 */
-	private $attendees = null;
-
-	/**
-	 * A collection of User instances
-	 *
-	 * @var null
-	 */
-	private $leaders = null;
-
-	/**
 	 * When this event was created
 	 *
 	 * @var string
@@ -231,42 +203,6 @@ class Event {
 	}
 
 	/**
-	 * Set waypoints
-	 *
-	 * @param null $waypoints
-	 */
-	public function setWaypoints($waypoints) {
-		$this->waypoints = $waypoints;
-	}
-
-	/**
-	 * Get waypoints
-	 *
-	 * @return null
-	 */
-	public function getWaypoints() {
-		return $this->waypoints;
-	}
-
-	/**
-	 * Set markers
-	 *
-	 * @param null $markers
-	 */
-	public function setMarkers($markers) {
-		$this->markers = $markers;
-	}
-
-	/**
-	 * Get markers
-	 *
-	 * @return null
-	 */
-	public function getMarkers() {
-		return $this->markers;
-	}
-
-	/**
 	 * Set description
 	 *
 	 * @param string $description
@@ -282,42 +218,6 @@ class Event {
 	 */
 	public function getDescription() {
 		return $this->description;
-	}
-
-	/**
-	 * Set attendees
-	 *
-	 * @param null $attendees
-	 */
-	public function setAttendees($attendees) {
-		$this->attendees = $attendees;
-	}
-
-	/**
-	 * Get attendees
-	 *
-	 * @return null
-	 */
-	public function getAttendees() {
-		return $this->attendees;
-	}
-
-	/**
-	 * Set leaders
-	 *
-	 * @param null $leaders
-	 */
-	public function setLeaders($leaders) {
-		$this->leaders = $leaders;
-	}
-
-	/**
-	 * Get leaders
-	 *
-	 * @return null
-	 */
-	public function getLeaders() {
-		return $this->leaders;
 	}
 
 	/**
