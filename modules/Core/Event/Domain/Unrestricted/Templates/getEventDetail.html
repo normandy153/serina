@@ -29,10 +29,14 @@
 	<section>
 		<article>
 			<div class="event-brief">
-				{{ event.getBrief() | raw }}
+				<p>
+					{{ event.getBrief() | raw }}
+				</p>
 			</div>
 
-			{{ event.getDescription() | raw }}
+			<p>
+				{{ event.getDescription() | raw }}
+			</p>
 		</article>
 	</section>
 	<section>
