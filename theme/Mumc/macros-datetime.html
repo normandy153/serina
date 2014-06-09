@@ -16,7 +16,7 @@
 		{% set selected = '' %}
 	{% endif %}
 
-	<option {{ selected }} value="{{ value }}">{{ value }}</option>
+	<option {{ selected|raw }} value="{{ value }}">{{ value }}</option>
 	{% endfor %}
 </select>
 {% endmacro %}
