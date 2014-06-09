@@ -1,3 +1,5 @@
+{# A shortcut to making a select dropdown with integer values #}
+{# These values are prefixed with a leading zero #}
 {% macro select(name, from, to, preselected) %}
 <select name="{{ name }}">
 	{% for i in range(from, to) %}
@@ -19,4 +21,18 @@
 	<option {{ selected|raw }} value="{{ value }}">{{ value }}</option>
 	{% endfor %}
 </select>
+{% endmacro %}
+
+{# selectDateTime() #}
+{# Multiple uses of select() combined in a shortcut #}
+{% macro selectDateTime() %}
+	{% import _self as self %}
+
+	{{ self.select('startAt[year]', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y')+1) }}
+	{{ self.select('startAt[month]', 0, 12, 'now'|date('m')) }}
+	{{ self.select('startAt[day]', 0, 31, 'now'|date('d')) }}
+
+	{{ self.select('startAt[hour]', 0, 23, 'now'|date('H')) }}
+	{{ self.select('startAt[minute]', 0, 59, 'now'|date('i')) }}
+	{{ self.select('startAt[second]', 0, 59, 'now'|date('s')) }}
 {% endmacro %}

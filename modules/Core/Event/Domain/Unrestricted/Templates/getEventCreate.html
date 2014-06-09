@@ -12,9 +12,7 @@
 {% endblock %}
 
 {% block content %}
-
-{{ macros.select('startAt[year]', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y')+1) }}
-
+{{ macros.selectDateTime() }}
 <form action="/event/create" method="post">
 	<fieldset>
 		<legend>Details</legend>
