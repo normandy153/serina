@@ -37,10 +37,8 @@ class Controller extends Unrestricted {
 
 		$eventMapper = new \Core\Event\EventMapper();
 
-
 		$event = $eventMapper->findById($args[1]);
 
-		new Probe($event);
 		$this->output('getEventDetail', array(
 			'event' => $event
 		));
