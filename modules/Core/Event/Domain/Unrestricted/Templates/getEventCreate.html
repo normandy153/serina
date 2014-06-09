@@ -1,0 +1,97 @@
+{% extends 'Unrestricted.html' %}
+
+{% block head %}
+<title>Create User</title>
+<script type="text/javascript" src="/user/js/cloners.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('form').addCloners();
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<form action="/event/create" method="post">
+	<fieldset>
+		<legend>Details</legend>
+		<label>
+			Name
+			<input name="name" type="text" value="" />
+		</label>
+		<label>
+			Brief
+			<textarea name="brief"></textarea>
+		</label>
+		<label>
+			Description
+			<textarea name="description"></textarea>
+		</label>
+		<label>
+			Starts
+			<select name="startsAt[day]">
+				{% for currentDay in allDates.allDays %}
+				{% if currentDay.selected %}
+				<option value="{{ currentDay.value }}" selected="selected">{{ currentDay.label }}</option>
+				{% else %}
+				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+			/
+			<select name="startsAt[month]">
+				{% for currentMonth in allDates.allMonths %}
+				{% if currentMonth.selected %}
+				<option value="{{ currentMonth.value }}" selected="selected">{{ currentMonth.label }}</option>
+				{% else %}
+				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+			/
+			<select name="startsAt[year]">
+				{% for currentYear in allDates.allYears %}
+				{% if currentYear.selected %}
+				<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
+				{% else %}
+				<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</label>
+		<label>
+			Ends
+			<select name="endsAt[day]">
+				{% for currentDay in allDates.allDays %}
+				{% if currentDay.selected %}
+				<option value="{{ currentDay.value }}" selected="selected">{{ currentDay.label }}</option>
+				{% else %}
+				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+			/
+			<select name="endsAt[month]">
+				{% for currentMonth in allDates.allMonths %}
+				{% if currentMonth.selected %}
+				<option value="{{ currentMonth.value }}" selected="selected">{{ currentMonth.label }}</option>
+				{% else %}
+				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+			/
+			<select name="endsAt[year]">
+				{% for currentYear in allDates.allYears %}
+				{% if currentYear.selected %}
+				<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
+				{% else %}
+				<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</label>
+	</fieldset>
+
+	<input type="submit" value="Submit" />
+</form>
+{% endblock %}
