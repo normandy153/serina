@@ -21,6 +21,7 @@ class EventMapper extends \App\Mapper\Base {
 		$this->setTable('event');
 
 		$this->addProperty('id', 'id', self::TYPE_INT);
+		$this->addProperty('uuid', 'uuid', self::TYPE_STR);
 		$this->addProperty('name', 'name', self::TYPE_STR);
 		$this->addProperty('brief', 'brief', self::TYPE_STR);
 		$this->addProperty('description', 'description', self::TYPE_STR);

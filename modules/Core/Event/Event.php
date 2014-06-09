@@ -17,6 +17,13 @@ class Event {
 	private $id = null;
 
 	/**
+	 * Public unique identifier
+	 *
+	 * @var string
+	 */
+	private $uuid = '';
+
+	/**
 	 * Event name
 	 *
 	 * @var string
@@ -119,6 +126,15 @@ class Event {
 	 */
 	public function __construct() {
 
+	}
+
+	/**
+	 * Generate uuid
+	 */
+	public function generateUuid() {
+		$base = strtoupper(sha1(crypt(microtime() . rand(0,10000))));
+
+		return trim(chunk_split($base, 4, '-'), '-');
 	}
 
 	/* Getters/Setters
@@ -338,6 +354,24 @@ class Event {
 	 */
 	public function getHidden() {
 		return $this->hidden;
+	}
+
+	/**
+	 * Set uuid
+	 *
+	 * @param string $uuid
+	 */
+	public function setUuid($uuid) {
+		$this->uuid = $uuid;
+	}
+
+	/**
+	 * Get uuid
+	 *
+	 * @return string
+	 */
+	public function getUuid() {
+		return $this->uuid;
 	}
 
 	/**

@@ -86,6 +86,7 @@ class Controller extends Unrestricted {
 		$event->setStartAt($startAt);
 		$event->setEndAt($endAt);
 		$event->setHidden(1);
+		$event->setUuid($event->generateUuid());
 		$event->setCreatedAt($now);
 		$event->setUpdatedAt($now);
 		$event->setDeletedAt(null);
