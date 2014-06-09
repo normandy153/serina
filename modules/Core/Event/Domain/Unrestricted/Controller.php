@@ -33,8 +33,14 @@ class Controller extends Unrestricted {
 	 * Detail view of a particular event
 	 */
 	public function getEventDetail() {
-		$event = new \Core\Event\Event();
+		$args = $this->getArgs();
 
+		$eventMapper = new \Core\Event\EventMapper();
+
+
+		$event = $eventMapper->findById($args[1]);
+
+		new Probe($event);
 		$this->output('getEventDetail', array(
 			'event' => $event
 		));

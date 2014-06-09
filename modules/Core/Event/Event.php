@@ -42,14 +42,14 @@ class Event {
 	 *
 	 * @var string
 	 */
-	private $startDateTime = '';
+	private $startAt = '';
 
 	/**
 	 * End date
 	 *
 	 * @var string
 	 */
-	private $endDateTime = '';
+	private $endAt = '';
 
 	/**
 	 * Whether this event is hidden from the public
@@ -57,27 +57,6 @@ class Event {
 	 * @var bool
 	 */
 	private $hidden = false;
-
-	/**
-	 * When this event was created
-	 *
-	 * @var string
-	 */
-	private $createdAt = '';
-
-	/**
-	 * When this event was last updated
-	 *
-	 * @var string
-	 */
-	private $updatedAt = '';
-
-	/**
-	 * When this event was softdeleted
-	 *
-	 * @var string
-	 */
-	private $deletedAt = '';
 
 	/**
 	 * A collection of Node instances which used addresses
@@ -108,6 +87,27 @@ class Event {
 	private $leaders = null;
 
 	/**
+	 * When this event was created
+	 *
+	 * @var string
+	 */
+	private $createdAt = '';
+
+	/**
+	 * When this event was last updated
+	 *
+	 * @var string
+	 */
+	private $updatedAt = '';
+
+	/**
+	 * When this event was softdeleted
+	 *
+	 * @var string
+	 */
+	private $deletedAt = '';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -118,21 +118,39 @@ class Event {
 	 */
 
 	/**
-	 * Set end datetime
+	 * Set end at
 	 *
-	 * @param string $endDateTime
+	 * @param string $endAt
 	 */
-	public function setEndDateTime($endDateTime) {
-		$this->endDateTime = $endDateTime;
+	public function setEndAt($endAt) {
+		$this->endAt = $endAt;
 	}
 
 	/**
-	 * Get end datetime
+	 * Get end at
 	 *
 	 * @return string
 	 */
-	public function getEndDateTime() {
-		return $this->endDateTime;
+	public function getEndAt() {
+		return $this->endAt;
+	}
+
+	/**
+	 * Set start at
+	 *
+	 * @param string $startAt
+	 */
+	public function setStartAt($startAt) {
+		$this->startAt = $startAt;
+	}
+
+	/**
+	 * Get start at
+	 *
+	 * @return string
+	 */
+	public function getStartAt() {
+		return $this->startAt;
 	}
 
 	/**
@@ -169,24 +187,6 @@ class Event {
 	 */
 	public function getName() {
 		return $this->name;
-	}
-
-	/**
-	 * Set start datetime
-	 *
-	 * @param string $startDateTime
-	 */
-	public function setStartDateTime($startDateTime) {
-		$this->startDateTime = $startDateTime;
-	}
-
-	/**
-	 * Get start datetime
-	 *
-	 * @return string
-	 */
-	public function getStartDateTime() {
-		return $this->startDateTime;
 	}
 
 	/**
