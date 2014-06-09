@@ -11,9 +11,10 @@ namespace Core\Event\Domain\Unrestricted;
 
 use App\Controller\Domain\Unrestricted;
 use App\Date\Dropdown;
+use App\Date\Recombinator;
 use App\Probe;
-use Core\Event;
-use Core\User\UserMapper;
+use Core\Event\Event;
+use Core\Event\EventMapper;
 
 class Controller extends Unrestricted {
 
@@ -36,7 +37,58 @@ class Controller extends Unrestricted {
 	 * Create a new Event
 	 */
 	public function postEventCreate() {
+		$now = date('Y-m-d h:i:s');
 
+		/* Start Date/Time
+		 */
+		$dateElements = array(
+			sprintf("%02d", $_POST['startAt']['year']),
+			sprintf("%02d", $_POST['startAt']['month']),
+			sprintf("%02d", $_POST['startAt']['day']),
+		);
+
+		$timeElements = array(
+			sprintf("%02d", $_POST['startAt']['hour']),
+			sprintf("%02d", $_POST['startAt']['minute']),
+			'00',
+		);
+
+		$startAt = implode('-', $dateElements) . ' ' . implode(':', $timeElements);
+
+		/* End Date/Time
+		 */
+		$dateElements = array(
+			sprintf("%02d", $_POST['endAt']['year']),
+			sprintf("%02d", $_POST['endAt']['month']),
+			sprintf("%02d", $_POST['endAt']['day']),
+		);
+
+		$timeElements = array(
+			sprintf("%02d", $_POST['endAt']['hour']),
+			sprintf("%02d", $_POST['endAt']['minute']),
+			'00',
+		);
+
+		$endAt = implode('-', $dateElements) . ' ' . implode(':', $timeElements);
+
+		/* Event
+		 */
+		$event = new Event();
+		$event->setName($_POST['name']);
+		$event->setBrief($_POST['brief']);
+		$event->setDescription($_POST['description']);
+		$event->setStartAt($startAt);
+		$event->setEndAt($endAt);
+		$event->setHidden(1);
+		$event->setCreatedAt($now);
+		$event->setUpdatedAt($now);
+		$event->setDeletedAt(null);
+
+		$eventMapper = new EventMapper();
+		$eventMapper->save($event);
+
+		new Probe($event);
+		exit();
 	}
 
 	/**
