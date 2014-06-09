@@ -12,7 +12,8 @@
 {% endblock %}
 
 {% block content %}
-{{ macros.selectDateTime() }}
+{{ macros.selectFullDateTime_RangedYear('now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
+
 <form action="/event/create" method="post">
 	<fieldset>
 		<legend>Details</legend>

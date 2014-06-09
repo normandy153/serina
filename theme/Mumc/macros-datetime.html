@@ -25,14 +25,14 @@
 
 {# selectDateTime() #}
 {# Multiple uses of select() combined in a shortcut #}
-{% macro selectDateTime() %}
+{% macro selectFullDateTime_RangedYear(startYear, endYear, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute, selectedSecond) %}
 	{% import _self as self %}
 
-	{{ self.select('startAt[year]', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y')+1) }}
-	{{ self.select('startAt[month]', 0, 12, 'now'|date('m')) }}
-	{{ self.select('startAt[day]', 0, 31, 'now'|date('d')) }}
+	{{ self.select('startAt[year]', startYear, endYear, selectedYear) }}
+	{{ self.select('startAt[month]', 0, 12, selectedMonth) }}
+	{{ self.select('startAt[day]', 0, 31, selectedDay) }}
 
-	{{ self.select('startAt[hour]', 0, 23, 'now'|date('H')) }}
-	{{ self.select('startAt[minute]', 0, 59, 'now'|date('i')) }}
-	{{ self.select('startAt[second]', 0, 59, 'now'|date('s')) }}
+	{{ self.select('startAt[hour]', 0, 23, selectedHour) }}
+	{{ self.select('startAt[minute]', 0, 59, selectedMinute) }}
+	{{ self.select('startAt[second]', 0, 59, selectedSecond) }}
 {% endmacro %}
