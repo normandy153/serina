@@ -94,7 +94,21 @@ class Controller extends Unrestricted {
 		$eventMapper = new EventMapper();
 		$eventMapper->save($event);
 
+		header("Location: /event/update/{$event->getId()}");
+	}
+
+	/**
+	 * Update an existing Event
+	 */
+	public function getEventUpdate() {
+		$args = $this->getArgs();
+
+		$eventMapper = new EventMapper();
+
+		$event = $eventMapper->findById($args[1]);
+
 		new Probe($event);
+
 		exit();
 	}
 
