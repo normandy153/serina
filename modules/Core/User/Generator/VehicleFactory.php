@@ -38,7 +38,7 @@ class VehicleFactory extends Base {
 		$vehicle = new \Core\User\Vehicle();
 		$vehicle->setDescription("{$colour} {$type}");
 		$vehicle->setRegistration(implode('', $registration));
-		$vehicle->setPassengers(5);
+		$vehicle->setCapacity(5);
 
 		return $vehicle;
 	}

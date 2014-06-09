@@ -1,0 +1,40 @@
+{% extends 'Unrestricted.html' %}
+{% import "macros-datetime.html" as macros %}
+
+{% block head %}
+<title>Create Event</title>
+{% endblock %}
+
+{% block content %}
+<form action="/event/create" method="post">
+	<fieldset>
+		<legend>Details</legend>
+		<label>
+			Name
+			<input name="name" type="text" value="" />
+		</label>
+		<label>
+			Brief
+			<textarea name="brief"></textarea>
+		</label>
+		<label>
+			Description
+			<textarea name="description"></textarea>
+		</label>
+		<label>
+			Meeting
+			{{ macros.selectFullDateTime_Event('meetingAt', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
+		</label>
+		<label>
+			Starts
+			{{ macros.selectFullDateTime_Event('startAt', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
+		</label>
+		<label>
+			Ends
+			{{ macros.selectFullDateTime_Event('endAt', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
+		</label>
+	</fieldset>
+
+	<input type="submit" value="Submit" />
+</form>
+{% endblock %}

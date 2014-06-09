@@ -1,0 +1,113 @@
+{# select() #}
+{# A shortcut to making a select dropdown with integer values #}
+{# These values are prefixed with a leading zero #}
+{# ------------------------------------------------------------------------- #}
+{% macro select(name, from, to, preselected) %}
+<select name="{{ name }}">
+	{% for i in range(from, to) %}
+
+	{# Concatenate a leading zero #}
+	{% if i < 10 %}
+	{% set value = 0 ~ i %}
+	{% else %}
+	{% set value = i %}
+	{% endif %}
+
+	{# Optional preselected state #}
+	{% if i == preselected %}
+	{% set selected = 'selected="selected"' %}
+	{% else %}
+	{% set selected = '' %}
+	{% endif %}
+
+	<option {{ selected|raw }} value="{{ value }}">{{ value }}</option>
+	{% endfor %}
+</select>
+{% endmacro %}
+
+
+{# selectMonth() #}
+{# A specialised version of select() #}
+{# These values translate into textual month for display purposes #}
+{# ------------------------------------------------------------------------- #}
+{% macro selectMonth(name, from, to, preselected) %}
+<select name="{{ name }}">
+	{% for i in range(from, to) %}
+
+	{# Concatenate a leading zero #}
+	{% if i < 10 %}
+	{% set value = 0 ~ i %}
+	{% else %}
+	{% set value = i %}
+	{% endif %}
+
+	{# Optional preselected state #}
+	{% if i == preselected %}
+	{% set selected = 'selected="selected"' %}
+	{% else %}
+	{% set selected = '' %}
+	{% endif %}
+
+	{# Display value as textual month index #}
+	{% set label = date('2014-' ~ value ~ '-01')|date('M') %}
+
+	<option {{ selected|raw }} value="{{ value }}">{{ label }}</option>
+	{% endfor %}
+</select>
+{% endmacro %}
+
+
+{# selectFullDateTime_RangedYear() #}
+{# Multiple uses of select() combined in a shortcut #}
+{# This provides the usual datetime preselected values, but limits the #}
+{# options for the Year dropdown, e.g. for minimum age etc #}
+{# ------------------------------------------------------------------------- #}
+{% macro selectFullDateTime_RangedYear(name, startYear, endYear, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute, selectedSecond) %}
+	{% import _self as self %}
+
+	{{ self.select(name~'[day]', 0, 31, selectedDay) }} /
+	{{ self.select(name~'[month]', 0, 12, selectedMonth) }} /
+	{{ self.select(name~'[year]', startYear, endYear, selectedYear) }}
+
+	{{ self.select(name~'[hour]', 0, 23, selectedHour) }} :
+	{{ self.select(name~'[minute]', 0, 59, selectedMinute) }} :
+	{{ self.select(name~'[second]', 0, 59, selectedSecond) }}
+{% endmacro %}
+
+
+{# selectFullDateTime_Event() #}
+{# Specialised version of selectFullDateTime_RangedYear() for events #}
+{# This excludes Seconds, and uses a Month translation #}
+{# This uses a meridiem selector #}
+{# ------------------------------------------------------------------------- #}
+{% macro selectFullDateTime_Event(name, startYear, endYear, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute, selectedSecond) %}
+	{% import _self as self %}
+
+	{{ self.select(name~'[day]', 0, 31, selectedDay) }}
+	{{ self.selectMonth(name~'[month]', 0, 12, selectedMonth) }}
+	{{ self.select(name~'[year]', startYear, endYear, selectedYear) }} at
+
+	{# Preselect hour using 12-hour format #}
+	{% if selectedHour > 12 %}
+		{% set hour = selectedHour-12 %}
+		{% set isMorning = false %}
+	{% else %}
+		{% set hour = selectedHour %}
+		{% set isMorning = true %}
+	{% endif %}
+
+	{{ self.select(name~'[hour]', 0, 12, hour) }} :
+	{{ self.select(name~'[minute]', 0, 59, selectedMinute) }}
+	<input name="{{ name~'[second]' }}" type="hidden" value="00" />
+
+	{# Preselect meridiem #}
+	<select name="{{ name~'[meridiem]' }}">
+		{% if isMorning %}
+		<option value="am" selected="selected">AM</option>
+		<option value="pm">PM</option>
+		{% else %}
+		<option value="am">AM</option>
+		<option value="pm" selected="selected">PM</option>
+		{% endif %}
+	</select>
+{% endmacro %}
