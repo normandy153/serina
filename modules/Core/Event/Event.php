@@ -14,47 +14,42 @@ class Event {
 	 *
 	 * @var int
 	 */
-	private $id = 1;
+	private $id = null;
 
 	/**
 	 * Event name
 	 *
 	 * @var string
 	 */
-	private $name = 'Test Event';
+	private $name = '';
 
 	/**
 	 * Event brief
 	 *
 	 * @var string
 	 */
-	private $brief = '<p>Dynamically target high-payoff intellectual capital for customized technologies. Objectively integrate emerging core competencies before process-centric communities. Dramatically evisculate holistic innovation rather than client-centric data.</p>';
+	private $brief = '';
 
 	/**
 	 * Event description
 	 *
 	 * @var string
 	 */
-	private $description = '
-		<p>Credibly reintermediate backend ideas for cross-platform models. Continually reintermediate integrated processes through technically sound intellectual capital. Holistically foster superior methodologies without market-driven best practices.</p>
-		<p>Distinctively exploit optimal alignments for intuitive bandwidth. Quickly coordinate e-business applications through revolutionary catalysts for change. Seamlessly underwhelm optimal testing procedures whereas bricks-and-clicks processes.</p>
-		<p>Synergistically evolve 2.0 technologies rather than just in time initiatives. Quickly deploy strategic networks with compelling e-business. Credibly pontificate highly efficient manufactured products and enabled data.</p>
-		<p>Dynamically target high-payoff intellectual capital for customized technologies. Objectively integrate emerging core competencies before process-centric communities. Dramatically evisculate holistic innovation rather than client-centric data.</p>
-		<p>Progressively maintain extensive infomediaries via extensible niches. Dramatically disseminate standardized metrics after resource-leveling processes. Objectively pursue diverse catalysts for change for interoperable meta-services.</p>';
+	private $description = '';
 
 	/**
 	 * Start date
 	 *
 	 * @var string
 	 */
-	private $startDateTime = '2014-01-15 12:20:00';
+	private $startDateTime = '';
 
 	/**
 	 * End date
 	 *
 	 * @var string
 	 */
-	private $endDateTime = '2014-01-17 17:00:00';
+	private $endDateTime = '';
 
 	/**
 	 * Whether this event is hidden from the public
@@ -87,7 +82,7 @@ class Event {
 	/**
 	 * A collection of Node instances which used addresses
 	 *
-	 * @var Event\Waypoint\PolyfillCollection
+	 * @var Waypoint\PolyfillCollection
 	 */
 	private $waypoints = null;
 
@@ -117,54 +112,6 @@ class Event {
 	 */
 	public function __construct() {
 
-		/* Assemble waypoints
-		 * Transcode nodes into a single polyfill collection
-		 */
-		$allWaypoints = array(
-			'169-171 Berkeley Street, Melbourne, VIC, 3000',
-			'Mansfield, Victoria, Australia',
-			'Tawonga South, Australia',
-		);
-
-		$waypointCollection = new \Core\Event\Waypoint\PolyfillCollection($allWaypoints);
-		$waypointCollection->transcode();
-
-		/* Markers (Points of Interest)
-		 */
-		$markerCollection = new \App\Collection();
-
-		$marker = new \Core\Event\Waypoint\Marker();
-		$marker->setLatitude('-37.777185')->setLongitude('144.834234')->setDescription('A random place.');
-		$markerCollection->add($marker);
-
-		$marker = new \Core\Event\Waypoint\Marker();
-		$marker->setLatitude('-36.732281')->setLongitude('147.306061')->setDescription('Mt. Bogong Summit');
-		$markerCollection->add($marker);
-
-		/* Attendees
-		 */
-		$userFactory = new \Core\User\Generator\UserFactory();
-
-		$attendees = new \App\Collection();
-		$attendees->add($userFactory->spawn());
-		$attendees->add($userFactory->spawn());
-		$attendees->add($userFactory->spawn());
-		$attendees->add($userFactory->spawn());
-		$attendees->add($userFactory->spawn());
-		$attendees->add($userFactory->spawn());
-		$attendees->add($userFactory->spawn());
-		$attendees->add($userFactory->spawn());
-
-		/* People
-		 */
-		$leaders = new \App\Collection();
-		$leaders->add($userFactory->spawn());
-		$leaders->add($userFactory->spawn());
-
-		$this->setWaypoints($waypointCollection);
-		$this->setMarkers($markerCollection);
-		$this->setAttendees($attendees);
-		$this->setLeaders($leaders);
 	}
 
 	/* Getters/Setters
@@ -349,7 +296,6 @@ class Event {
 	public function getBrief() {
 		return $this->brief;
 	}
-
 
 	/**
 	 * Set hidden
