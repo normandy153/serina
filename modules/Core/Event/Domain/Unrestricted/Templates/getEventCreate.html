@@ -1,5 +1,5 @@
 {% extends 'Unrestricted.html' %}
-{% import "macros.html" as macros %}
+{% import "macros-datetime.html" as macros %}
 
 {% block head %}
 <title>Create Event</title>
@@ -13,7 +13,7 @@
 
 {% block content %}
 
-{{ macros.selectYear('startAt[year]', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y')+1) }}
+{{ macros.select('startAt[year]', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y')+1) }}
 
 <form action="/event/create" method="post">
 	<fieldset>

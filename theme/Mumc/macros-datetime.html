@@ -1,0 +1,22 @@
+{% macro select(name, from, to, preselected) %}
+<select name="{{ name }}">
+	{% for i in range(from, to) %}
+
+	{# Concatenate a leading zero #}
+	{% if i < 10 %}
+		{% set value = 0 ~ i %}
+	{% else %}
+		{% set value = i %}
+	{% endif %}
+
+	{# Optional preselected state #}
+	{% if i == preselected %}
+		{% set selected = 'selected="selected"' %}
+	{% else %}
+		{% set selected = '' %}
+	{% endif %}
+
+	<option {{ selected }} value="{{ value }}">{{ value }}</option>
+	{% endfor %}
+</select>
+{% endmacro %}
