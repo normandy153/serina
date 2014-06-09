@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-{{ macros.selectFullDateTime_RangedYear('now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
+
 
 <form action="/event/create" method="post">
 	<fieldset>
@@ -31,115 +31,11 @@
 		</label>
 		<label>
 			Starts
-			<select name="startAt[day]">
-				{% for currentDay in allDates.allDays %}
-				{% if currentDay.selected %}
-				<option value="{{ currentDay.value }}" selected="selected">{{ currentDay.label }}</option>
-				{% else %}
-				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
-				{% endif %}
-				{% endfor %}
-			</select>
-			/
-			<select name="startAt[month]">
-				{% for currentMonth in allDates.allMonths %}
-				{% if currentMonth.selected %}
-				<option value="{{ currentMonth.value }}" selected="selected">{{ currentMonth.label }}</option>
-				{% else %}
-				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
-				{% endif %}
-				{% endfor %}
-			</select>
-			/
-			<select name="startAt[year]">
-				{% for currentYear in allDates.allYears %}
-				{% if currentYear.selected %}
-				<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
-				{% else %}
-				<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
-				{% endif %}
-				{% endfor %}
-			</select>
-
-			<select name="startAt[hour]">
-				{% for i in 0..23 %}
-				<option value="{{ i }}">
-					{% if i < 10 %}
-					0{{ i }}
-					{% else %}
-					{{ i }}
-					{% endif %}
-				</option>
-				{% endfor %}
-			</select>
-			:
-			<select name="startAt[minute]">
-				{% for i in 0..59 %}
-				<option value="{{ i }}">
-					{% if i < 10 %}
-					0{{ i }}
-					{% else %}
-					{{ i }}
-					{% endif %}
-				</option>
-				{% endfor %}
-			</select>
+			{{ macros.selectFullDateTime_Event('startAt', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
 		</label>
 		<label>
 			Ends
-			<select name="endAt[day]">
-				{% for currentDay in allDates.allDays %}
-				{% if currentDay.selected %}
-				<option value="{{ currentDay.value }}" selected="selected">{{ currentDay.label }}</option>
-				{% else %}
-				<option value="{{ currentDay.value }}">{{ currentDay.label }}</option>
-				{% endif %}
-				{% endfor %}
-			</select>
-			/
-			<select name="endAt[month]">
-				{% for currentMonth in allDates.allMonths %}
-				{% if currentMonth.selected %}
-				<option value="{{ currentMonth.value }}" selected="selected">{{ currentMonth.label }}</option>
-				{% else %}
-				<option value="{{ currentMonth.value }}">{{ currentMonth.label }}</option>
-				{% endif %}
-				{% endfor %}
-			</select>
-			/
-			<select name="endAt[year]">
-				{% for currentYear in allDates.allYears %}
-				{% if currentYear.selected %}
-				<option value="{{ currentYear.value }}" selected="selected">{{ currentYear.label }}</option>
-				{% else %}
-				<option value="{{ currentYear.value }}">{{ currentYear.label }}</option>
-				{% endif %}
-				{% endfor %}
-			</select>
-
-			<select name="endAt[hour]">
-				{% for i in 0..23 %}
-				<option value="{{ i }}">
-					{% if i < 10 %}
-					0{{ i }}
-					{% else %}
-					{{ i }}
-					{% endif %}
-				</option>
-				{% endfor %}
-			</select>
-			:
-			<select name="endAt[minute]">
-				{% for i in 0..59 %}
-				<option value="{{ i }}">
-					{% if i < 10 %}
-					0{{ i }}
-					{% else %}
-					{{ i }}
-					{% endif %}
-				</option>
-				{% endfor %}
-			</select>
+			{{ macros.selectFullDateTime_Event('endAt', 'now'|date('Y'), 'now'|date('Y')+1, 'now'|date('Y'), 'now'|date('m'), 'now'|date('d'), 'now'|date('H'), 'now'|date('i'), 'now'|date('s')) }}
 		</label>
 	</fieldset>
 
