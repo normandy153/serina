@@ -1,5 +1,7 @@
+{# select() #}
 {# A shortcut to making a select dropdown with integer values #}
 {# These values are prefixed with a leading zero #}
+{# ------------------------------------------------------------------------- #}
 {% macro select(name, from, to, preselected) %}
 <select name="{{ name }}">
 	{% for i in range(from, to) %}
@@ -23,8 +25,11 @@
 </select>
 {% endmacro %}
 
-{# selectDateTime() #}
+{# selectFullDateTime_RangedYear() #}
 {# Multiple uses of select() combined in a shortcut #}
+{# This provides the usual datetime preselected values, but limits the #}
+{# options for the Year dropdown, e.g. for minimum age etc #}
+{# ------------------------------------------------------------------------- #}
 {% macro selectFullDateTime_RangedYear(startYear, endYear, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute, selectedSecond) %}
 	{% import _self as self %}
 
