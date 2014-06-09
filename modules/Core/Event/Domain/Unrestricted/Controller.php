@@ -22,15 +22,7 @@ class Controller extends Unrestricted {
 	 * Prepare a form to create a new Event
 	 */
 	public function getEventCreate() {
-		$dropdown = new Dropdown();
-		$dropdown->setMinYearOffset(0);
-		$dropdown->setPreselectedYear(date('Y'));
-		$dropdown->setPreselectedMonth(date('n'));
-		$dropdown->setPreselectedDay(date('j'));
-
-		$this->output('getEventCreate', array(
-			'allDates' => $dropdown->generate(),
-		));
+		$this->output('getEventCreate', array());
 	}
 
 	/**
