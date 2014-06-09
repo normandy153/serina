@@ -48,7 +48,7 @@ class Controller extends Unrestricted {
 		);
 
 		$timeElements = array(
-			sprintf("%02d", $_POST['startAt']['hour']),
+			sprintf("%02d", $_POST['startAt']['meridiem'] == 'pm' ? $_POST['startAt']['hour']+12 : $_POST['startAt']['hour']),
 			sprintf("%02d", $_POST['startAt']['minute']),
 			'00',
 		);
@@ -64,7 +64,7 @@ class Controller extends Unrestricted {
 		);
 
 		$timeElements = array(
-			sprintf("%02d", $_POST['endAt']['hour']),
+			sprintf("%02d", $_POST['endAt']['meridiem'] == 'pm' ? $_POST['endAt']['hour']+12 : $_POST['endAt']['hour']),
 			sprintf("%02d", $_POST['endAt']['minute']),
 			'00',
 		);
