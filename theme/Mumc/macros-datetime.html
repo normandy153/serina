@@ -78,6 +78,7 @@
 {# selectFullDateTime_Event() #}
 {# Specialised version of selectFullDateTime_RangedYear() for events #}
 {# This excludes Seconds, and uses a Month translation #}
+{# This uses a meridiem selector #}
 {# ------------------------------------------------------------------------- #}
 {% macro selectFullDateTime_Event(name, startYear, endYear, selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute, selectedSecond) %}
 	{% import _self as self %}
@@ -86,7 +87,27 @@
 	{{ self.selectMonth(name~'[month]', 0, 12, selectedMonth) }}
 	{{ self.select(name~'[year]', startYear, endYear, selectedYear) }} at
 
-	{{ self.select(name~'[hour]', 0, 23, selectedHour) }} :
+	{# Preselect hour using 12-hour format #}
+	{% if selectedHour > 12 %}
+		{% set hour = selectedHour-12 %}
+		{% set isMorning = false %}
+	{% else %}
+		{% set hour = selectedHour %}
+		{% set isMorning = true %}
+	{% endif %}
+
+	{{ self.select(name~'[hour]', 0, 12, hour) }} :
 	{{ self.select(name~'[minute]', 0, 59, selectedMinute) }}
 	<input name="{{ name~'[second]' }}" type="hidden" value="00" />
+
+	{# Preselect meridiem #}
+	<select name="{{ name~'[meridiem]' }}">
+		{% if isMorning %}
+		<option value="am" selected="selected">AM</option>
+		<option value="pm">PM</option>
+		{% else %}
+		<option value="am">AM</option>
+		<option value="pm" selected="selected">PM</option>
+		{% endif %}
+	</select>
 {% endmacro %}
