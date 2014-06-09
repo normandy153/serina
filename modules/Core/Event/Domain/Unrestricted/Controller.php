@@ -113,6 +113,21 @@ class Controller extends Unrestricted {
 	}
 
 	/**
+	 * View special information about an event in a public context
+	 */
+	public function getEventToken() {
+		$args = $this->getArgs();
+
+		$eventMapper = new EventMapper();
+
+		$event = $eventMapper->findByColumn('uuid', $args[1])->first();
+
+		new Probe($event);
+
+		exit();
+	}
+
+	/**
 	 * Get a list of events
 	 */
 	public function getEventList() {
