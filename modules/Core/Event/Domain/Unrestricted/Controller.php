@@ -105,7 +105,7 @@ class Controller extends Unrestricted {
 
 		$eventMapper = new EventMapper();
 
-		$event = $eventMapper->findById($args[1]);
+		$event = $eventMapper->findDetailedById($args[1]);
 
 		$this->output('getEventUpdate', array(
 			'event' => $event

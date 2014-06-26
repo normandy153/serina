@@ -64,6 +64,14 @@
 	</fieldset>
 	<fieldset>
 		<legend>Routes And Markers</legend>
+
+		<ul>
+		{% for waypoint in event.getWaypoints() %}
+		<li>
+			<input name="waypoint[{{ waypoint.getId() }}]" value="{{ waypoint.getAddress() }}" />
+		</li>
+		{% endfor %}
+		</ul>
 	</fieldset>
 
 	<input type="submit" value="Submit" />

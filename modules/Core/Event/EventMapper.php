@@ -32,9 +32,74 @@ class EventMapper extends \App\Mapper\Base {
 
 		/* Collections joined into this object
 		 */
-		$this->addProperty('routes', null, self::TYPE_COLLECTION);
-		$this->addProperty('attendees', null, self::TYPE_COLLECTION);
+		$this->addProperty('waypoints', null, self::TYPE_COLLECTION);
+//		$this->addProperty('routes', null, self::TYPE_COLLECTION);
+//		$this->addProperty('attendees', null, self::TYPE_COLLECTION);
+
+		$this->addJoin('Waypoint', array(
+			'this' => array(
+				'mapper' => '\Core\Event\EventMapper',
+				'property' => 'id',
+				'collection' => 'waypoints',
+			),
+			'other' => array(
+				'mapper' => '\Core\Event\WaypointMapper',
+				'property' => 'eventId',
+			),
+		));
 
 		$this->addTimestampable();
+	}
+
+	/**
+	 * Find detailed information about an event
+	 *
+	 * @param $id
+	 * @return mixed
+	 */
+	public function findDetailedById($id) {
+		$query = new Query();
+		$query->select(
+			'\Core\Event\Event e',
+			'\Core\Event\Waypoint w'
+		)
+			->from('e')
+			->leftJoin('e', 'Waypoint', 'w')
+			->where('e.id = :id')
+			->prepare();
+
+		/* Parameters used in the query
+		 */
+		$parameters = array(
+			'id' => array(
+				'column' => $id,
+				'type' => self::TYPE_INT,
+			)
+		);
+
+		$statement = $query->execute($parameters);
+
+		/* Set up collections
+		 */
+		$eventCollection = new \App\Collection();
+		$waypointCollection = new \App\Collection();
+
+		foreach($statement as $row) {
+			$event = $query->getMapperForAlias('e')->hydrate('e', $row);
+			$eventCollection->setItemAt($event->getId(), $event);
+
+			$waypoint = $query->getMapperForAlias('w')->hydrate('w', $row);
+			$waypointCollection->setItemAt($waypoint->getId(), $waypoint);
+		}
+
+		/* Build event/waypoint relation
+ 		 */
+		$this->joinCollections($eventCollection, $waypointCollection, 'Waypoint', $query);
+
+		/* Reindex
+		 */
+		$eventCollection->reindex();
+
+		return $eventCollection->first();
 	}
 } 

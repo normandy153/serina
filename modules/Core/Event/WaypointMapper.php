@@ -17,8 +17,8 @@ class WaypointMapper extends \App\Mapper\Base {
 	 * @return mixed|void
 	 */
 	protected function properties() {
-		$this->setModel('\\Core\\Event\\Event');
-		$this->setTable('event');
+		$this->setModel('\\Core\\Event\\Waypoint');
+		$this->setTable('waypoint');
 
 		$this->addProperty('id', 'id', self::TYPE_INT);
 		$this->addProperty('eventId', 'event_id', self::TYPE_INT);

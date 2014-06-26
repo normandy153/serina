@@ -73,6 +73,13 @@ class Event {
 	private $hidden = false;
 
 	/**
+	 * An instance of Collection
+	 *
+	 * @var null
+	 */
+	private $waypoints = null;
+
+	/**
 	 * When this event was created
 	 *
 	 * @var string
@@ -326,5 +333,23 @@ class Event {
 	 */
 	public function getDeletedAt() {
 		return $this->deletedAt;
+	}
+
+	/**
+	 * Set waypoints
+	 *
+	 * @param null $waypoints
+	 */
+	public function setWaypoints($waypoints) {
+		$this->waypoints = $waypoints;
+	}
+
+	/**
+	 * Get waypoints
+	 *
+	 * @return null
+	 */
+	public function getWaypoints() {
+		return $this->waypoints;
 	}
 }
