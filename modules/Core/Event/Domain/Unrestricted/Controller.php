@@ -113,6 +113,81 @@ class Controller extends Unrestricted {
 	}
 
 	/**
+	 * Update an existing Event
+	 */
+	public function postEventUpdate() {
+		$now = date('Y-m-d h:i:s');
+
+		/* Meeting Date/Time
+		 */
+		$dateElements = array(
+			sprintf("%02d", $_POST['meetingAt']['year']),
+			sprintf("%02d", $_POST['meetingAt']['month']),
+			sprintf("%02d", $_POST['meetingAt']['day']),
+		);
+
+		$timeElements = array(
+			sprintf("%02d", $_POST['meetingAt']['meridiem'] == 'pm' ? $_POST['meetingAt']['hour']+12 : $_POST['meetingAt']['hour']),
+			sprintf("%02d", $_POST['meetingAt']['minute']),
+			'00',
+		);
+
+		$meetingAt = implode('-', $dateElements) . ' ' . implode(':', $timeElements);
+
+		/* Start Date/Time
+		 */
+		$dateElements = array(
+			sprintf("%02d", $_POST['startAt']['year']),
+			sprintf("%02d", $_POST['startAt']['month']),
+			sprintf("%02d", $_POST['startAt']['day']),
+		);
+
+		$timeElements = array(
+			sprintf("%02d", $_POST['startAt']['meridiem'] == 'pm' ? $_POST['startAt']['hour']+12 : $_POST['startAt']['hour']),
+			sprintf("%02d", $_POST['startAt']['minute']),
+			'00',
+		);
+
+		$startAt = implode('-', $dateElements) . ' ' . implode(':', $timeElements);
+
+		/* End Date/Time
+		 */
+		$dateElements = array(
+			sprintf("%02d", $_POST['endAt']['year']),
+			sprintf("%02d", $_POST['endAt']['month']),
+			sprintf("%02d", $_POST['endAt']['day']),
+		);
+
+		$timeElements = array(
+			sprintf("%02d", $_POST['endAt']['meridiem'] == 'pm' ? $_POST['endAt']['hour']+12 : $_POST['endAt']['hour']),
+			sprintf("%02d", $_POST['endAt']['minute']),
+			'00',
+		);
+
+		$endAt = implode('-', $dateElements) . ' ' . implode(':', $timeElements);
+
+		/* Event
+		 */
+		$eventMapper = new EventMapper();
+
+		$event = $eventMapper->findDetailedById($_POST['eventId']);
+		$event->setName($_POST['name']);
+		$event->setBrief($_POST['brief']);
+		$event->setDescription($_POST['description']);
+		$event->setMeetingAt($meetingAt);
+		$event->setStartAt($startAt);
+		$event->setEndAt($endAt);
+		$event->setHidden(1);
+		$event->setUpdatedAt($now);
+		$event->setDeletedAt(null);
+
+		$eventMapper = new EventMapper();
+		$eventMapper->save($event);
+
+		header("Location: /event/update/{$event->getId()}");
+	}
+
+	/**
 	 * View special information about an event in a public context
 	 */
 	public function getEventToken() {

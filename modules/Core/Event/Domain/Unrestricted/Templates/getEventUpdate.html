@@ -7,7 +7,9 @@
 
 {% block content %}
 
-<form action="/event/update/{{ event.getId() }}" method="post">
+<form action="/event/update" method="post">
+	<input name="eventId" type="hidden" value="{{ event.getId() }}" />
+
 	<fieldset>
 		<legend>Details</legend>
 		<label>
