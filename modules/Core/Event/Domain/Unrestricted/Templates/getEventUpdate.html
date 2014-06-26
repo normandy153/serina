@@ -1,0 +1,68 @@
+{% extends 'Unrestricted.html' %}
+{% import "macros-datetime.html" as macros %}
+
+{% block head %}
+<title>Update Event</title>
+{% endblock %}
+
+{% block content %}
+
+<form action="/event/update/{{ event.getId() }}" method="post">
+	<fieldset>
+		<legend>Details</legend>
+		<label>
+			Name
+			<input name="name" type="text" value="{{ event.getName() }}" />
+		</label>
+		<label>
+			Brief
+			<textarea name="brief">{{ event.getBrief() }}</textarea>
+		</label>
+		<label>
+			Description
+			<textarea name="description">{{ event.getDescription() }}</textarea>
+		</label>
+		<label>
+			Meeting
+			{{ macros.selectFullDateTime_Event('meetingAt',
+				event.getMeetingAt()|date('Y'),
+				event.getMeetingAt()|date('Y')+1,
+				event.getMeetingAt()|date('Y'),
+				event.getMeetingAt()|date('m'),
+				event.getMeetingAt()|date('d'),
+				event.getMeetingAt()|date('H'),
+				event.getMeetingAt()|date('i'),
+				event.getMeetingAt()|date('s'))
+			}}
+		</label>
+		<label>
+			Starts
+			{{ macros.selectFullDateTime_Event('startAt',
+				event.getStartAt()|date('Y'),
+				event.getStartAt()|date('Y')+1,
+				event.getStartAt()|date('Y'),
+				event.getStartAt()|date('m'),
+				event.getStartAt()|date('d'),
+				event.getStartAt()|date('H'),
+				event.getStartAt()|date('i'),
+				event.getStartAt()|date('s'))
+			}}
+		</label>
+		<label>
+			Ends
+			{{ macros.selectFullDateTime_Event('endAt',
+				event.getEndAt()|date('Y'),
+				event.getEndAt()|date('Y')+1,
+				event.getEndAt()|date('Y'),
+				event.getEndAt()|date('m'),
+				event.getEndAt()|date('d'),
+				event.getEndAt()|date('H'),
+				event.getEndAt()|date('i'),
+				event.getEndAt()|date('s'))
+			}}
+		</label>
+	</fieldset>
+
+	<input type="submit" value="Submit" />
+</form>
+{% endblock %}
