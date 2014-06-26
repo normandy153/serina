@@ -70,7 +70,7 @@
 		<ul>
 		{% for waypoint in event.getWaypoints() %}
 		<li>
-			<input name="waypoint[{{ waypoint.getId() }}]" value="{{ waypoint.getAddress() }}" />
+			<input name="waypoint[]" value="{{ waypoint.getAddress() }}" />
 		</li>
 		{% endfor %}
 		</ul>

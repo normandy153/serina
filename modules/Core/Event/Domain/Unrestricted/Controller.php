@@ -12,6 +12,8 @@ use App\Controller\Domain\Unrestricted;
 use App\Probe;
 use Core\Event\Event;
 use Core\Event\EventMapper;
+use Core\Event\Waypoint;
+use Core\Event\WaypointMapper;
 
 class Controller extends Unrestricted {
 
@@ -183,6 +185,21 @@ class Controller extends Unrestricted {
 
 		$eventMapper = new EventMapper();
 		$eventMapper->save($event);
+
+		/* Purge waypoints before re-adding them and regenerating cached Routes
+		 */
+		$waypointMapper = new WaypointMapper();
+
+		foreach($event->getWaypoints() as $currentWaypoint) {
+			$waypointMapper->delete($currentWaypoint);
+		}
+
+		foreach($_POST['waypoint'] as $currentWaypoint) {
+			$waypoint = new Waypoint();
+			$waypoint->setEventId($event->getId());
+			$waypoint->setAddress($currentWaypoint);
+			$waypointMapper->save($waypoint);
+		}
 
 		header("Location: /event/update/{$event->getId()}");
 	}
