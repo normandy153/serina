@@ -3,6 +3,12 @@
 
 {% block head %}
 <title>Update Event</title>
+<script type="text/javascript" src="/user/js/cloners.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('form').addCloners();
+	});
+</script>
 {% endblock %}
 
 {% block content %}
@@ -66,14 +72,26 @@
 	</fieldset>
 	<fieldset>
 		<legend>Routes And Markers</legend>
+		<a data-cloner="true">Add</a>
 
-		<ul>
-		{% for waypoint in event.getWaypoints() %}
-		<li>
-			<input name="waypoint[]" value="{{ waypoint.getAddress() }}" />
-		</li>
-		{% endfor %}
-		</ul>
+		<section data-cloneable="true" class="hidden">
+			<label>
+				<input name="waypoint[]" disabled value="" />
+
+				<a data-cloner-remover="true">Remove</a>
+			</label>
+		</section>
+
+		<div data-cloneable-socket="true">
+			{% for waypoint in event.getWaypoints() %}
+			<section>
+				<label>
+					<input name="waypoint[]" value="{{ waypoint.getAddress() }}" />
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
+			{% endfor %}
+		</div>
 	</fieldset>
 
 	<input type="submit" value="Submit" />
