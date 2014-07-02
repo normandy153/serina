@@ -211,7 +211,18 @@ class Controller extends Unrestricted {
 		$polyfills = new Waypoint\PolyfillCollection($waypointCollection);
 		$polyfills->transcode();
 
-		new \App\Probe($polyfills);
+		$routeMapper = new Waypoint\RouteMapper();
+		$routeMapper->cleanse($event);
+
+		$allPolyfills = $polyfills->getAllEncodedPolyfills();
+		new \App\Probe($allPolyfills);
+		foreach($allPolyfills as $currentPolyfill) {
+			$route = new Waypoint\Route();
+			$route->setEventId($event->getId());
+			$route->setPolyfill($currentPolyfill->jsonSerialize());
+			$routeMapper->save($route);
+		}
+
 		die();
 
 		header("Location: /event/update/{$event->getId()}");
