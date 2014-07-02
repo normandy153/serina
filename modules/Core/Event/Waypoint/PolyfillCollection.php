@@ -11,6 +11,8 @@
 namespace Core\Event\Waypoint;
 
 
+use App\Collection;
+
 class PolyfillCollection extends \App\Collection {
 
 	/**
@@ -55,13 +57,11 @@ class PolyfillCollection extends \App\Collection {
 	 *
 	 * @param $allWaypoints
 	 */
-	public function __construct($allWaypoints) {
-		if (is_array($allWaypoints) && count($allWaypoints)) {
-			foreach($allWaypoints as $currentWaypoint) {
-				$node = new PolyfillNode();
-				$node->setAddress($currentWaypoint);
-				$this->add($node);
-			}
+	public function __construct(Collection $allWaypoints) {
+		foreach($allWaypoints as $currentWaypoint) {
+			$node = new PolyfillNode();
+			$node->setAddress($currentWaypoint->getAddress());
+			$this->add($node);
 		}
 	}
 

@@ -8,6 +8,7 @@
 
 namespace Core\Event\Domain\Unrestricted;
 
+use App\Collection;
 use App\Controller\Domain\Unrestricted;
 use App\Probe;
 use Core\Event\Event;
@@ -186,7 +187,7 @@ class Controller extends Unrestricted {
 		$eventMapper = new EventMapper();
 		$eventMapper->save($event);
 
-		/* Purge waypoints before re-adding them and regenerating cached Routes
+		/* Purge waypoints before re-adding them and regenerating cached polyfills
 		 */
 		$waypointMapper = new WaypointMapper();
 
@@ -194,12 +195,24 @@ class Controller extends Unrestricted {
 			$waypointMapper->delete($currentWaypoint);
 		}
 
+		$waypointCollection = new Collection();
+
 		foreach($_POST['waypoint'] as $currentWaypoint) {
 			$waypoint = new Waypoint();
 			$waypoint->setEventId($event->getId());
 			$waypoint->setAddress($currentWaypoint);
 			$waypointMapper->save($waypoint);
+
+			$waypointCollection->add($waypoint);
 		}
+
+		/* Render and cache polyfills
+		 */
+		$polyfills = new Waypoint\PolyfillCollection($waypointCollection);
+		$polyfills->transcode();
+
+		new \App\Probe($polyfills);
+		die();
 
 		header("Location: /event/update/{$event->getId()}");
 	}
