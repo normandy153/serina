@@ -8,6 +8,7 @@
 
 namespace Core\Event\Waypoint;
 
+use \App\Mapper\Query;
 
 class RouteMapper extends \App\Mapper\Base {
 
@@ -25,13 +26,18 @@ class RouteMapper extends \App\Mapper\Base {
 		$this->addProperty('polyfill', 'polyfill', self::TYPE_STR);
 	}
 
+	/**
+	 * Delete existing routes associated with an event
+	 *
+	 * @param $event
+	 */
 	public function cleanse($event) {
 		$queryString = "
 			DELETE FROM `{$this->getTable()}`
 			WHERE event_id = :eventId
 		";
 
-		$query = new \App\Mapper\Query();
+		$query = new Query();
 		$query->prepareRawQuery($queryString);
 		$query->execute(array(
 			'eventId' => array(
