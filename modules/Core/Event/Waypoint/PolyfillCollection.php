@@ -190,16 +190,24 @@ class PolyfillCollection extends \App\Collection {
 			if (!strlen($errors)) {
 				$data = json_decode($result);
 
-				/* Add polyfil
+				/* Add polyfill. If it can't figure out the address, it'll
+				 * give you a stdClass object with status ZERO_RESULTS
 				 */
-				$polyfill = new Polyfill($data->routes[0]->overview_polyline->points);
-				$allEncodedPolyfills->add($polyfill);
+				if ($data->status !== "ZERO_RESULTS") {
+					$polyfill = new Polyfill($data->routes[0]->overview_polyline->points);
+					$allEncodedPolyfills->add($polyfill);
 
-				/* Map bounds
-				 * For jsonSerialize interface
-				 */
-				$bounds = new Bounds($data->routes[0]->bounds);
-				$allBounds->add($bounds);
+					/* Map bounds
+					 * For jsonSerialize interface
+					 */
+					$bounds = new Bounds($data->routes[0]->bounds);
+					$allBounds->add($bounds);
+				}
+				else {
+
+					/* TODO: Find actual addresses which cause errors
+					 */
+				}
 			}
 		}
 
