@@ -25,7 +25,7 @@ class PolyfillCollection extends \App\Collection {
 	/**
 	 * Encoded polyfill for the Nodes contained within
 	 *
-	 * @var null
+	 * @var \App\Collection
 	 */
 	private $allEncodedPolyfills = null;
 
@@ -226,7 +226,7 @@ class PolyfillCollection extends \App\Collection {
 	/**
 	 * Set encoded polyfill
 	 *
-	 * @param string $allEncodedPolyfills
+	 * @param \App\Collection $allEncodedPolyfills
 	 */
 	public function setAllEncodedPolyfills($allEncodedPolyfills) {
 		$this->allEncodedPolyfills = $allEncodedPolyfills;
@@ -235,7 +235,7 @@ class PolyfillCollection extends \App\Collection {
 	/**
 	 * Get encoded polyfill
 	 *
-	 * @return string
+	 * @return \App\Collection
 	 */
 	public function getAllEncodedPolyfills() {
 		return $this->allEncodedPolyfills;
