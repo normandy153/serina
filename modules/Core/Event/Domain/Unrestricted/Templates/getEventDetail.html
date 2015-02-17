@@ -10,9 +10,13 @@
 <script type="text/javascript">
 	$(function() {
 		$('#event-map').cartographer({
-			bounds: {{ event.getWaypoints().getAllBounds().jsonSerialize() | raw }},
-			polyfills: {{ event.getWaypoints().getAllEncodedPolyfills().jsonSerialize() | raw }},
-			markers: {{ event.getMarkers().jsonSerialize() | raw }}
+//			bounds: {{ event.getWaypoints().getAllBounds().jsonSerialize() | raw }},
+			polyfills: [
+				{% for currentRoute in event.getWaypoints() %}
+					'{{ currentRoute.getPolyfill() }}'{% if not loop.last %},{% endif %}
+				{% endfor %}
+			]
+//			markers: {{ event.getMarkers().jsonSerialize() | raw }}
 		});
 	});
 </script>

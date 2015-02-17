@@ -261,11 +261,15 @@ class Controller extends Unrestricted {
 		$args = $this->getArgs();
 
 		$eventMapper = new \Core\Event\EventMapper();
-
 		$event = $eventMapper->findById($args[1]);
 
+		$routes = new \Core\Event\Waypoint\RouteMapper();
+		$allRoutes = $routes->findbyColumn('event_id', $args[1]);
+
+		$event->setWaypoints($allRoutes);
+new Probe($event->getWaypoints());
 		$this->output('getEventDetail', array(
-			'event' => $event
+			'event' => $event,
 		));
 	}
 }
