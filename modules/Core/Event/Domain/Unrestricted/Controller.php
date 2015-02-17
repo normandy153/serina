@@ -216,6 +216,8 @@ class Controller extends Unrestricted {
 
 		$allPolyfills = $polyfills->getAllEncodedPolyfills();
 
+		/* Save encoded polyfills, to save on remote requests
+		 */
 		foreach($allPolyfills as $currentPolyfill) {
 			$route = new Waypoint\Route();
 			$route->setEventId($event->getId());
