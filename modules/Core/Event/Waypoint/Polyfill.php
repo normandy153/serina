@@ -25,7 +25,13 @@ class Polyfill implements \JsonSerializable {
 	 * @param $polyfill
 	 */
 	public function __construct($polyfill) {
-		$this->setPolyfillString($polyfill);
+
+		/* Automatically base64_encode the polyfill - javascript interprets
+		 * \w, \l etc as special meanings and will throw you ILLEGAL STRING
+		 * errors. base64_encode will hide those literals. All polyfills are
+		 * base64_encoded in the db.
+		 */
+		$this->setPolyfillString(base64_encode($polyfill));
 	}
 
 	/**
