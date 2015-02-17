@@ -9,7 +9,7 @@
 namespace App;
 
 
-class Collection implements \Iterator, \JsonSerializable {
+class Collection implements \Iterator, \JsonSerializable, \Countable {
 
 	/**
 	 * Current position
@@ -122,6 +122,10 @@ class Collection implements \Iterator, \JsonSerializable {
 		return $this->stack[$index];
 	}
 
+	/**
+	 * Reindex elements in the stack
+	 * (used when you want to foreach over noncontinuous int keys)
+	 */
 	public function reindex() {
 		$this->stack = array_values($this->stack);
 	}
@@ -179,6 +183,15 @@ class Collection implements \Iterator, \JsonSerializable {
 	 */
 	public function key() {
 		return $this->position;
+	}
+
+	/**
+	 * Return the number of items in the stack
+	 *
+	 * @return int
+	 */
+	public function count() {
+		return count($this->stack);
 	}
 
 	/* Getters/Setters
