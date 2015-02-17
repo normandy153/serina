@@ -13,7 +13,7 @@
 //			bounds: {{ event.getWaypoints().getAllBounds().jsonSerialize() | raw }},
 			polyfills: [
 				{% for currentRoute in event.getWaypoints() %}
-					'{{ currentRoute.getPolyfill() }}'{% if not loop.last %},{% endif %}
+					'{{ currentRoute.getPolyfill() }}'{{ loop.last ? '' : ', '}}
 				{% endfor %}
 			]
 //			markers: {{ event.getMarkers().jsonSerialize() | raw }}
