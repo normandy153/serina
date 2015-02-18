@@ -217,11 +217,13 @@ class Controller extends Unrestricted {
 		$allPolyfills = $polyfills->getAllEncodedPolyfills();
 
 		/* Save encoded polyfills, to save on remote requests
+		 * Polyfills are base64_encoded
 		 */
 		foreach($allPolyfills as $currentPolyfill) {
 			$route = new Waypoint\Route();
 			$route->setEventId($event->getId());
-			$route->setPolyfill($currentPolyfill->jsonSerialize());
+			$route->setPolyfill($currentPolyfill->getPolyfillString());
+			$route->setBounds($currentPolyfill->getBoundsJson());
 			$routeMapper->save($route);
 		}
 
@@ -269,9 +271,12 @@ class Controller extends Unrestricted {
 		$allRoutes = $routes->findbyColumn('event_id', $args[1]);
 
 		$event->setWaypoints($allRoutes);
-new Probe($event->getWaypoints());
+
+		$boundsRaw = '[{northeast:{lat:-37.7850266,lng:145.1734078},southwest:{lat:-37.8618761,lng:144.9682586}},{northeast:{lat:-37.7850266,lng:146.9509716},southwest:{lat:-41.3684443,lng:144.4793591}}]';
+
 		$this->output('getEventDetail', array(
 			'event' => $event,
+			'bounds' => $boundsRaw
 		));
 	}
 }
