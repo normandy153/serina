@@ -75,11 +75,18 @@ class Event {
 	private $hidden = false;
 
 	/**
-	 * An instance of Collection
+	 * Routes (polyfills) for this event
 	 *
 	 * @var \App\Collection
 	 */
 	private $waypoints = null;
+
+	/**
+	 * Markers for this event
+	 *
+	 * @var \App\Collection
+	 */
+	private $markers = null;
 
 	/**
 	 * When this event was created
@@ -353,5 +360,23 @@ class Event {
 	 */
 	public function getWaypoints() {
 		return $this->waypoints;
+	}
+
+	/**
+	 * Set markers
+	 *
+	 * @param \App\Collection $markers
+	 */
+	public function setMarkers($markers) {
+		$this->markers = $markers;
+	}
+
+	/**
+	 * Get markers
+	 *
+	 * @return \App\Collection
+	 */
+	public function getMarkers() {
+		return $this->markers;
 	}
 }

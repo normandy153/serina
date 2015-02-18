@@ -33,6 +33,7 @@ class EventMapper extends \App\Mapper\Base {
 		/* Collections joined into this object
 		 */
 		$this->addProperty('waypoints', null, self::TYPE_COLLECTION);
+		$this->addProperty('markers', null, self::TYPE_COLLECTION);
 //		$this->addProperty('routes', null, self::TYPE_COLLECTION);
 //		$this->addProperty('attendees', null, self::TYPE_COLLECTION);
 
@@ -44,6 +45,18 @@ class EventMapper extends \App\Mapper\Base {
 			),
 			'other' => array(
 				'mapper' => '\Core\Event\WaypointMapper',
+				'property' => 'eventId',
+			),
+		));
+
+		$this->addJoin('Marker', array(
+			'this' => array(
+				'mapper' => '\Core\Event\EventMapper',
+				'property' => 'id',
+				'collection' => 'markers',
+			),
+			'other' => array(
+				'mapper' => '\Core\Event\Waypoint\MarkerMapper',
 				'property' => 'eventId',
 			),
 		));
@@ -61,10 +74,12 @@ class EventMapper extends \App\Mapper\Base {
 		$query = new Query();
 		$query->select(
 			'\Core\Event\Event e',
-			'\Core\Event\Waypoint w'
+			'\Core\Event\Waypoint w',
+			'\Core\Event\Waypoint\Marker m'
 		)
 			->from('e')
 			->leftJoin('e', 'Waypoint', 'w')
+			->leftJoin('e', 'Marker', 'm')
 			->where('e.id = :id')
 			->prepare();
 
@@ -83,6 +98,7 @@ class EventMapper extends \App\Mapper\Base {
 		 */
 		$eventCollection = new \App\Collection();
 		$waypointCollection = new \App\Collection();
+		$markerCollection = new \App\Collection();
 
 		foreach($statement as $row) {
 			$event = $query->getMapperForAlias('e')->hydrate('e', $row);
@@ -90,11 +106,18 @@ class EventMapper extends \App\Mapper\Base {
 
 			$waypoint = $query->getMapperForAlias('w')->hydrate('w', $row);
 			$waypointCollection->setItemAt($waypoint->getId(), $waypoint);
+
+			$marker = $query->getMapperForAlias('m')->hydrate('m', $row);
+			$markerCollection->setItemAt($marker->getId(), $marker);
 		}
 
 		/* Build event/waypoint relation
  		 */
 		$this->joinCollections($eventCollection, $waypointCollection, 'Waypoint', $query);
+
+		/* Build event/marker relation
+ 		 */
+		$this->joinCollections($eventCollection, $markerCollection, 'Marker', $query);
 
 		/* Reindex
 		 */
