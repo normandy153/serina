@@ -7,6 +7,8 @@
  */
 namespace Core\Event;
 
+use \App\Collection;
+
 class Event {
 
 	/**
@@ -75,7 +77,7 @@ class Event {
 	/**
 	 * An instance of Collection
 	 *
-	 * @var null
+	 * @var \App\Collection
 	 */
 	private $waypoints = null;
 
@@ -104,7 +106,7 @@ class Event {
 	 * Constructor
 	 */
 	public function __construct() {
-
+		$this->setWaypoints(new Collection());
 	}
 
 	/**
