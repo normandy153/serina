@@ -36,8 +36,15 @@ class Marker implements \JsonSerializable {
 
 	/**
 	 * Constructor
+	 *
+	 * @param $latitude
+	 * @param $longitude
+	 * @param $description
 	 */
-	public function __construct() {
+	public function __construct($latitude, $longitude, $description) {
+		$this->setLatitude($latitude);
+		$this->setLongitude($longitude);
+		$this->setDescription($description);
 	}
 
 	/**
@@ -62,7 +69,7 @@ class Marker implements \JsonSerializable {
 	 * @param string $latitude
 	 * @return $this
 	 */
-	public function setLatitude($latitude) {
+	private function setLatitude($latitude) {
 		$this->latitude = $latitude;
 
 		return $this;
@@ -83,7 +90,7 @@ class Marker implements \JsonSerializable {
 	 * @param string $longitude
 	 * @return $this
 	 */
-	public function setLongitude($longitude) {
+	private function setLongitude($longitude) {
 		$this->longitude = $longitude;
 
 		return $this;
@@ -103,7 +110,7 @@ class Marker implements \JsonSerializable {
 	 *
 	 * @param string $description
 	 */
-	public function setDescription($description) {
+	private function setDescription($description) {
 		$this->description = $description;
 	}
 
