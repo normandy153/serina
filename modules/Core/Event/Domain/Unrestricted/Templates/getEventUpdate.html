@@ -71,7 +71,7 @@
 		</label>
 	</fieldset>
 	<fieldset>
-		<legend>Routes And Markers</legend>
+		<legend>Routes</legend>
 		<a data-cloner="true">Add</a>
 
 		<section data-cloneable="true" class="hidden">
@@ -87,6 +87,32 @@
 			<section>
 				<label>
 					<input name="waypoint[]" value="{{ waypoint.getAddress() }}" />
+					<a data-cloner-remover="true">Remove</a>
+				</label>
+			</section>
+			{% endfor %}
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>Markers</legend>
+		<a data-cloner="true">Add</a>
+
+		<section data-cloneable="true" class="hidden">
+			<label>
+				<input name="marker[latitude][]" disabled value="" />
+				<input name="marker[longitude][]" disabled value="" />
+				<input name="marker[description][]" disabled value="" />
+				<a data-cloner-remover="true">Remove</a>
+			</label>
+		</section>
+
+		<div data-cloneable-socket="true">
+			{% for markers in event.getMarkers() %}
+			<section>
+				<label>
+					<input name="marker[latitude][]" value="{{ marker.getLatitude() }}" />
+					<input name="marker[longitude][]" value="{{ marker.getLongitude() }}" />
+					<input name="marker[description][]" value="{{ marker.getDescription() }}" />
 					<a data-cloner-remover="true">Remove</a>
 				</label>
 			</section>
