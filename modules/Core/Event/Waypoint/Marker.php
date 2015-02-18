@@ -14,6 +14,20 @@ namespace Core\Event\Waypoint;
 class Marker implements \JsonSerializable {
 
 	/**
+	 * Identifier
+	 *
+	 * @var int
+	 */
+	private $id = null;
+
+	/**
+	 * Associated event id
+	 *
+	 * @var int
+	 */
+	private $eventId = null;
+
+	/**
 	 * Latitude of a marker
 	 *
 	 * @var string
@@ -36,15 +50,8 @@ class Marker implements \JsonSerializable {
 
 	/**
 	 * Constructor
-	 *
-	 * @param $latitude
-	 * @param $longitude
-	 * @param $description
 	 */
-	public function __construct($latitude, $longitude, $description) {
-		$this->setLatitude($latitude);
-		$this->setLongitude($longitude);
-		$this->setDescription($description);
+	public function __construct() {
 	}
 
 	/**
@@ -69,7 +76,7 @@ class Marker implements \JsonSerializable {
 	 * @param string $latitude
 	 * @return $this
 	 */
-	private function setLatitude($latitude) {
+	public function setLatitude($latitude) {
 		$this->latitude = $latitude;
 
 		return $this;
@@ -90,7 +97,7 @@ class Marker implements \JsonSerializable {
 	 * @param string $longitude
 	 * @return $this
 	 */
-	private function setLongitude($longitude) {
+	public function setLongitude($longitude) {
 		$this->longitude = $longitude;
 
 		return $this;
@@ -110,7 +117,7 @@ class Marker implements \JsonSerializable {
 	 *
 	 * @param string $description
 	 */
-	private function setDescription($description) {
+	public function setDescription($description) {
 		$this->description = $description;
 	}
 
@@ -121,5 +128,41 @@ class Marker implements \JsonSerializable {
 	 */
 	public function getDescription() {
 		return $this->description;
+	}
+
+	/**
+	 * Set event id
+	 *
+	 * @param int $eventId
+	 */
+	public function setEventId($eventId) {
+		$this->eventId = $eventId;
+	}
+
+	/**
+	 * Get event id
+	 *
+	 * @return int
+	 */
+	public function getEventId() {
+		return $this->eventId;
+	}
+
+	/**
+	 * Set id
+	 *
+	 * @param int $id
+	 */
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	/**
+	 * Get id
+	 *
+	 * @return int
+	 */
+	public function getId() {
+		return $this->id;
 	}
 }
