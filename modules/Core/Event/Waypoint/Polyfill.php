@@ -20,11 +20,19 @@ class Polyfill implements \JsonSerializable {
 	private $polyfillString = '';
 
 	/**
+	 * A json-encoded bounds object
+	 *
+	 * @var string
+	 */
+	private $bounds = '';
+
+	/**
 	 * Constructor
 	 *
 	 * @param $polyfill
+	 * @param $bounds
 	 */
-	public function __construct($polyfill) {
+	public function __construct($polyfill, $bounds) {
 
 		/* Automatically base64_encode the polyfill - javascript interprets
 		 * \w, \l etc as special meanings and will throw you ILLEGAL STRING
@@ -32,6 +40,10 @@ class Polyfill implements \JsonSerializable {
 		 * base64_encoded in the db.
 		 */
 		$this->setPolyfillString(base64_encode($polyfill));
+
+		/* Save a cached version of the bounds
+		 */
+		$this->setBounds($bounds);
 	}
 
 	/**
@@ -40,7 +52,19 @@ class Polyfill implements \JsonSerializable {
 	 * @return array|mixed
 	 */
 	public function jsonSerialize() {
-		return $this->getPolyfillString();
+		return json_encode(array(
+			'polyfill' => $this->getPolyfillString(),
+			'bounds' => $this->getBounds()
+		));
+	}
+
+	/**
+	 * Get bounds as a json string
+	 *
+	 * @return string
+	 */
+	public function getBoundsJson() {
+		return json_encode($this->getBounds());
 	}
 
 	/* Getters/Setters
@@ -60,7 +84,25 @@ class Polyfill implements \JsonSerializable {
 	 *
 	 * @return string
 	 */
-	private function getPolyfillString() {
+	public function getPolyfillString() {
 		return $this->polyfillString;
+	}
+
+	/**
+	 * Set bounds
+	 *
+	 * @param string $bounds
+	 */
+	private function setBounds($bounds) {
+		$this->bounds = $bounds;
+	}
+
+	/**
+	 * Get bounds
+	 *
+	 * @return string
+	 */
+	public function getBounds() {
+		return $this->bounds;
 	}
 }

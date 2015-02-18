@@ -194,7 +194,7 @@ class PolyfillCollection extends \App\Collection {
 				 * give you a stdClass object with status ZERO_RESULTS
 				 */
 				if ($data->status !== "ZERO_RESULTS") {
-					$polyfill = new Polyfill($data->routes[0]->overview_polyline->points);
+					$polyfill = new Polyfill($data->routes[0]->overview_polyline->points, $data->routes[0]->bounds);
 					$allEncodedPolyfills->add($polyfill);
 
 					/* Map bounds
