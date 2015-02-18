@@ -294,12 +294,18 @@ class Controller extends Unrestricted {
 
 		/* All polyfills and bounds
 		 */
-		$routes = new RouteMapper();
-		$allRoutes = $routes->findbyColumn('event_id', $args[1]);
+		$routeMapper = new RouteMapper();
+		$allRoutes = $routeMapper->findbyColumn('event_id', $args[1]);
+
+		/* All markers
+		 */
+		$markerMapper = new MarkerMapper();
+		$allMarkers = $markerMapper->findByColumn('event_id', $args[1]);
 
 		$this->output('getEventDetail', array(
 			'event' => $event,
 			'allRoutes' => $allRoutes,
+			'allMarkers' => $allMarkers,
 		));
 	}
 }

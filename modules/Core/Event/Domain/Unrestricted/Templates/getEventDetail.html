@@ -20,7 +20,11 @@
 					'{{ currentRoute.getPolyfill() }}'{{ loop.last ? '' : ', '}}
 				{% endfor %}
 			]
-//			markers: {{ event.getMarkers().jsonSerialize() | raw }}
+			markers: [
+				{% for currentMarker in allMarkers %}
+					{{ currentMarker.jsonSerialize() | json_encode | raw }}{{ loop.last ? '' : ', '}}
+				{% endfor %}
+			]
 		});
 	});
 </script>
