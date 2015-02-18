@@ -230,15 +230,16 @@ class Controller extends Unrestricted {
 
 		/* Save markers for this event
 		 */
-		new Probe($_POST['marker']);
+		$markerMapper = new \Core\Event\Waypoint\MarkerMapper();
+		$markerMapper->cleanse($event);
+
 		for ($i = 0; $i < count($_POST['marker']['latitude']); $i++) {
 			$latitude = $_POST['marker']['latitude'][$i];
 			$longitude = $_POST['marker']['longitude'][$i];
 			$description = $_POST['marker']['description'][$i];
 
 			$marker = new \Core\Event\Waypoint\Marker($latitude, $longitude, $description);
-
-
+			$markerMapper->save($marker);
 		}
 
 		header("Location: /event/update/{$event->getId()}");
