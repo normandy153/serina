@@ -15,6 +15,8 @@ use Core\Event\Event;
 use Core\Event\EventMapper;
 use Core\Event\Waypoint;
 use Core\Event\WaypointMapper;
+use Core\Event\Waypoint\Marker;
+use Core\Event\Waypoint\MarkerMapper;
 use Core\Event\Waypoint\RouteMapper;
 
 class Controller extends Unrestricted {
@@ -230,7 +232,7 @@ class Controller extends Unrestricted {
 
 		/* Save markers for this event
 		 */
-		$markerMapper = new \Core\Event\Waypoint\MarkerMapper();
+		$markerMapper = new MarkerMapper();
 		$markerMapper->cleanse($event);
 
 		for ($i = 0; $i < count($_POST['marker']['latitude']); $i++) {
@@ -238,7 +240,7 @@ class Controller extends Unrestricted {
 			$longitude = $_POST['marker']['longitude'][$i];
 			$description = $_POST['marker']['description'][$i];
 
-			$marker = new \Core\Event\Waypoint\Marker();
+			$marker = new Marker();
 			$marker->setEventId($event->getId());
 			$marker->setLatitude($latitude);
 			$marker->setLongitude($longitude);
