@@ -15,6 +15,7 @@ use Core\Event\Event;
 use Core\Event\EventMapper;
 use Core\Event\Waypoint;
 use Core\Event\WaypointMapper;
+use Core\Event\Waypoint\RouteMapper;
 
 class Controller extends Unrestricted {
 
@@ -264,19 +265,19 @@ class Controller extends Unrestricted {
 	public function getEventDetail() {
 		$args = $this->getArgs();
 
-		$eventMapper = new \Core\Event\EventMapper();
+		/* Event data
+		 */
+		$eventMapper = new EventMapper();
 		$event = $eventMapper->findById($args[1]);
 
-		$routes = new \Core\Event\Waypoint\RouteMapper();
+		/* All polyfills and bounds
+		 */
+		$routes = new RouteMapper();
 		$allRoutes = $routes->findbyColumn('event_id', $args[1]);
-
-		$event->setWaypoints($allRoutes);
-
-		$boundsRaw = '[{northeast:{lat:-37.7850266,lng:145.1734078},southwest:{lat:-37.8618761,lng:144.9682586}},{northeast:{lat:-37.7850266,lng:146.9509716},southwest:{lat:-41.3684443,lng:144.4793591}}]';
 
 		$this->output('getEventDetail', array(
 			'event' => $event,
-			'bounds' => $boundsRaw
+			'allRoutes' => $allRoutes,
 		));
 	}
 }

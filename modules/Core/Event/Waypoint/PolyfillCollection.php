@@ -168,10 +168,6 @@ class PolyfillCollection extends \App\Collection {
 		 */
 		$this->regroup();
 
-		/* Bounds
-		 */
-		$allBounds = new \App\Collection();
-
 		/* A collection of polyfills
 		 */
 		$allEncodedPolyfills = new \App\Collection();
@@ -196,12 +192,6 @@ class PolyfillCollection extends \App\Collection {
 				if ($data->status !== "ZERO_RESULTS") {
 					$polyfill = new Polyfill($data->routes[0]->overview_polyline->points, $data->routes[0]->bounds);
 					$allEncodedPolyfills->add($polyfill);
-
-					/* Map bounds
-					 * For jsonSerialize interface
-					 */
-					$bounds = new Bounds($data->routes[0]->bounds);
-					$allBounds->add($bounds);
 				}
 				else {
 
@@ -210,10 +200,6 @@ class PolyfillCollection extends \App\Collection {
 				}
 			}
 		}
-
-		/* Store all bounding data
-		 */
-		$this->setAllBounds($allBounds);
 
 		/* Store all the polyfill results
 		 */

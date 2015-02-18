@@ -10,9 +10,13 @@
 <script type="text/javascript">
 	$(function() {
 		$('#event-map').cartographer({
-//			bounds: {{ event.getWaypoints().getAllBounds().jsonSerialize() | raw }},
+			bounds: [
+				{% for currentRoute in allRoutes %}
+					{{ currentRoute.getBounds()|raw }}{{ loop.last ? '' : ', '}}
+				{% endfor %}
+			],
 			polyfills: [
-				{% for currentRoute in event.getWaypoints() %}
+				{% for currentRoute in allRoutes %}
 					'{{ currentRoute.getPolyfill() }}'{{ loop.last ? '' : ', '}}
 				{% endfor %}
 			]
