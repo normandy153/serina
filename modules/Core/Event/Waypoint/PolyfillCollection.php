@@ -10,24 +10,10 @@
 
 namespace Core\Event\Waypoint;
 
-
 use App\Collection;
+use App\Curl;
 
-class PolyfillCollection extends \App\Collection {
-
-	/**
-	 * All bounding data for maps
-	 *
-	 * @var null
-	 */
-	private $allBounds = null;
-
-	/**
-	 * Encoded polyfill for the Nodes contained within
-	 *
-	 * @var \App\Collection
-	 */
-	private $allEncodedPolyfills = null;
+class PolyfillCollection extends Collection {
 
 	/**
 	 * The Google Maps API Url
@@ -44,9 +30,16 @@ class PolyfillCollection extends \App\Collection {
 	private $maxItems = 4;
 
 	/**
+	 * Encoded polyfill for the Nodes contained within
+	 *
+	 * @var \App\Collection
+	 */
+	private $allEncodedPolyfills = null;
+
+	/**
 	 * An instance of \App\Collection
 	 *
-	 * @var null
+	 * @var \App\Collection
 	 */
 	private $allCollections = null;
 
@@ -71,10 +64,10 @@ class PolyfillCollection extends \App\Collection {
 	 * @return \App\Collection
 	 */
 	private function regroup() {
-		$allCollections = new \App\Collection();
+		$allCollections = new Collection();
 
 		if ($this->length()) {
-			$currentCollection = new \App\Collection();
+			$currentCollection = new Collection();
 			$i = 1;
 
 			/* Each currentCollection holds maxItems
@@ -90,7 +83,7 @@ class PolyfillCollection extends \App\Collection {
 
 					/* Reset for next batch
 					 */
-					$currentCollection = new \App\Collection();
+					$currentCollection = new Collection();
 				}
 
 				$currentCollection->add($currentItem);
@@ -115,7 +108,7 @@ class PolyfillCollection extends \App\Collection {
 	 * @return string
 	 */
 	private function retrieveUrls() {
-		$allUrls = new \App\Collection();
+		$allUrls = new Collection();
 
 		/* Process each group of Nodes
 		 */
@@ -170,12 +163,14 @@ class PolyfillCollection extends \App\Collection {
 
 		/* A collection of polyfills
 		 */
-		$allEncodedPolyfills = new \App\Collection();
+		$allEncodedPolyfills = new Collection();
 
 		/* Process each polyfill url individually
 		 */
-		foreach($this->retrieveUrls() as $currentUrl) {
-			$curl = new \App\Curl($currentUrl);
+		$allUrls = $this->retrieveUrls();
+
+		foreach($allUrls as $currentUrl) {
+			$curl = new Curl($currentUrl);
 
 			$result = $curl->exec()->getResult();
 			$errors = $curl->exec()->getErrors();
@@ -279,23 +274,5 @@ class PolyfillCollection extends \App\Collection {
 	 */
 	private function getAllCollections() {
 		return $this->allCollections;
-	}
-
-	/**
-	 * Set all bounds
-	 *
-	 * @param null $allBounds
-	 */
-	private function setAllBounds($allBounds) {
-		$this->allBounds = $allBounds;
-	}
-
-	/**
-	 * Get all bounds
-	 *
-	 * @return null
-	 */
-	public function getAllBounds() {
-		return $this->allBounds;
 	}
 }
