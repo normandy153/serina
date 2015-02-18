@@ -238,7 +238,11 @@ class Controller extends Unrestricted {
 			$longitude = $_POST['marker']['longitude'][$i];
 			$description = $_POST['marker']['description'][$i];
 
-			$marker = new \Core\Event\Waypoint\Marker($latitude, $longitude, $description);
+			$marker = new \Core\Event\Waypoint\Marker();
+			$marker->setEventId($event->getId());
+			$marker->setLatitude($latitude);
+			$marker->setLongitude($longitude);
+			$marker->setDescription($description);
 			$markerMapper->save($marker);
 		}
 
