@@ -19,7 +19,7 @@
 				{% for currentRoute in allRoutes %}
 					'{{ currentRoute.getPolyfill() }}'{{ loop.last ? '' : ', '}}
 				{% endfor %}
-			]
+			],
 			markers: [
 				{% for currentMarker in allMarkers %}
 					{{ currentMarker.jsonSerialize() | json_encode | raw }}{{ loop.last ? '' : ', '}}

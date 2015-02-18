@@ -64,8 +64,6 @@
          */
         function plotRoutes() {
             for (var i = 0; i < config.polyfills.length; i++) {
-//                var temp = $.parseJSON(config.polyfills[i]);
-
                 var decodedPoints = google.maps.geometry.encoding.decodePath(base64_decode(config.polyfills[i]));
 
                 var encodedPolyline = new google.maps.Polyline({
