@@ -228,6 +228,19 @@ class Controller extends Unrestricted {
 			$routeMapper->save($route);
 		}
 
+		/* Save markers for this event
+		 */
+		new Probe($_POST['marker']);
+		for ($i = 0; $i < count($_POST['marker']['latitude']); $i++) {
+			$latitude = $_POST['marker']['latitude'][$i];
+			$longitude = $_POST['marker']['longitude'][$i];
+			$description = $_POST['marker']['description'][$i];
+
+			$marker = new \Core\Event\Waypoint\Marker($latitude, $longitude, $description);
+
+
+		}
+
 		header("Location: /event/update/{$event->getId()}");
 	}
 
