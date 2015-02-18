@@ -9,8 +9,9 @@
 namespace Core\Event\Waypoint;
 
 use \App\Mapper\Query;
+use \App\Mapper\Base;
 
-class RouteMapper extends \App\Mapper\Base {
+class RouteMapper extends Base {
 
 	/**
 	 * Define properties
@@ -24,6 +25,7 @@ class RouteMapper extends \App\Mapper\Base {
 		$this->addProperty('id', 'id', self::TYPE_INT);
 		$this->addProperty('eventId', 'event_id', self::TYPE_INT);
 		$this->addProperty('polyfill', 'polyfill', self::TYPE_STR);
+		$this->addProperty('bounds', 'bounds', self::TYPE_STR);
 	}
 
 	/**
