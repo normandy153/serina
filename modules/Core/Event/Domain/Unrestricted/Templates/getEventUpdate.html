@@ -107,7 +107,7 @@
 		</section>
 
 		<div data-cloneable-socket="true">
-			{% for markers in event.getMarkers() %}
+			{% for marker in event.getMarkers() %}
 			<section>
 				<label>
 					<input name="marker[latitude][]" value="{{ marker.getLatitude() }}" />
