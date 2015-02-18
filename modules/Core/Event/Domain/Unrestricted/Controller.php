@@ -17,6 +17,8 @@ use Core\Event\Waypoint;
 use Core\Event\WaypointMapper;
 use Core\Event\Waypoint\Marker;
 use Core\Event\Waypoint\MarkerMapper;
+use Core\Event\Waypoint\PolyfillCollection;
+use Core\Event\Waypoint\Route;
 use Core\Event\Waypoint\RouteMapper;
 
 class Controller extends Unrestricted {
@@ -211,10 +213,10 @@ class Controller extends Unrestricted {
 
 		/* Render and cache polyfills
 		 */
-		$polyfills = new Waypoint\PolyfillCollection($waypointCollection);
+		$polyfills = new PolyfillCollection($waypointCollection);
 		$polyfills->transcode();
 
-		$routeMapper = new Waypoint\RouteMapper();
+		$routeMapper = new RouteMapper();
 		$routeMapper->cleanse($event);
 
 		$allPolyfills = $polyfills->getAllEncodedPolyfills();
@@ -223,7 +225,7 @@ class Controller extends Unrestricted {
 		 * Polyfills are base64_encoded
 		 */
 		foreach($allPolyfills as $currentPolyfill) {
-			$route = new Waypoint\Route();
+			$route = new Route();
 			$route->setEventId($event->getId());
 			$route->setPolyfill($currentPolyfill->getPolyfillString());
 			$route->setBounds($currentPolyfill->getBoundsJson());
