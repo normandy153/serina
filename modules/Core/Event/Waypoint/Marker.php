@@ -67,9 +67,6 @@ class Marker implements \JsonSerializable {
 		);
 	}
 
-	/* Getters/Setters
-	 */
-
 	/**
 	 * Set latitude
 	 *
@@ -77,10 +74,16 @@ class Marker implements \JsonSerializable {
 	 * @return $this
 	 */
 	public function setLatitude($latitude) {
+
+		/* Remove illegal characters from values
+		 */
 		$this->latitude = $latitude;
 
 		return $this;
 	}
+
+	/* Getters/Setters
+	 */
 
 	/**
 	 * Get latitude
